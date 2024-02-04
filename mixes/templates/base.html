@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-");
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="description" content="" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Meta Tags -->
+    <meta
+      property="og:title"
+      content="DJ G400 - 400 Miles Above The Competition"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="{{ meta_descriprion }}" />
+    <meta name="keywords" content="{{ meta_keywords }}" />
+    <meta name="author" content="DJ G400" />
+    <meta property="og:type" content="website" />
+    <title>DJ G400 - {{ title_tag }}</title>
+    <!-- End of Meta Tags -->
+    <meta name="msapplication-config" content="./browserconfig.xml" />
+    <meta name="theme-color" content="#30d5c8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/js/bootstrap.min.js"></script>
+    <!-- favicons
+    ================================================== -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{% static 'favicon/apple-touch-icon.png' %}"
+    />
+    <link
+      rel="android-chrome"
+      sizes="192x192"
+      href="{% static 'favicon/android-chrome-192x192.png' %}"
+    />
+    <link
+      rel="android-chrome"
+      sizes="512x512"
+      href="{% static 'favicon/android-chrome-512x512.png' %}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{% static 'favicon/favicon-32x32.png' %}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{% static 'favicon/favicon-16x16.png' %}"
+    />
+    <link rel="manifest" href="{% static 'site.webmanifest' %}" />
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+  </head>
+
+  <body>
+    <!-- Preloader -->
+    <div class="preloader d-flex align-items-center justify-content-center">
+      <div class="lds-ellipsis">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    {% include "navbar.html" %} {% block body %} {% endblock %} {% include
+    "footer.html" %}
+
+    <script src="{% static 'js/jquery/jquery-2.2.4.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/plugins/plugins.js' %}"></script>
+    <script src="{% static 'js/active.js' %}"></script>
+  </body>
+</html>
