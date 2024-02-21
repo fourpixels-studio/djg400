@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from django.urls import reverse
 
 class Album(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
@@ -25,7 +26,13 @@ class Genre(models.Model):
 
 class Mix(models.Model):
     title = models.CharField(max_length=200, blank=True, null=True)
-    episode = models.CharField(max_length=3, blank=True, null=True)
+    cover = models.ImageField(upload_to="mix-covers/", blank=True, null=True)
+    thumbnail = models.ImageField(upload_to="mix-covers/", blank=True, null=True)
+    portrait_cover = models.ImageField(upload_to="mix-covers/", blank=True, null=True)
+    small_cover = models.ImageField(upload_to="mix-covers/", blank=True, null=True)
+    medium_cover = models.ImageField(upload_to="mix-covers/", blank=True, null=True)
+    large_cover = models.ImageField(upload_to="mix-covers/", blank=True, null=True)
+    episode_number = models.CharField(max_length=3, blank=True, null=True)
     color = models.CharField(max_length=15, blank=True, null=True)
     album = models.ForeignKey(Album, on_delete=models.CASCADE, blank=True, null=True)
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE, blank=True, null=True)
@@ -46,6 +53,20 @@ class Mix(models.Model):
         
     def __str__(self):
         return self.title
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+        
+    @property
+    def get_mix_url(self):
+        return f"www.djg400.com/{self.slug}/"
+    
+    @property
+    def get_url(self):
+        return reverse("mix_detail", kwargs={
+            "slug": self.slug,
+        })
 
 class Playlist(models.Model):
     title = models.CharField(max_length=200, blank=True, null=True)
