@@ -11,7 +11,11 @@
 <meta name="image" content="https://djg400.com{% static 'djg400_meta_thumbnail.jpg' %}">
 {% endif %}
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="{{ meta_url }}">
+{% if meta_url %}
+<meta name="canonical" content="{{ meta_url }}">
+{% else %}
+<meta name="canonical" content="https://djg400.com">
+{% endif %}
 
 <!-- Facebook Meta Tags -->
 <meta property="og:title" content="DJ G400 — {{ title_tag }}">
@@ -19,7 +23,11 @@
 <meta property="og:type" content="website">
 <meta property="og:description" content="{{ meta_description }}">
 <meta property="og:keywords" content="{{ meta_keywords }}">
-<meta property="og:url" content="{{ meta_url }}">
+{% if meta_url %}
+<meta name="og:url" content="{{ meta_url }}">
+{% else %}
+<meta name="og:url" content="https://djg400.com">
+{% endif %}
 <meta property="og:site_name" content="DJ G400">
 {% if meta_thumbnail %}
 <meta property="og:image" content="https://djg400.com{{ meta_thumbnail }}">
@@ -40,10 +48,14 @@
 <meta name="twitter:image" content="https://djg400.com{% static 'djg400_meta_thumbnail.jpg' %}">
 {% endif %}
 <meta name="twitter:image:width" content="1200">
-<meta name="twitter:image:height" content="600">
+<meta name="twitter:image:height" content="630">
+{% if meta_url %}
 <meta name="twitter:url" content="{{ meta_url }}">
+{% else %}
+<meta name="twitter:url" content="https://djg400.com">
+{% endif %}
 <meta name="twitter:site" content="www.djg400.com">
-<meta name="twitter:creator" content="@djg400.com">
+<meta name="twitter:creator" content="@djg400">
 
 <!-- LinkedIn Meta Tags -->
 {% if meta_thumbnail %}
