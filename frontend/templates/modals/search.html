@@ -6,14 +6,14 @@
                     <div class="row justify-content-center align-items-center g-3">
                         <form method="POST" class="col mb-3" onsubmit="showSpinner()">
                             {% csrf_token %}
-                            <div class="d-flex mt-4 justify-content-between">
-                                <h3 class="grey-5">Search...</h3>
+                            <div class="d-flex mt-3 justify-content-between">
+                                <h3 class="grey-4">Search...</h3>
                                 <button type="button" class="btn-close btn-light text-light btn-lg" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="frpw my-4">
                                 <input placeholder="Search for mixes, albums, artists" type="text" class="form-control form-control-lg" id="id_search" name="search" required/>
                             </div>
-                            <input type="submit" value="Search" class="btn mt-3 btn-dark btn-lg w-100"/>
+                            <input type="submit" value="Search" class="btn rounded-2 btn-dark btn-lg w-100"/>
                         </form>
                     </div>
                 </div>
