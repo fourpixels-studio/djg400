@@ -1,0 +1,155 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap");
+body{
+    font-family:"Space Grotesk", sans-serif !important;
+}
+.hover{
+    cursor: pointer;
+}
+.hover:hover{
+    cursor: pointer;
+}
+
+/* Navbar toggler button animation start */
+.navbar-toggler{
+    width: 30px;
+    height: 30px;
+    position: relative;
+    transition: .5s ease-in-out;
+}
+.navbar-toggler,
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus{
+    outline: none;
+    box-shadow: none;
+    border: 0;
+}
+.navbar-toggler span{
+    margin: 0;
+    padding: 0;
+}
+.toggler-icon{
+    display: block;
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    background: #30d5c8;
+    border-radius: 1px;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: .25s ease-in-out;
+}
+.middle-bar{
+    margin-top: 0px;
+}
+/* When navigation is clicked */
+.navbar-toggler .top-bar{
+    margin-top: 0px;
+    transform: rotate(135deg);
+}
+
+.navbar-toggler .middle-bar{
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.navbar-toggler .bottom-bar{
+    margin-top: 0px;
+    transform: rotate(-135deg);
+}
+
+/* State when the navbar is collapsed */
+
+.navbar-toggler.collapsed .top-bar{
+    margin-top: -20px;
+    transform: rotate(0deg);
+}
+
+.navbar-toggler.collapsed .middle-bar{
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
+
+.navbar-toggler.collapsed .bottom-bar{
+    margin-top: 20px;
+    transform: rotate(0deg);
+}
+
+/* Color of the three lines */
+.navbar-toggler.collapsed .toggler-icon{
+    background: linear-gradient(263deg, #30d5c8, #30d5c8 100%);
+}
+
+/* Navbar toggler button animation end */
+
+.hero-logo{
+    width: auto; 
+    object-fit: cover; 
+}
+
+/* Media Queries */
+/* Extra small devices(phones, 600px and down) */
+@media (max-width: 600px) {
+    .hero-logo{
+        height: 50vh;
+    }
+}
+/* Small devices(Portrait tablets and large phones, 600px and up) */
+@media (min-width: 600px) {
+    .hero-logo{
+        height: 50vh;
+    }
+}
+/* Medium devices (Landscape tablets, 768px and up) */
+@media (min-width: 768px) {
+    .hero-logo{
+        height: 60vh;
+    }
+}
+/* Large devices (Laptops/desktops, 992px and up) */
+@media (min-width: 992px) {
+    .hero-logo{
+        height: 80vh;
+    }
+}
+/* Extra large devices (Large laptops and desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .hero-logo{
+        height: 80vh;
+    }
+}
+@media (min-width: 1400px) {
+    .hero-logo{
+        height: 95vh;
+    }
+}
+
+.bg-grey{
+    background-color: #141414;
+}
+.grey-5{
+    color: #141414 !important;
+}
+.grey-4{
+    color: #2D2D2D !important;
+}
+.grey-3{
+    color: #686868 !important;
+}
+.grey-2{
+    color: #B7B7B7 !important;
+}
+.grey-1{
+    color: #F4F4F4 !important;
+}
+.rounded-4{
+    border-radius: 14px;
+}
+
+.no-btn{
+    background: none;
+    color: inherit;
+    border: none;
+    cursor: pointer;
+}

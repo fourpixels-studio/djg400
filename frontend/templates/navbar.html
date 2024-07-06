@@ -1,0 +1,57 @@
+{% load static %}
+<nav style="background-color: #141414;" class="navbar navbar-expand-lg navbar-black fixed-top" id="mainNav">
+    <div class="container px-5">
+        <a class="navbar-brand fw-bold" href="{% url 'index' %}">
+            <img src="{% static 'logo/logo.svg' %}" style="height: 50px;" class="img-fluid">
+        </a>
+        <button class="navbar-toggler collapsed d-flex d-lg-none flex-column justify-content-around" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="toggler-icon top-bar"></span>
+            <span class="toggler-icon middle-bar"></span>
+            <span class="toggler-icon bottom-bar"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav me-auto me-4 my-3 my-lg-0">
+                <li class="nav-item"><a class="nav-link me-lg-3" href="{% url 'index' %}">Home</a></li>
+                <li class="nav-item">
+                    <div class="dropdown">
+                        <a class="nav-link me-lg-3 dropdown-toggle hover"  id="dropdownMixes" data-bs-toggle="dropdown" aria-expanded="false">Mixes</a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMixes">
+                            <li><a class="dropdown-item" href="">Audio</a></li>
+                            <li><a class="dropdown-item" href="">Video</a></li>
+                            <li><a class="dropdown-item" href="">Download</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <button class="btn btn-primary mb-2 me-2 mb-lg-0" data-bs-toggle="modal" data-bs-target="#searchModal">
+                <span class="d-flex align-items-center">
+                    <i class="fa-solid fa-magnifying-glass me-2"></i>
+                    <span class="small">Search</span>
+                </span>
+            </button>
+            {% if request.user.is_superuser %}
+            <div class="dropdown">
+                <a class="no-btn ms-2 mb-2 mb-lg-0 dropdown-toggle hover"  id="dropdownAdmin" data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownAdmin">
+                    <li><a class="dropdown-item" href="/admin/">Admin</a></li>
+                    <li><a class="dropdown-item" href="">Log out</a></li>
+                </ul>
+            </div>
+            {% elif request.user.is_authenticated %}
+            <a style="text-decoration: none;" class="hover grey-1 ms-2 mb-2 mb-lg-0" href="">
+                <span class="d-flex align-items-center">
+                    <i class="fa-solid fa-right-from-bracket me-2"></i>
+                    <span>Log out</span>
+                </span>
+            </a>
+            {% else %}
+            <button class="no-btn nav-link mb-2 mb-lg-0" data-bs-toggle="modal" data-bs-target="#loginModal">
+                <span class="d-flex align-items-center">
+                    <i class="fa-solid fa-user me-2"></i>
+                    <span>Log in</span>
+                </span>
+            </button>
+            {% endif %}
+        </div>
+    </div>
+</nav>

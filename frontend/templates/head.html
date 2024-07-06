@@ -1,0 +1,82 @@
+{% load static %}
+<!-- Meta Tags -->
+<title>DJ G400 — {{ title_tag }}</title>
+<meta name="author" content="DJ G400" />
+<meta name="description" content="{{ meta_description }}" />
+<meta name="keywords" content="{{ meta_keywords }}" />
+<meta name="theme-color" content="#30d5c8" />
+{% if meta_thumbnail %}
+<meta name="image" content="https://djg400.com{{ meta_thumbnail }}">
+{% else %}
+<meta name="image" content="https://djg400.com{% static 'djg400_meta_thumbnail.jpg' %}">
+{% endif %}
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="{{ meta_url }}">
+
+<!-- Facebook Meta Tags -->
+<meta property="og:title" content="DJ G400 — {{ title_tag }}">
+<meta property="og:locale" content="en_EU">
+<meta property="og:type" content="website">
+<meta property="og:description" content="{{ meta_description }}">
+<meta property="og:keywords" content="{{ meta_keywords }}">
+<meta property="og:url" content="{{ meta_url }}">
+<meta property="og:site_name" content="DJ G400">
+{% if meta_thumbnail %}
+<meta property="og:image" content="https://djg400.com{{ meta_thumbnail }}">
+{% else %}
+<meta property="og:image" content="https://djg400.com{% static 'djg400_meta_thumbnail.jpg' %}">
+{% endif %}
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- Twitter Meta Tags -->
+<meta name="twitter:title" content="DJ G400 — {{ title_tag }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:description" content="{{ meta_description }}">
+{% if meta_thumbnail %}
+<meta name="twitter:image" content="https://djg400.com{{ meta_thumbnail }}">
+{% else %}
+<meta name="twitter:image" content="https://djg400.com{% static 'djg400_meta_thumbnail.jpg' %}">
+{% endif %}
+<meta name="twitter:image:width" content="1200">
+<meta name="twitter:image:height" content="600">
+<meta name="twitter:url" content="{{ meta_url }}">
+<meta name="twitter:site" content="www.djg400.com">
+<meta name="twitter:creator" content="@djg400.com">
+
+<!-- LinkedIn Meta Tags -->
+{% if meta_thumbnail %}
+<meta property="og:image" content="https://djg400.com{{ meta_thumbnail }}">
+{% else %}
+<meta property="og:image" content="https://djg400.com{% static 'djg400_meta_thumbnail.jpg' %}">
+{% endif %}
+<meta property="og:image:alt" content="{{ meta_description }}">
+<meta property="linkedin:site" content="https://www.linkedin.com/company/djg400/">
+
+<!-- Favicons Start -->
+<link rel="icon" type="image/icon" href="{% static 'favicon/favicon.ico' %}" />
+<link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}" />
+<link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}" />
+<link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}" />
+<link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/android-chrome-512x512.png' %}" />
+<link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/android-chrome-192x192.png' %}" />
+<!-- Favicons End -->
+
+<!-- Manifest -->
+<link rel="manifest" href="{% static 'favicon/site.webmanifest' %}" />
+
+<!-- Fontawesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- MAIN FONT -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@100;200;300;400;500;600;700;800;900;&display=swap" rel="stylesheet" />
+
+<!-- css -->
+<link rel="stylesheet" href="{% static 'css/custom.css' %}">
+<link rel="stylesheet" href="{% static 'css/animations.css' %}">
+<!-- bootstrap -->
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<script defer src="{% static 'js/bootstrap.bundle.min.js' %}"></script>

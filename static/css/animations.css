@@ -1,0 +1,79 @@
+@keyframes zoomOut {
+  from {
+    transform: scale(1.2);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.zoomOut {
+  animation: zoomOut 1s ease-in-out;
+  transform-origin: center center;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fadeInUp {
+  opacity: 1;
+  animation: fadeInUp 1.3s ease-out;
+  transform-origin: center bottom;
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-400px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.fadeInRight {
+  opacity: 1;
+  animation: fadeInRight 2.5s ease-out;
+  transform-origin: center bottom;
+}
+
+@keyframes hoverZoomOut {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.2);
+  }
+}
+.hoverZoomOut {
+  transform: scale(1);
+  cursor: pointer;
+}
+.hoverZoomOut:hover {
+  animation: hoverZoomOut 1s ease-in-out forwards;
+  transform-origin: center center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.fadeIn {
+  opacity: 1;
+  animation: fadeIn 1.5s ease-out;
+}
