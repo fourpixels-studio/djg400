@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap");
+/* btn-primary hover color - 091E1C */
 body{
     font-family:"Space Grotesk", sans-serif !important;
 }
@@ -145,6 +146,9 @@ body{
 }
 .rounded-4{
     border-radius: 14px;
+}
+.rounded-2{
+    border-radius: 10px;
 }
 
 .no-btn{
