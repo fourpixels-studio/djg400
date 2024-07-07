@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<div class="container-fluid p-4">
+  {% include 'partials/footer_player.html' %}
+
+  <div class="row gy-4 align-items-start jutify-content-evenly">
+    
+    <div class="col-sm-12 col-md-2">
+      {% include 'partials/sidebar.html' %}
+    </div>
+
+    <div class="col-sm-12 col-md-7">
+      {% include 'partials/middle.html' %}
+      {% include 'genres.html' %}
+    </div>
+
+    <div class="col-sm-12 col-md-3">
+      {% include 'partials/now_playing.html' %}
+    </div>
+
+  </div>
+  
+</div>
+{% endblock %}
