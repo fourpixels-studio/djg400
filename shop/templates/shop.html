@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+{% include 'shop_hero.html' %}
+<div class="container-fluid">
+    <div class="container my-5">
+        <div style="margin-top: -10rem;" class="text-center fadeInUp mb-5">
+            <h1 class="text-white display-4">Arap Trap's Merchandise Store</h1>
+            <p class="grey-2">Shop the latest collection of urban, modern, and fresh merchandise inspired by Arap Trap's unique style.</p>
+            <button class="btn btn-outline-light my-3 px-4 rounded-pill">Scroll down <i class="fa-solid fa-chevron-down"></i></button>
+        </div>
+        <section class="row gy-5 mt-5 justify-content-evenly align-items-center featurette">
+            <div class="col-md-5 col-sm-12 fadeIn">
+                <h2 class="featurette-heading fw-bold grey-1 lh-1">Latest release</h2>
+                <p class="lead grey-2 my-4">"Arap Trap" is the latest in the T-shirt series. This T-Shirt embodies the spirit of uptown vibes, evoking a world of sophistication, luxury, and refinement in the world of Hip Hop and Trap music.</p>
+                <a class="btn btn-outline-light rounded-pill btn-lg py-2 px-5">Coming soon</a>
+            </div>
+            <div class="col-md-5 col-sm-12">
+                <img 
+                srcset="
+                {% static 'img/homepage/merchandise_homepage.png' %} 2400w,
+                {% static 'img/homepage/merchandise_homepage.png' %} 1200w,
+                {% static 'img/homepage/merchandise_homepage.png' %}   600w"
+                sizes="(max-width: 2400px) 100vw, 2400px"
+                style="max-height: 80vh; width: 100%; object-fit: cover " 
+                src="{% static 'img/homepage/merchandise_homepage.png' %}" alt="" 
+                class="img-fluid rounded-4 img-fluid fadeInUp">
+            </div>
+        </section>
+        <hr class="grey-2" style="margin: 5rem 0;">
+    </div>
+
+    <section class="container px-3 my-5">
+        <div class="row g-4 my-5 py-5">
+            <div class="col-sm-12 col-md-4">
+                <div class="bg-grey rounded-2 p-4">
+                    <div class="feature-icon mt-5 d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                        <i class="fa-solid grey-1 fa-shirt fa-2xl"></i>
+                    </div>
+                    <h3 class="fs-2 grey-1 mt-3">T-Shirts</h3>
+                    <p class="grey-2">Features elements of urban culture and graffiti art.</p>
+                    <a href="#" class="nav-link p-0">Coming soon </a>
+                    <!-- <a href="#" class="nav-link p-0">Explore tshirts <span><i class="fa-solid fa-chevron-right"></i></span></a> -->
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-4">
+                <div class="bg-grey rounded-2 p-4">
+                    <div class="feature-icon mt-5 d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                        <i class="fa-solid grey-1 fa-vest fa-2xl"></i>
+                    </div>
+                    <h3 class="fs-2 grey-1 mt-3">Hoodies</h3>
+                    <p class="grey-2">Often incorporating elements of funk, hip-hop, and pop.</p>
+                    <a href="#" class="nav-link p-0">Coming soon </a>
+                    <!-- <a href="#" class="nav-link p-0">See colors <span><i class="fa-solid fa-chevron-right"></i></span></a> -->
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-4">
+                <div class="bg-grey rounded-2 p-4">
+                    <div class="feature-icon mt-5 d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                        <i class="fa-brands grey-1 fa-redhat fa-2xl"></i>
+                    </div>
+                    <h3 class="fs-2 grey-1 mt-3">Hats</h3>
+                    <p class="grey-2">Styles with jazz, funk, and vibrant colors.</p>
+                    <a href="#" class="nav-link p-0">Coming soon </a>
+                    <!-- <a href="#" class="nav-link p-0">View all <span><i class="fa-solid fa-chevron-right"></i></span></a> -->
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
