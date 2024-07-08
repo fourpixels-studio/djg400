@@ -1,42 +1,50 @@
 {% load static %}
 <div class="p-4 rounded-4 bg-grey">
-    <h3 class="grey-2">Now playing</h3>
+    <h3 class="grey-1">Now playing</h3>
     <img src="{% static 'img/mixes/hs08.jpg' %}" alt="" class="img-fluid my-3 fadeIn rounded-4">
     <div class="d-flex justify-content-between align-items-center">
-        <div>
-            <h5 class="grey-2">Highjacked</h5>
-            <small class="grey-3">Season 08 | 2024</small>
+        <div class="mt-2">
+            <h5 class="grey-1">Highjacked</h5>
+            <small class="grey-2">Season 08 | 2024</small>
         </div>
         <div>
             <i class="fa-solid fa-circle-pause text-primary grey-3 fa-2xl"></i>
         </div>
     </div>
     <hr class="grey-2">
-    <div class="row table-responsive">
-        <table class="table table-hover">
-            <tbody style="border-color: #2D2D2D;">
-                <tr>
-                    <td>
-                        <img class="recently-uploaded-cover" src="https://images.pexels.com/photos/17483848/pexels-photo-17483848/free-photo-of-an-artist-s-illustration-of-artificial-intelligence-ai-this-image-depicts-a-look-inside-how-ai-microchips-are-designed-it-was-created-by-champ-panupong-techawongthawon-as-part-of-the-v.png?auto=compress&cs=tinysrgb&w=800" alt="">
-                        <span style="font-size: .8rem;" class="ms-3 grey-2">The Shuffle</span>
-                    </td>
-                    <td style="font-size: .8rem;" class="grey-2">1:22:05</td>
-                </tr>
-                <tr>
-                    <td>
-                        <img class="recently-uploaded-cover" src="https://images.pexels.com/photos/17485679/pexels-photo-17485679/free-photo-of-an-artist-s-illustration-of-artificial-intelligence-ai-this-image-depicts-how-ai-could-be-used-in-the-field-of-sustainability-from-biodiversity-to-climate-it-was-created-by-nidia-dias.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
-                        <span style="font-size: .8rem;" class="ms-3 grey-2">Highjacked</span>
-                    </td>
-                <td style="font-size: .8rem;" class="grey-2">1:52:24</td>
-                </tr>
-                    <tr>
-                    <td>
-                        <img class="recently-uploaded-cover" src="https://images.pexels.com/photos/17483809/pexels-photo-17483809/free-photo-of-an-artist-s-illustration-of-artificial-intelligence-ai-this-image-represents-how-ai-accountability-is-a-strong-foundation-in-a-world-of-unpredictability-it-was-created-by-champ-panupon.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
-                        <span style="font-size: .8rem;" class="ms-3 grey-2">Mixconduct</span>
-                    </td>
-                    <td style="font-size: .8rem;" class="grey-2">1:02:42</td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="row mx-auto">
+        <div class="d-flex justify-content-between align-items-center flex-row px-0 mb-3">
+            <div class="d-flex flex-row">
+                <img class="recently-uploaded-cover" src="https://images.pexels.com/photos/17483848/pexels-photo-17483848/free-photo-of-an-artist-s-illustration-of-artificial-intelligence-ai-this-image-depicts-a-look-inside-how-ai-microchips-are-designed-it-was-created-by-champ-panupong-techawongthawon-as-part-of-the-v.png?auto=compress&cs=tinysrgb&w=800" alt="">
+                <div class="d-flex flex-column">
+                    <span style="font-size: .9rem;" class="hover-underline ms-3">The Shuffle</span>
+                    <span style="font-size: .7rem;" class="ms-3 grey-2">Vol 02</span>
+                </div>
+            </div>
+            <div style="font-size: .8rem;" class="grey-2">1:22:05</div>
+        </div>
+        <hr class="grey-2">
+        <div class="d-flex justify-content-between align-items-center flex-row px-0 mb-3">
+            <div class="d-flex flex-row">
+                <img class="recently-uploaded-cover" src="https://images.pexels.com/photos/17485679/pexels-photo-17485679/free-photo-of-an-artist-s-illustration-of-artificial-intelligence-ai-this-image-depicts-how-ai-could-be-used-in-the-field-of-sustainability-from-biodiversity-to-climate-it-was-created-by-nidia-dias.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
+                <div class="d-flex flex-column">
+                    <span style="font-size: .9rem;" class="hover-underline ms-3">Highjacked</span>
+                    <span style="font-size: .7rem;" class="ms-3 grey-2">Vol 08</span>
+                </div>
+            </div>
+            <div style="font-size: .8rem;" class="grey-2">1:52:24</div>
+        </div>
+        <hr class="grey-2">
+        <div class="d-flex justify-content-between align-items-center flex-row px-0 mb-3">
+            <div class="d-flex flex-row">
+                <img class="recently-uploaded-cover" src="https://images.pexels.com/photos/17483809/pexels-photo-17483809/free-photo-of-an-artist-s-illustration-of-artificial-intelligence-ai-this-image-represents-how-ai-accountability-is-a-strong-foundation-in-a-world-of-unpredictability-it-was-created-by-champ-panupon.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="">
+                <div class="d-flex flex-column">
+                    <span style="font-size: .9rem;" class="hover-underline ms-3">Mixconduct</span>
+                    <span style="font-size: .7rem;" class="ms-3 grey-2">Vol 01</span>
+                </div>
+            </div>
+            <div style="font-size: .8rem;" class="grey-2">1:02:42</div>
+        </div>
+        <hr class="grey-2">
     </div>
 </div>
