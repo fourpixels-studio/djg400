@@ -15,23 +15,23 @@
                 <div class="col-6 col-md-2 mb-3">
                     <h5 class="grey-1">Mixes</h5>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0">Audio</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0">Video</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0">Download</a></li>
+                        <li class="nav-item mb-2"><a href="{% url 'mix_list' %}" class="nav-link p-0">Audio</a></li>
+                        <li class="nav-item mb-2"><a href="{% url 'mix_list' %}" class="nav-link p-0">Video</a></li>
+                        <li class="nav-item mb-2"><a href="{% url 'mix_list' %}" class="nav-link p-0">Download</a></li>
                     </ul>
                 </div>
 
                 <div class="col-6 col-md-2 mb-3">
                     <h5 class="grey-1">Shop</h5>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="" class="nav-link p-0">Art</a></li>
-                        <li class="nav-item mb-2"><a href="" class="nav-link p-0">Merchandise</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0">Mix Covers</a></li>
+                        <li class="nav-item mb-2"><a href="{% url 'shop' %}" class="nav-link p-0">Art</a></li>
+                        <li class="nav-item mb-2"><a href="{% url 'shop' %}" class="nav-link p-0">Merchandise</a></li>
+                        <li class="nav-item mb-2"><a href="{% url 'shop' %}" class="nav-link p-0">Mix Covers</a></li>
                     </ul>
                 </div>
 
                 <div class="col-md-5 offset-md-1 mb-3">
-                    <form action="" method="POST" onsubmit="showSpinner()">
+                    <form action="{% url 'newsletter' %}" method="POST" onsubmit="showSpinner()">
                         {% csrf_token %}
                         <h5 class="grey-1">Subscribe to our newsletter</h5>
                         <p class="grey-2">Monthly digest of what's new and exciting from DJ G400</p>
