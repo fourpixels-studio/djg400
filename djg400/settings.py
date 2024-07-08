@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     "frontend",
     "mixes",
     "account",
+    "shop",
+    "newsletter",
 ]
 
 MIDDLEWARE = [
