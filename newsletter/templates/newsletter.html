@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<div class="container py-5">
+    {% if success %}
+    <div class="row justify-content-center">
+        <div class="col-sm-12 col md-8 col-lg-6">
+            <div class="bg-grey text-center rounded-4 p-5">
+                <div class="display-4"><i class="fa-solid fa-circle-check text-success"></i></div>
+                <h3 class="grey-1 my-3 display-6">You are now 400 miles above the rest!</h3>
+                <p class="grey-2">Thank you for subscribing to my newsletter. You’ll now receive the latest updates on new mixes, playlists, exclusive art, merchandise drops, and all the exciting news from the DJ G400 straight to your inbox.</p>
+                <a href="{% url 'index' %}" class="btn btn-primary px-5 btn-lg mt-3 w-100 rounded-pill">Done</a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="row align-items-center justify-content-center">
+        <div class="col-sm-12 col-md-10 col-lg-6">
+            <h3 class="grey-1 my-3">Subscribe to get notified when the next mix drops</h3>
+            <form action="{% url 'newsletter' %}" method="POST" onsubmit="showSpinner()">
+                {% csrf_token %}
+                <div class="form-floating">
+                    <input type="email" class="form-control" name="email" id="id_email" placeholder="Email">
+                    <label for="email">Email</label>
+                </div>
+                <button type="submit" class="btn submit-btn btn-primary my-3 w-100 m">Submit</button>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
