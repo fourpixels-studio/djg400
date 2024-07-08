@@ -1,96 +1,68 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block body %}
+{% include 'hero.html' %}
 <div class="container-fluid">
-    <header style="height: 100vh;" class="py-5 bg-dark">
-        <div class="container px-5">
-            <div class="row g-5 align-items-center fadeIn">
-                <div class="col-lg-6">
-                    <div class="my-5 mb-lg-0 text-center text-lg-start">
-                        <h1 class="display-1 fs-heading grey-1 lh-1 mb-3">400 Miles Above The Competition</h1>
-                        <div class="d-flex flex-column flex-lg-row align-items-center">
-                            <a class="btn btn-outline-light btn-lg mt-5 px-5 rounded-2" href="#!">Explore Mixes</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="text-center">
-                        <img src="{% static 'logo/logo.svg' %}" class="hero-logo">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
 
-    <section class="container rounded-4 bg-grey px-4 py-5 my-5 text-center">
-        <h1 class="display-4 fw-bold grey-1">DJ G400</h1>
-        <div class="col-lg-6 mx-auto">
-            <p class="lead mb-4">Welcome to the home of epic playlists, banging mixes, and dazzling outfits. Here, unmatched brilliance and innovation shine through superb mixes, playlists, and visuals, featuring elements of hip-hop, R&B, trap music, and street culture.</p>
-            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-            <button type="button" class="btn btn-outline-primary rounded-2 btn-lg px-5 me-sm-3">Shop merchandise</button>
+    <div class="container my-5">
+        <section class="row gy-5 featurette justify-content-evenly align-items-center">
+            <div class="col-md-5 col-sm-12 order-md-2 fadeIn">
+                <h2 class="display-6 fw-bold grey-1">Dazzling Outfits</h2>
+                <p class="lead grey-2 my-4">Shop the latest collection of urban, modern, and fresh merchandise inspired by Arap Trap's unique style.</p>
+                <a class="btn btn-outline-light rounded-pill btn-lg py-2 px-5" href="{% url 'shop' %}">Shop now</a>
             </div>
-        </div>
-        <div style="max-height: 30vh;">
-            <div class="container px-5 rounded-2">
-                <img src="{% static 'img/homepage/mixcloud-cover.jpg' %}" class="img-fluid rounded-2 mb-4" alt="Example image" loading="lazy">
+            <div class="col-md-5 col-sm-12 order-md-1">
+                <img style="max-height: 80vh; width: 100%; object-fit: cover" src="{% static 'img/homepage/merchandise_homepage.png' %}" alt="" class="img-fluid fadeIn">
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
-    <section class="py-4 container">
-        <hr class="grey-2">
-        <div class="row align-items-md-stretch">
-            <div class="col-md-6">
-                <div class="h-100 p-5 rounded-3">
-                    <h2 class="grey-1">Latest release</h2>
-                    <img src="{% static 'img/homepage/highjacked-07-lg.jpg' %}" alt="" class="img-fluid my-3 rounded-3">
-                    <p class="grey-2">Highjacked Season 07 is the latest in the Highjacked series. This mix embodies the spirit of uptown vibes, evoking a world of sophistication, luxury, and refinement in the world of Hip Hop and Trap music.</p>
-                    <button class="btn btn-outline-light" type="button">Play now</button>
+    <div class="container my-5">
+        <div class="bg-grey-gradient rounded-4 p-5">
+            <section class="row gy-5 justify-content-evenly align-items-center featurette">
+                <div class="col-md-5 col-sm-12 fadeIn">
+                    <h2 class="fw-bold display-6 grey-1">Latest release</h2>
+                    <p class="lead grey-2 my-4">Season 07 is the latest in the Highjacked series. This mix embodies the spirit of uptown vibes, evoking a world of sophistication, luxury, and refinement in the world of Hip Hop and Trap music.</p>
+                    <a href="{% url 'mix_list' %}" class="btn btn-outline-light rounded-pill btn-lg py-2 px-5">Open mixes</a>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="h-100 p-5 rounded-3">
-                    <h2 class="grey-1">The Shuffle Mix</h2>
-                    <img src="{% static 'img/homepage/ntv-04-lg.jpg' %}" alt="" class="img-fluid my-3 rounded-3">
-                    <p class="grey-2">Like how your music player does when its on 'shuffle' mode, this mix is all about random audio sets that i'll be releasing from time to time. Let's kick off with some lost throwback jams.</p>
-                    <button class="btn btn-outline-light" type="button">Listen now</button>
+                <div class="col-md-5 col-sm-12">
+                    <img style="max-height: 80vh; width: 100%; object-fit: cover" src="{% static 'img/homepage/latest_mix_homepage.jpg' %}" alt="" class="img-fluid rounded-2 img-fluid fadeIn">
                 </div>
-            </div>
+            </section>
         </div>
-        <hr class="grey-2">
-    </section>
-    <section class="container-fluid">
-        <img src="{% static 'img/homepage/g400-abstract.png' %}" alt="" class="img-fluid">
-    </section>
+    </div>
 
     <section class="container px-3 my-5">
-        <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-            <div class="feature col">
-                <hr class="grey-3">
-                <div class="feature-icon mt-5 d-inline-flex align-items-center justify-content-center fs-2 mb-3">
-                    <i class="fa-solid fa-record-vinyl fa-2xl"></i>
+        <div class="row g-4 my-5 py-5">
+            <div class="col-sm-12 col-md-4">
+                <div class="bg-grey-gradient rounded-2 p-4">
+                    <div class="feature-icon mt-5 d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                        <i class="fa-solid grey-1 fa-record-vinyl fa-2xl"></i>
+                    </div>
+                    <h3 class="fs-2 grey-1 mt-3">Hip Hop</h3>
+                    <p class="grey-2">Hip hop combines rhythmic spoken lyrics, DJing, breakdancing, and graffiti art, originating from urban culture and often addressing social issues.</p>
+                    <a href="#" class="nav-link p-0">Explore playlist <span><i class="fa-solid fa-chevron-right"></i></span></a>
                 </div>
-                <h3 class="fs-2 grey-2 mt-3">Hip Hop</h3>
-                <p class="grey-3">Hip hop combines rhythmic spoken lyrics, DJing, breakdancing, and graffiti art, originating from urban culture and often addressing social issues.</p>
-                <a href="#" class="nav-link p-0">Explore playlist <span><i class="fa-solid fa-chevron-right"></i></span></a>
             </div>
-            <div class="feature col">
-                <hr class="grey-3">
-                <div class="feature-icon mt-5 d-inline-flex align-items-center justify-content-center fs-2 mb-3">
-                    <i class="fa-solid fa-icons fa-2xl"></i>
+            <div class="col-sm-12 col-md-4">
+                <div class="bg-grey-gradient rounded-2 p-4">
+                    <div class="feature-icon mt-5 d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                        <i class="fa-solid grey-1 fa-icons fa-2xl"></i>
+                    </div>
+                    <h3 class="fs-2 grey-1 mt-3">RnB</h3>
+                    <p class="grey-2">R&B (Rythm and Blues) blends soulful vocals, smooth melodies, and rhythmic beats, often incorporating elements of funk, hip-hop, and pop.</p>
+                    <a href="#" class="nav-link p-0">Explore playlist <span><i class="fa-solid fa-chevron-right"></i></span></a>
                 </div>
-                <h3 class="fs-2 grey-2 mt-3">RnB</h3>
-                <p class="grey-3">R&B (Rythm and Blues) blends soulful vocals, smooth melodies, and rhythmic beats, often incorporating elements of funk, hip-hop, and pop.</p>
-                <a href="#" class="nav-link p-0">Explore playlist <span><i class="fa-solid fa-chevron-right"></i></span></a>
             </div>
-            <div class="feature col">
-                <hr class="grey-3">
-                <div class="feature-icon mt-5 d-inline-flex align-items-center justify-content-center fs-2 mb-3">
-                    <i class="fa-solid fa-earth-africa fa-2xl"></i>
+            <div class="col-sm-12 col-md-4">
+                <div class="bg-grey-gradient rounded-2 p-4">
+                    <div class="feature-icon mt-5 d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                        <i class="fa-solid grey-1 fa-earth-africa fa-2xl"></i>
+                    </div>
+                    <h3 class="fs-2 grey-1 mt-3">Afrobeats</h3>
+                    <p class="grey-2">Afrobeats merges West African musical styles with jazz, funk, and hip-hop, featuring upbeat rhythms, catchy melodies, and vibrant instrumentation.</p>
+                    <a href="#" class="nav-link p-0">Explore playlist <span><i class="fa-solid fa-chevron-right"></i></span></a>
                 </div>
-                <h3 class="fs-2 grey-2 mt-3">Afrobeats</h3>
-                <p class="grey-3">Afrobeats merges West African musical styles with jazz, funk, and hip-hop, featuring upbeat rhythms, catchy melodies, and vibrant instrumentation.</p>
-                <a href="#" class="nav-link p-0">Explore playlist <span><i class="fa-solid fa-chevron-right"></i></span></a>
             </div>
         </div>
     </section>
@@ -99,7 +71,7 @@
         <div class="row rounded-4  bg-grey p-5 justify-content-center text-center">
             <div class="col-sm-10 col-md-8">
                 <h3 class="grey-2 display-4 text-center">Subscribe to get notified when the next mix drops</h3>
-                <button class="btn btn-primary btn-lg mt-4 px-5">Subscribe</button>
+                <a href="{% url 'newsletter' %}" class="btn btn-primary btn-lg mt-4 px-5">Subscribe</a>
             </div>
         </div>
     </div>
