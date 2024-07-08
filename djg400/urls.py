@@ -26,6 +26,7 @@ urlpatterns = [
     path("mixes/", include("mixes.urls")),
     path("account/", include("account.urls")),
     path("shop/", include("shop.urls")),
+    path("newsletter/", include("newsletter.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Configure admin titles
