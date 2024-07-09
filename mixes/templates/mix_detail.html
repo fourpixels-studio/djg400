@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<div class="container p-4">
+  <div class="row justify-content-evenly g-3">
+    <div class="col-sm-12 col-lg-6 position-relative fadeIn">
+      <a href="{% url 'mix_list' %}" class="back-btn text-white position-absolute"><i class="fa-solid fa-xl fa-circle-arrow-left"></i></a>
+      <img loading="lazy" src="{% static 'img/mixes/hs08.jpg' %}" alt="" class="img-fluid rounded-4">
+      <div class="border border-1 my-4"></div>
+    </div>
+    <div class="col-sm-12 col-lg-5 fadeInUp">
+      <div class="d-flex flex-row align-items-center">
+        <div class="h1 me-3"><i class="fa-solid hover fa-circle-pause fa-2xl text-white"></i></div>
+        <div>
+          <h1 class="text-white">Highjacked</h1>
+          <h4 class="grey-1">Season 08 - 2024</h4>
+        </div>
+      </div>
+      <p class="grey-2 my-4">Season 07 is the latest in the Highjacked series. This mix embodies the spirit of uptown vibes, evoking a world of sophistication, luxury, and refinement in the world of Hip Hop and Trap music.</p>
+      <div class="flex-row d-flex mt-5">
+        <i class="fa-solid hover fa-heart grey-1 me-2 fa-xl"></i>
+        <i class="fa-solid hover fa-arrow-up-from-bracket grey-1 fa-xl"></i>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
