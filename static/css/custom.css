@@ -226,3 +226,15 @@ body{
 .bg-gradientToDown {
     background: linear-gradient(180deg, #141414, #00000000); /* Example gradient colors */
 }
+.no-link{
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+.back-btn{
+    background-color: #00000073;
+    padding: .8rem .8rem;
+    border-radius: 50%;
+    margin-left: 1rem;
+    margin-top: 1rem;
+}
