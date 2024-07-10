@@ -231,10 +231,18 @@ body{
     color: inherit;
     cursor: pointer;
 }
-.back-btn{
+.back-btn {
     background-color: #00000073;
     padding: .8rem .8rem;
     border-radius: 50%;
     margin-left: 1rem;
     margin-top: 1rem;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.back-btn:hover i{
+    transform: scale(2.1);
+    background-color: none;
+    transition: transform 0.3s ease-in-out;
 }
