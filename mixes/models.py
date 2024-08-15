@@ -43,7 +43,12 @@ class Album(models.Model):
         return reverse("filtered_albums", kwargs={
             "slug": self.slug,
         })
-
+        
+    @property
+    def get_hit_count(self):
+        if self.hit_count_generic.exists():
+            return self.hit_count_generic.first().hits
+        return 0
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
@@ -96,6 +101,12 @@ class Genre(models.Model):
         return reverse("filtered_genres", kwargs={
             "slug": self.slug,
         })
+        
+    @property
+    def get_hit_count(self):
+        if self.hit_count_generic.exists():
+            return self.hit_count_generic.first().hits
+        return 0
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -212,12 +223,6 @@ class Mix(models.Model):
             return self.landscape_cover.url
         return static('landscape_cover.png')
 
-    @property
-    def get_landscape_thumbnail(self):
-        if self.meta_thumbnail:
-            return self.meta_thumbnail.url
-        return static('landscape_cover.png')
-
     # @property
     # def get_similar_mixes(self):
     #     if self.similar_mixes:
@@ -240,6 +245,18 @@ class Mix(models.Model):
         if self.release_date:
             return self.release_date.year
         return None
+        
+    @property
+    def get_landscape_thumbnail(self):
+        if self.meta_thumbnail:
+            return self.meta_thumbnail.url
+        return static('landscape_cover.png')
+        
+    @property
+    def get_hit_count(self):
+        if self.hit_count_generic.exists():
+            return self.hit_count_generic.first().hits
+        return 0
 
     def save(self, *args, **kwargs):
         if not self.slug:
