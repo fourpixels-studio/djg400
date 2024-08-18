@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container-fluid p-4">
+  {% include 'components/footer_player.html' %}
+  <div class="container-fluid">
+    <figure class="figure-card bg-black rounded-4">
+      <img loading="lazy" src="{{ cover_image }}" alt="" class="img-fluid fadeIn rounded-4" style="height: 40vh; width: 100%; object-fit: cover">
+      <figcaption>
+        <p class="text-white fadeInUp">{{ title_tag }}</p>
+    </figure>
+  </div>
+  <div class="row gy-4 align-items-start jutify-content-evenly">
+
+    <div class="col-sm-12 col-lg-7">
+      {% include 'partials/filtered_middle.html' %}
+      {% include 'genres.html' %}
+      {% include 'albums.html' %}
+    </div>
+
+    <div class="col-sm-12 col-lg-5">
+      {% include 'partials/now_playing.html' %}
+    </div>
+    
+  </div>
+</div>
+{% endblock %}

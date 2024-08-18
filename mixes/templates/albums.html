@@ -1,14 +1,13 @@
 <div class="container p-0 m-0">
     <div class="row my-2 p-0 m-0">
         <div class="d-flex my-3 justify-content-between">
-            <h4 class="grey-1">Pick genre</h4>
-            <a href="" class="p-0 nav-link hover">See all</a>
+            <h4 class="grey-1">Pick album</h4>
         </div>
     </div>
     <ul class="row row-cols-auto g-3 list-unstyled">
-        {% for genre in genres %}
+        {% for album in albums %}
         <li class="col">
-            <div class="genre-card"><a href="{{ genre.get_url }}" class="no-btn">{{ genre.name }}</a></div>
+            <div class="genre-card"><a href="{{ album.get_url }}" class="no-link">{{ album.name }}</a></div>
         </li>
         {% endfor %}
     </ul>
