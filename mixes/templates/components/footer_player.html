@@ -1,0 +1,60 @@
+{% load static %}
+<div class="fixed-bottom">
+    <!-- large player -->
+    <div class="container-fluid py-3 player-lg" style="backdrop-filter: blur(15px); background-color: #141414de">
+        <div class="row align-items-center">
+            <div class="col-5">
+                <div class="d-flex align-items-center flex-row">
+                    <i style="font-size: 2.5rem;" class="fa-solid me-3 hover fa-circle-pause text-primary"></i>
+                    <img src="{{ latest_mix.get_square_thumbnail }}" class="recently-uploaded-cover">
+                    <div class="ms-3">
+                        <span class="grey-1">
+                            <a class="no-link hover-underline" href="{{ latest_mix.get_url }}">
+                                {{ latest_mix.title }}
+                            </a>
+                        </span> <br>
+                        <span class="grey-2 small">{{ latest_mix.album.name }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                <i class="fa-solid hover fa-heart grey-1 me-2 f fa-xl"></i>
+                <i class="fa-solid hover fa-arrow-up-from-bracket grey-1 me-2 f fa-xl"></i>
+                <i class="fa-solid hover fa-arrow-rotate-left grey-1 me-2 f fa-xl"></i>
+                <i class="fa-solid hover fa-angles-left grey-1 me-2 fa-xl"></i>
+                <i class="fa-solid hover fa-angles-right grey-1 fa-xl"></i>
+            </div>
+            <div class="col-4">
+                <hr style="border: 2px solid #B7B7B7;">
+            </div>
+            <div class="col-1">
+                <i class="fa-solid hover fa-volume-high grey-1 fa-xl"></i>
+            </div>
+        </div>
+    </div>
+    <!-- small player -->
+    <div class="container-fluid player-sm py-3" style="backdrop-filter: blur(15px); background-color: #141414de">
+        <div class="row justify-content-evenly align-items-center">
+            <div class="col-1">
+                <i class="fa-solid hover fa-circle-pause fa-2xl text-primary"></i>
+            </div>
+            <div class="col-8 pe-0">
+                <div class="d-flex flex-row align-items-center justify-content-between">
+                    <span class="grey-1 mb-2">
+                        <a class="no-link hover-underline" href="{{ latest_mix.get_url }}">
+                            {{ latest_mix.title }}
+                        </a>
+                    </span>
+                    <span style="font-size: .7rem;" class="grey-2">-11:44</span>
+                </div>
+                <div class="border border-1"></div>
+            </div>
+            <div class="col-2 text-center">
+                <div class="flex-row d-flex">
+                    <i class="fa-solid hover fa-heart grey-1 me-2 fa-xl"></i>
+                    <i class="fa-solid hover fa-arrow-up-from-bracket grey-1 fa-xl"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

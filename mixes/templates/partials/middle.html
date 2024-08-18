@@ -2,9 +2,9 @@
 <div class="container p-0 m-0">
     <figure class="figure-card bg-black rounded-4">
         <img loading="lazy" src="{% static 'landscape_cover.png' %}" alt="" class="img-fluid fadeIn rounded-4">
-        <!--<img loading="lazy" src="{{ latest_mix.get_landscape_thumbnail }}" alt="" class="img-fluid fadeIn rounded-4">-->
         <figcaption>
-            <h2 class="text-white fadeInUp">DJ G400 Mixes</h2>
+            <p class="text-white fadeInUp">Latest release</p>
+            <a href="{{ latest_mix.get_url }}" class="btn btn-outline-light px-2 rounded-pill fadeInUp">Play now</a>
         </figcaption>
     </figure>
     <div class="row my-2 p-0 m-0">

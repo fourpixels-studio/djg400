@@ -1,0 +1,13 @@
+<tr>
+    <td>
+        <img class="recently-uploaded-cover" src="{{ mix.get_square_thumbnail }}" alt="">
+        <a href="{{ mix.get_url }}" class="ms-3 hover-underline grey-1">{{ mix.get_title }}</a>
+    </td>
+    <td class="grey-2 pt-3">
+        <a href="{{ mix.genre.get_url }}" class="no-link">{{ mix.genre.name }}</a>
+    </td>
+    <td class="grey-2 pt-3">
+        <a href="{{ mix.get_url }}" class="ms-3 no-link grey-1"><i class="fa-solid fa-play hover"></i></a>
+        <small class="no-link grey-1">{{ mix.get_hit_count }}</small>
+    </td>
+</tr>
