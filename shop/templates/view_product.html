@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container mt-4">
+    <div class="row align-items-start justify-content-evenly">
+        <div class="col-sm-12 col-lg-6 px-0 position-relative">
+            <a href="{% url 'shop' %}" class="back-btn text-white position-absolute"><i class="fa-solid fa-xl fa-circle-arrow-left"></i></a>
+            <img class="img-fluid w-100" src="{{ product.img_lg.url }}" loading="lazy" >
+        </div>
+
+        <div class="col-sm-12 col-lg-6">
+            <div class="d-flex flex-column">
+                <p class="grey-1">Home / {{ product.type.name }}</p>
+                <h1 class="grey-1">{{ product.name }}</h1>
+                <h4 class="grey-1">Ksh {{ product.price }}</h4>
+                <a href="" class="btn my-3 btn-primary w-100 btn-lg rounded-2">Add To Cart</a>
+                <h3 class="grey-2">Product Details</h3>
+                <p class="grey-1">{{ product.description }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
