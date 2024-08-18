@@ -43,12 +43,7 @@ class Album(models.Model):
         return reverse("filtered_albums", kwargs={
             "slug": self.slug,
         })
-        
-    @property
-    def get_hit_count(self):
-        if self.hit_count_generic.exists():
-            return self.hit_count_generic.first().hits
-        return 0
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
@@ -101,12 +96,6 @@ class Genre(models.Model):
         return reverse("filtered_genres", kwargs={
             "slug": self.slug,
         })
-        
-    @property
-    def get_hit_count(self):
-        if self.hit_count_generic.exists():
-            return self.hit_count_generic.first().hits
-        return 0
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -154,6 +143,7 @@ class Mix(models.Model):
     genre = models.ForeignKey(
         Genre, on_delete=models.CASCADE, blank=True, null=True)
     stream_link = models.TextField(blank=True, null=True)
+    youtube_link = models.TextField(blank=True, null=True)
     is_popular = models.BooleanField(default=False, blank=True, null=True)
     featured_artists = models.TextField(blank=True, null=True)
     similar_mixes = models.CharField(max_length=100, blank=True, null=True)
@@ -165,6 +155,7 @@ class Mix(models.Model):
         default=0, blank=True, null=True)
     like_count = models.PositiveIntegerField(default=0, blank=True, null=True)
     slug = models.SlugField(unique=True, null=True, blank=True)
+    video = models.FileField(null=True, blank=True)
     hit_count_generic = GenericRelation(
         HitCount, object_id_field='object_pk', related_query_name='hit_count_generic_relation')
 
@@ -200,6 +191,12 @@ class Mix(models.Model):
         })
 
     @property
+    def get_video_url(self):
+        return reverse("video_mix_detail", kwargs={
+            "slug": self.slug,
+        })
+
+    @property
     def get_square_cover(self):
         if self.square_cover:
             return self.square_cover.url
@@ -221,6 +218,12 @@ class Mix(models.Model):
     def get_landscape_cover(self):
         if self.landscape_cover:
             return self.landscape_cover.url
+        return static('landscape_cover.png')
+
+    @property
+    def get_landscape_thumbnail(self):
+        if self.meta_thumbnail:
+            return self.meta_thumbnail.url
         return static('landscape_cover.png')
 
     # @property
@@ -245,13 +248,7 @@ class Mix(models.Model):
         if self.release_date:
             return self.release_date.year
         return None
-        
-    @property
-    def get_landscape_thumbnail(self):
-        if self.meta_thumbnail:
-            return self.meta_thumbnail.url
-        return static('landscape_cover.png')
-        
+
     @property
     def get_hit_count(self):
         if self.hit_count_generic.exists():
