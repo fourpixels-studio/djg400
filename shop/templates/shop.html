@@ -7,13 +7,12 @@
         <div style="margin-top: -10rem;" class="text-center fadeInUp mb-5">
             <h1 class="text-white display-4">Arap Trap's Merchandise Store</h1>
             <p class="grey-2">Shop the latest collection of urban, modern, and fresh merchandise inspired by Arap Trap's unique style.</p>
-            <button class="btn btn-outline-light my-3 px-4 rounded-pill">Scroll down <i class="fa-solid fa-chevron-down"></i></button>
         </div>
         <section class="row gy-5 mt-5 justify-content-evenly align-items-center featurette">
             <div class="col-md-5 col-sm-12 fadeIn">
                 <h2 class="featurette-heading fw-bold grey-1 lh-1">Latest release</h2>
                 <p class="lead grey-2 my-4">"Arap Trap" is the latest in the T-shirt series. This T-Shirt embodies the spirit of uptown vibes, evoking a world of sophistication, luxury, and refinement in the world of Hip Hop and Trap music.</p>
-                <a class="btn btn-outline-light rounded-pill btn-lg py-2 px-5">Coming soon</a>
+                <a href="{{ latest_product.get_url }}" class="btn btn-outline-light rounded-pill btn-lg py-2 px-5">View</a>
             </div>
             <div class="col-md-5 col-sm-12">
                 <img 
@@ -27,7 +26,20 @@
                 class="img-fluid rounded-4 img-fluid fadeInUp">
             </div>
         </section>
-        <hr class="grey-2" style="margin: 5rem 0;">
+        <h1 class="grey-1">Shop</h1>
+        <section class="row mt-5 row-cols-2 g-3 justify-content-start align-items-center">
+            {% for product in products %}
+            <div class="col-sm-6 col-lg-3">
+                <div class="bg-grey p-3 rounded-4 d-flex flex-column">
+                    <img src="{{ product.img_small.url }}" alt="{{ product.name }}'s Image" class="img-fluid" >
+                    <div class="mt-2">
+                        <a href="{{ product.get_url }}" class="grey-1 hover-underline h6">{{ product.name }}</a>
+                        <p class="grey-2 mb-0">Ksh {{ product.price }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </section>
     </div>
 
     <section class="container px-3 my-5">
