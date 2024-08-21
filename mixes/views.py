@@ -71,7 +71,7 @@ def filtered_genres(request, slug):
     return render(request, 'filtered_mixes.html', context)
 
 
-def mix_detail(request, slug):
+def audio_mix_detail(request, slug):
     mix = get_object_or_404(Mix, slug=slug)
     meta_description = f"Volume {mix.episode_number} in the {mix.album.name} series. This mix embodies the spirit of uptown vibes, evoking a world of sophistication, luxury, and refinement in the world of {mix.genre.name} music."
     meta_keywords = f"{mix.album.name}, {mix.genre.name}, {mix.title}, 400 miles above the competition, arap trap, 4hunnid, g400, highjacked, hood love, trap, hip hop, rnb, rap, quality mixes, hd mixes, 1080p mixes"
@@ -85,9 +85,10 @@ def mix_detail(request, slug):
         'meta_description': meta_description,
         'meta_keywords': meta_keywords,
         'meta_thumbnail': meta_thumbnail,
+        'products': Product.objects.all(),
     }
     update_views(request, mix)
-    return render(request, 'mix_detail.html', context)
+    return render(request, 'audio_mix_detail.html', context)
 
 
 def video_mix_detail(request, slug):
@@ -107,4 +108,4 @@ def video_mix_detail(request, slug):
         'products': Product.objects.all(),
     }
     update_views(request, mix)
-    return render(request, 'video_mix_detail.html', context)
+    return render(request, 'audio_mix_detail.html', context)
