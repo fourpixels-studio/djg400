@@ -1,0 +1,10 @@
+{% load hitcount_tags %}
+<div class="bg-grey p-3 rounded-4">
+    <div class="d-flex flex-row gap-2">
+        <small class="grey-1">{% get_hit_count for mix %} views</small>
+        <small class="grey-1">{{ mix.release_date }}</small>
+        <small class="grey-2">#{{ mix.genre.name }}</small>
+        <small class="grey-2">#{{ mix.album.name }}</small>
+    </div>
+    <p class="grey-2 small mb-0">{{ mix.album.description }}</p>
+</div>
