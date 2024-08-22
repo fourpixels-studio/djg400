@@ -4,6 +4,7 @@ from django.db.models import Q
 
 def search_results(request):
     search_context = {}
+    random_mixes = Mix.objects.order_by('?')[:10]
     if request.GET:
         query = request.GET.get("q")
         if query:
@@ -32,6 +33,7 @@ def search_results(request):
             "results": results,
             "query": query,
             "num_results": results.count(),
+            'random_mixes': random_mixes,
         }
 
     return search_context
