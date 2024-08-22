@@ -109,3 +109,12 @@ def video_mix_detail(request, slug):
     }
     update_views(request, mix)
     return render(request, 'audio_mix_detail.html', context)
+
+def search_mixes(request):
+    meta_description = f'Showing "{request.GET.get("q")}" results in DJ G400. {seo.meta_description}'
+    context = {
+        "title_tag": f'"{request.GET.get("q")}" results',
+        'meta_description': meta_description,
+        'meta_keywords': seo.meta_keywords,
+    }
+    return render(request, 'search_mixes.html', context)
