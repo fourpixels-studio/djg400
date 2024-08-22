@@ -1,0 +1,10 @@
+.product-component{
+    border-radius: 14px;
+    padding: 8px;
+    background-color: #141414;
+}
+.product-component img{
+    height: 236px; 
+    width: 100%; 
+    object-fit: cover;
+}
