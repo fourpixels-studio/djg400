@@ -226,10 +226,15 @@ body{
 .bg-gradientToDown {
     background: linear-gradient(180deg, #141414, #00000000); /* Example gradient colors */
 }
+.bg-gradientToUp {
+    background: linear-gradient(0deg, #141414, #00000000); /* Example gradient colors */
+}
 .no-link{
     text-decoration: none;
     color: inherit;
     cursor: pointer;
+    padding: 0;
+    margin: 0;
 }
 .back-btn {
     background-color: #00000073;
@@ -240,9 +245,24 @@ body{
     cursor: pointer;
     transition: transform 0.3s ease-in-out;
 }
+.back-btn i {
+    transition: transform 0.3s ease-in-out;
+}
 
 .back-btn:hover i{
     transform: scale(2.1);
     background-color: none;
     transition: transform 0.3s ease-in-out;
+}
+.fw-300{
+    font-weight: 300 !important;
+}
+.fw-400{
+    font-weight: 400 !important;
+}
+.fw-500{
+    font-weight: 500 !important;
+}
+.fw-700{
+    font-weight: 700 !important;
 }
