@@ -8,7 +8,7 @@
     </head>
     <body style="background-color: #000; color: #fff" class="text-white">
         {% include "navbar.html" %}
-        <div style="padding-top: 4.7rem;">
+        <div style="padding-top: 4rem;">
             {% include "messages.html" %}
             {% block body %} {% endblock %}
         </div>
@@ -17,5 +17,6 @@
         {% include "modals/loading_spinner.html" %}
         {% include "modals/search.html" %}
         <script src="{% static 'js/footerYear.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
     </body>
 </html>
