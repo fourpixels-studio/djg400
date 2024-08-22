@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load hitcount_tags %}
+{% load custom_filters %}
+<div class="container-fluid p-4">
+    <div class="row gy-4 align-items-start jutify-content-evenly">
+        <div class="col-sm-12 col-lg-2">
+        {% include 'components/sidebar.html' %}
+        </div>
+        <div class="col-sm-12 col-lg-10">
+            <div class="container p-0 m-0">
+                <div class="row p-0 m-0">
+                    <div class="p-3 rounded-4 bg-gradientToDown">
+                        {% for mix in results %}
+                        <a href="{{ mix.get_url }}" class="no-link">
+                            <div class="d-flex flex-row align-items-start gap-3 mb-3">
+                                <img src="{{ mix.get_landscape_thumbnail }}" style="width: 50%; height: auto; object-fit: cover" class="img-fluid rounded-4">
+                                <div>
+                                    <h6 class="grey-1 hover-underline mb-0">{{ mix.get_title }}</h6>
+                                    <small style="font-size: .8rem;" class="grey-2">{% get_hit_count for mix %} views &#xb7; {{ mix.release_date|round_timesince }} ago</small> 
+                                    <p class="grey-2 small my-2">Genre: {{ mix.genre.name }}</p>
+                                    <small style="font-size: .7rem;" class="grey-2">{{ mix.album.description|truncatewords:8 }}</small> <br>
+                                    {% if mix.youtube_link %}
+                                    <p class="badge grey-2 rounded-1 text-dark bg-light mt-2">Video</p>
+                                    {% elif mix.stream_link %}
+                                    <p class="badge grey-2 rounded-1 text-dark bg-light mt-2">Audio</p>
+                                    {% else %}
+                                    <p class="badge grey-2 rounded-1 text-dark bg-light mt-2">Link coming soon</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
