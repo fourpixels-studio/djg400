@@ -1,90 +1,54 @@
 from django.db import models
-from django.utils.text import slugify
-from django.urls import reverse
 
-class Album(models.Model):
-    name = models.CharField(max_length=100, blank=True, null=True)
-    slug = models.SlugField(unique=True, null=True, blank=True)
-    
-    def __str__(self):
-        return self.name
-    
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
-    
-class Genre(models.Model):
-    name = models.CharField(max_length=100, blank=True, null=True)
-    slug = models.SlugField(unique=True, null=True, blank=True)
-    
-    def __str__(self):
-        return self.name
-    
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
 
-class Mix(models.Model):
-    title = models.CharField(max_length=200, blank=True, null=True)
-    cover = models.ImageField(upload_to="mix-covers/", blank=True, null=True)
-    thumbnail = models.ImageField(upload_to="mix-covers/", blank=True, null=True)
-    portrait_cover = models.ImageField(upload_to="mix-covers/", blank=True, null=True)
-    small_cover = models.ImageField(upload_to="mix-covers/", blank=True, null=True)
-    medium_cover = models.ImageField(upload_to="mix-covers/", blank=True, null=True)
-    large_cover = models.ImageField(upload_to="mix-covers/", blank=True, null=True)
-    episode_number = models.CharField(max_length=3, blank=True, null=True)
-    color = models.CharField(max_length=15, blank=True, null=True)
-    album = models.ForeignKey(Album, on_delete=models.CASCADE, blank=True, null=True)
-    genre = models.ForeignKey(Genre, on_delete=models.CASCADE, blank=True, null=True)
-    stream_link = models.TextField(blank=True, null=True)
-    is_popular = models.BooleanField(default=False, blank=True, null=True)
-    featured_artists = models.TextField(blank=True, null=True)
-    similar_mixes = models.TextField(blank=True, null=True)
-    release_date = models.DateField(blank=True, null=True)
-    play_count = models.PositiveIntegerField(default=0, blank=True, null=True)
-    download_count = models.PositiveIntegerField(default=0, blank=True, null=True)
-    reshare_count = models.PositiveIntegerField(default=0, blank=True, null=True)
-    like_count = models.PositiveIntegerField(default=0, blank=True, null=True)
-    slug = models.SlugField(unique=True, null=True, blank=True)
-    
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
-        super().save(*args, **kwargs)
-        
-    def __str__(self):
-        return self.title
-    
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
-        super().save(*args, **kwargs)
-        
-    @property
-    def get_mix_url(self):
-        return f"www.djg400.com/{self.slug}/"
-    
-    @property
-    def get_url(self):
-        return reverse("mix_detail", kwargs={
-            "slug": self.slug,
-        })
+class About(models.Model):
+    hero_image = models.FileField(
+        upload_to="about/", blank=True, null=True)
+    hero_tagline = models.CharField(max_length=80, blank=True, null=True)
+    hero_paragraph = models.TextField(blank=True, null=True)
 
-class Playlist(models.Model):
-    title = models.CharField(max_length=200, blank=True, null=True)
-    episode = models.CharField(max_length=3, blank=True, null=True)
-    color = models.CharField(max_length=15, blank=True, null=True)
-    album = models.ForeignKey(Album, on_delete=models.CASCADE, blank=True, null=True)
-    genre = models.ForeignKey(Genre, on_delete=models.CASCADE, blank=True, null=True)
-    stream_link = models.TextField(blank=True, null=True)
-    is_popular = models.BooleanField(default=False, blank=True, null=True)
-    featured_artists = models.TextField(blank=True, null=True)
-    similar_mixes = models.TextField(blank=True, null=True)
-    similar_playlists = models.TextField(blank=True, null=True)
-    release_date = models.DateField(blank=True, null=True)
-    slug = models.SlugField(unique=True, null=True, blank=True)
-    
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
-        super().save(*args, **kwargs)
-        
+    wide_image = models.FileField(
+        upload_to="about/", blank=True, null=True)
+
+    arap_trap_2 = models.FileField(
+        upload_to="about/", blank=True, null=True)
+
+    who_is_djg400_title = models.CharField(
+        max_length=80, blank=True, null=True)
+    who_is_djg400_paragraph = models.TextField(blank=True, null=True)
+    who_is_djg400_image = models.FileField(
+        upload_to="about/", blank=True, null=True)
+
+    musical_style_title = models.CharField(
+        max_length=80, blank=True, null=True)
+    musical_style_paragraph = models.TextField(blank=True, null=True)
+    musical_style_image = models.FileField(
+        upload_to="about/", blank=True, null=True)
+
+    performances_title = models.CharField(
+        max_length=80, blank=True, null=True)
+    performances_paragraph = models.TextField(blank=True, null=True)
+    performances_image = models.FileField(
+        upload_to="about/", blank=True, null=True)
+
+    visuals_title = models.CharField(
+        max_length=80, blank=True, null=True)
+    visuals_paragraph = models.TextField(blank=True, null=True)
+    visuals_image = models.FileField(
+        upload_to="about/", blank=True, null=True)
+
+    discography_title = models.CharField(
+        max_length=80, blank=True, null=True)
+    discography_paragraph = models.TextField(blank=True, null=True)
+    discography_image = models.FileField(
+        upload_to="about/", blank=True, null=True)
+
+    contact_title = models.CharField(
+        max_length=80, blank=True, null=True)
+    contact_paragraph = models.TextField(blank=True, null=True)
+
+    arap_trap_footer = models.FileField(
+        upload_to="about/", blank=True, null=True)
+
     def __str__(self):
-        return self.title
+        return str("About")
