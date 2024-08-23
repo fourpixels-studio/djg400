@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block body %} 
+{% load static %} 
+<main class="container-fluid">
+    <img src="{{ about.hero_image.url }}" alt="" class="fadeInUp img-fluid mt-sm-5 mt-lg-0" style="margin-bottom: -8rem">
+    <div class="container my-5">
+        <div class="row justify-content-center text-center mt-5 pt-5">
+            <div class="col-sm-12 col-lg-7 fadeInUp">
+                <h1 class="display-5 grey-1 mt-5 mt-lg-0 mb-3">{{ about.hero_tagline }}</h1>
+                <p class="grey-2">{{ about.hero_paragraph }}</p>
+            </div>
+        </div>
+
+        <img src="{{ about.wide_image.url }}" alt="" class="img-fluid my-4 fadeInUp">
+
+        <img src="{{ about.arap_trap_2.url }}" alt="" class="img-fluid fadeInUp" style="opacity: .9; margin-top: -10rem; margin-bottom: -7rem">
+
+        <div class="row g-4 justify-content-between my-4 align-items-center">
+            <div class="col-sm-12 col-lg-6 mt-5 mt-lg-0 fadeInUp">
+                <h3 class="grey-1 mt-5 mt-lg-0">{{ about.who_is_djg400_title }}</h3>
+                <p class="grey-2 lead">{{ about.who_is_djg400_paragraph }}</p>
+            </div>
+            <div class="col-sm-12 col-lg-5">
+                <img src="{{ about.who_is_djg400_image.url }}" alt="" class="w-100 img-fluid rounded-4 fadeInUp">
+            </div>
+        </div>
+        <div class="row g-4 justify-content-between my-4 align-items-center">
+            <div class="col-sm-12 col-lg-6 mt-5 order-md-2 fadeInUp">
+                <h3 class="grey-1">{{ about.musical_style_title }}</h3>
+                <p class="grey-2 lead">{{ about.musical_style_paragraph }}</p>
+            </div>
+            <div class="col-sm-12 col-lg-5 order-md-1">
+                <img src="{{ about.musical_style_image.url }}" alt="" class="w-100 img-fluid rounded-4 fadeInUp">
+            </div>
+        </div>
+        <div class="row g-4 justify-content-between my-4 align-items-center">
+            <div class="col-sm-12 col-lg-6 mt-5 fadeInUp">
+                <h3 class="grey-1">{{ about.performances_title }}</h3>
+                <p class="grey-2 lead">{{ about.performances_paragraph }}</p>
+            </div>
+            <div class="col-sm-12 col-lg-5">
+                <img src="{{ about.performances_image.url }}" alt="" class="w-100 img-fluid rounded-4 fadeInUp">
+            </div>
+        </div>
+        <div class="row g-4 justify-content-between my-4 align-items-center">
+            <div class="col-sm-12 col-lg-6 mt-5 order-md-2 fadeInUp">
+                <h3 class="grey-1">{{ about.visuals_title }}</h3>
+                <p class="grey-2 lead">{{ about.visuals_paragraph }}</p>
+            </div>
+            <div class="col-sm-12 col-lg-5 order-md-1">
+                <img src="{{ about.visuals_image.url }}" alt="" class="w-100 img-fluid rounded-4 fadeInUp">
+            </div>
+        </div>
+        <div class="row g-4 justify-content-between my-4 align-items-center">
+            <div class="col-sm-12 col-lg-6 mt-5 fadeInUp">
+                <h3 class="grey-1">{{ about.discography_title }}</h3>
+                <p class="grey-2 lead">{{ about.discography_paragraph }}</p>
+                <a href="{% url 'mix_list' %}" class="btn btn-outline-light rounded-pill px-4">Listen to mixes <i style="font-size: .8rem;" class="ms-1 fa-solid fa-chevron-right"></i></a>
+            </div>
+            <div class="col-sm-12 col-lg-5">
+                <img src="{{ about.discography_image.url }}" alt="" class="w-100 img-fluid rounded-4 fadeInUp">
+            </div>
+        </div>
+        <div id="contact" class="row justify-content-center my-5">
+            <div class="col-sm-12 col-lg-6 my-5 text-center">
+                <h1 class="grey-1">{{ about.contact_title }}</h1>
+                <p class="grey-2 lead">{{ about.contact_paragraph }}</p>
+                <form >
+                    <div class="form-floating">
+                        <input type="text" class="form-control" name="name">
+                        <label for="name">Name</label>
+                    </div>
+                    <div class="form-floating my-3">
+                        <input type="email" class="form-control" name="email">
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="text" class="form-control" name="message">
+                        <label for="message">Message</label>
+                    </div>
+                    <a href="#!" class="btn btn-primary mt-3 btn-lg w-100">Send message</a>
+                </form>
+            </div>
+        </div>
+        <img src="{{ about.arap_trap_footer.url }}" alt="" class="img-fluid fadeInUp" style="opacity: .8;">
+    </div>
+</main>
+{% endblock %}
