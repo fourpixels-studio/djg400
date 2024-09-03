@@ -52,3 +52,12 @@ class About(models.Model):
 
     def __str__(self):
         return str("About")
+
+
+class Contact(models.Model):
+    name = models.CharField(max_length=180, blank=True, null=True)
+    email = models.EmailField()
+    message = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
