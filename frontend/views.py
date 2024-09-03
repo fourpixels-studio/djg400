@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from mixes.models import Mix
-from .models import About
+from .models import About, Contact
 from seo_management.models import SEO
 
 seo = SEO.objects.first()
@@ -19,6 +19,19 @@ def index(request):
 
 def about(request):
     about = About.objects.first()
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        contact = Contact(
+            name=name,
+            email=email,
+            message=message,
+        )
+        contact.save()
+        messages.success(
+            request, 'Your message has been received. I will get back to you soon.')
+        return redirect('about')
     context = {
         'title_tag': "About DJ G400",
         'meta_description': about.who_is_djg400_paragraph,
