@@ -65,7 +65,8 @@
             <div class="col-sm-12 col-lg-6 my-5 text-center">
                 <h1 class="grey-1">{{ about.contact_title }}</h1>
                 <p class="grey-2 lead">{{ about.contact_paragraph }}</p>
-                <form >
+                <form action="{% url 'about' %}" method="POST">
+                    {% csrf_token %}
                     <div class="form-floating">
                         <input type="text" class="form-control" name="name">
                         <label for="name">Name</label>
@@ -74,11 +75,8 @@
                         <input type="email" class="form-control" name="email">
                         <label for="email">Email</label>
                     </div>
-                    <div class="form-floating">
-                        <input type="text" class="form-control" name="message">
-                        <label for="message">Message</label>
-                    </div>
-                    <a href="#!" class="btn btn-primary mt-3 btn-lg w-100">Send message</a>
+                    <textarea name="message" placeholder="Message" rows="5" id="id_message" class="form-control"></textarea>
+                    <button type="submit" class="btn btn-outline-primary mt-3 btn-lg rounded-4 w-100">Send message</button>
                 </form>
             </div>
         </div>
