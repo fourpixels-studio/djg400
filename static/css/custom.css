@@ -93,7 +93,7 @@ body{
 /* Extra small devices(phones, 600px and down) */
 @media (max-width: 600px) {
     #header {
-        background-image: url("../img/homepage/g400_hero_portrait.jpg");
+        background-image: url("../img/homepage/Ethnic_portrait_72.jpg");
     }
     #shop-header {
         background-image: url("../img/shop/shop_hero_portrait.png");
@@ -102,7 +102,7 @@ body{
 /* Small devices(Portrait tablets and large phones, 600px and up) */
 @media (min-width: 600px) {
     #header {
-        background-image: url("../img/homepage/g400_hero_portrait.jpg");
+        background-image: url("../img/homepage/Ethnic_portrait_72.jpg");
     }
     #shop-header {
         background-image: url("../img/shop/shop_hero_portrait.png");
@@ -111,7 +111,7 @@ body{
 /* Medium devices (Landscape tablets, 768px and up) */
 @media (min-width: 768px) {
     #header {
-        background-image: url("../img/homepage/g400_hero_landscape.png");
+        background-image: url("../img/homepage/g400_hero_landscape.jpg");
     }
     #shop-header {
         background-image: url("../img/shop/shop_hero_landscape.png");
@@ -120,7 +120,7 @@ body{
 /* Large devices (Laptops/desktops, 992px and up) */
 @media (min-width: 992px) {
     #header {
-        background-image: url("../img/homepage/g400_hero_landscape.png");
+        background-image: url("../img/homepage/Ethnic_Landscape_72.jpg");
     }
     #shop-header {
         background-image: url("../img/shop/shop_hero_landscape.png");
@@ -129,7 +129,7 @@ body{
 /* Extra large devices (Large laptops and desktops, 1200px and up) */
 @media (min-width: 1200px) {
     #header {
-        background-image: url("../img/homepage/g400_hero_landscape.png");
+        background-image: url("../img/homepage/Ethnic_Landscape_72.jpg");
     }
     #shop-header {
         background-image: url("../img/shop/shop_hero_landscape.png");
@@ -137,7 +137,7 @@ body{
 }
 @media (min-width: 1400px) {
     #header {
-        background-image: url("../img/homepage/g400_hero_landscape.png");
+        background-image: url("../img/homepage/Ethnic_1080p.jpg");
     }
     #shop-header {
         background-image: url("../img/shop/shop_hero_landscape.png");
@@ -160,10 +160,10 @@ body{
     color: #686868 !important;
 }
 .grey-2{
-    color: #B7B7B7 !important;
+    color: #b3b3b3 !important;
 }
 .grey-1{
-    color: #F4F4F4 !important;
+    color: #e0e0e0 !important;
 }
 .rounded-4{
     border-radius: 14px;
@@ -266,3 +266,82 @@ body{
 .fw-700{
     font-weight: 700 !important;
 }
+.add-ticket:hover{
+background-color: rgb(52, 89, 52);
+}
+.add-ticket{
+    background-color: rgb(112, 183, 112);
+    padding-left: .8rem;
+    padding-right: .8rem;
+    padding-top: .4rem;
+    padding-bottom: .4rem;
+    color: #fff;
+    border-radius: 50px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    border: none;
+    cursor: pointer;
+}
+.remove-ticket:hover{
+    background-color: rgb(114, 43, 43);
+}
+.remove-ticket{
+    align-items: center;
+    padding-left: .9rem;
+    padding-right: .9rem;
+    padding-top: .4rem;
+    padding-bottom: .4rem;
+    justify-content: center;
+    display: flex;
+    background-color: rgb(226, 94, 94);
+    color: #fff;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+}
+.quantity{
+    font-size: 1.5rem;
+}
+.bg-muted{
+    background-color: #626262bf;
+}
+.hide{
+    display: none;
+}
+.show{
+    display: block;
+}
+.is-invalid {
+    border-color: #ff6b6b;
+}
+.is-invalid ~ .invalid-feedback {
+    display: block;
+    color: #ff6b6b;
+}
+/* Text */
+.primary-color{
+    color: #30d5c8;
+}
+.dark-background{
+    background-color: #1a1a1a;
+}
+.secondary-color{
+    color: #2bb2a6;
+}
+.highlight-color{
+    color: #42e1d6;
+}
+.text-light{
+    color: #e0e0e0;
+}
+.text-color-muted{
+    color: #b3b3b3;
+}
+.border-color{
+    border: 1px solid #383838;
+}
+.error{
+    color: #ff6b6b;
+}
+/* Text */
