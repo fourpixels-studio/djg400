@@ -7,18 +7,18 @@
                     <img src="{% static 'logo/logo.svg' %}" style="height: 120px;" class="img-fluid">
                 </div>
                 <div class="col-6 col-md-2">
-                    <h5 class="grey-1">DJ G400</h5>
+                    <h5 class="grey-1">Quick Link</h5>
                     <ul class="nav flex-column">
                         <li class="nav-item mb-2"><a href="{% url 'index' %}" class="nav-link p-0">Home</a></li>
                         <li class="nav-item mb-2"><a href="{% url 'about' %}" class="nav-link p-0">About</a></li>
-                        <li class="nav-item mb-2"><a href="" class="nav-link p-0">Contact</a></li>
+                        <li class="nav-item mb-2"><a href="{% url 'about' %}#contact" class="nav-link p-0">Contact</a></li>
                     </ul>
                 </div>
                 <div class="col-6 col-md-2">
-                    <h5 class="grey-1">Mixes</h5>
+                    <h5 class="grey-1">Music</h5>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="{% url 'mix_list' %}" class="nav-link p-0">Audio</a></li>
-                        <li class="nav-item mb-2"><a href="{% url 'video_mix_list' %}" class="nav-link p-0">Video</a></li>
+                        <li class="nav-item mb-2"><a href="{% url 'mix_list' %}" class="nav-link p-0">Mixes</a></li>
+                        <li class="nav-item mb-2"><a href="{% url 'playlists' %}" class="nav-link p-0">Playlists</a></li>
                         <li class="nav-item mb-2"><a href="{% url 'mix_list' %}" class="nav-link p-0">Latest</a></li>
                     </ul>
                 </div>

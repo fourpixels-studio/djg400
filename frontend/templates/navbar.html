@@ -1,8 +1,8 @@
 {% load static %}
-<nav style="background: linear-gradient(180deg, #000, #1b1b1b);" class="navbar navbar-expand-lg py-2 fixed-top" id="mainNav">
+<nav style="background: linear-gradient(180deg, #000, #1a1a1a);" class="navbar navbar-expand-lg py-2 fixed-top" id="mainNav">
     <div class="container-fluid px-4">
         <a class="navbar-brand fw-bold" href="{% url 'index' %}">
-            <img src="{% static 'logo/logo.svg' %}" style="height: 50px;" class="img-fluid">
+            <img src="{% static 'logo/logo.svg' %}" style="height: 40px;" class="img-fluid">
         </a>
         <button class="navbar-toggler collapsed d-flex d-lg-none flex-column justify-content-around" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="toggler-icon top-bar"></span>
@@ -11,33 +11,14 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav me-auto me-4 my-3 my-lg-0">
-                <li class="nav-item"><a class="nav-link me-lg-3" href="{% url 'index' %}">Home</a></li>
-                <li class="nav-item">
-                    <div class="dropdown">
-                        <a class="nav-link me-lg-3 dropdown-toggle hover"  id="dropdownMixes" data-bs-toggle="dropdown" aria-expanded="false">Mixes</a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMixes">
-                            <li><a class="dropdown-item" href="{% url 'mix_list' %}">All</a></li>
-                            <li><a class="dropdown-item" href="{% url 'mix_list' %}">Audio</a></li>
-                            <li><a class="dropdown-item" href="{% url 'video_mix_list' %}">Video</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <div class="dropdown">
-                        <a class="nav-link me-lg-3 dropdown-toggle hover"  id="dropdownShop" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownShop">
-                            <li><a class="dropdown-item" href="{% url 'shop' %}">Art</a></li>
-                            <li><a class="dropdown-item" href="{% url 'shop' %}">Merchandise</a></li>
-                            <li><a class="dropdown-item" href="{% url 'shop' %}">Mix Covers</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item"><a class="nav-link me-lg-3" href="">Playlists</a></li>
+                <li class="nav-item"><a class="nav-link me-lg-3" href="{% url 'mix_list' %}">Mixes</a></li>
+                <li class="nav-item"><a class="nav-link me-lg-3" href="{% url 'shop' %}">Shop</a></li>
+                <li class="nav-item"><a class="nav-link me-lg-3" href="{% url 'playlists' %}">Playlists</a></li>
                 <li class="nav-item"><a class="nav-link me-lg-3" href="{% url 'about' %}">About</a></li>
                 <li>
-                    <form method="GET" action="{% url 'search_mixes' %}" class="d-flex px-3 rounded-4" style="border-radius: 18px; background-color: #000">
+                    <form method="GET" action="{% url 'search_mixes' %}" class="d-flex px-3 rounded-4" style="border-radius: 18px; background-color: #1a1a1a">
                         <button class="no-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-                        <input required type="text" name="q" class="form-control px-3 border-0" placeholder="Search..." value="{{ query }}" style="width: 340px; border-radius: 18px; background-color: #000">
+                        <input required type="text" name="q" class="form-control px-3 border-0" placeholder="Search..." value="{{ query }}" style="width: 340px; border-radius: 18px; background-color: #1a1a1a">
                     </form>
                 </li>
             </ul>
