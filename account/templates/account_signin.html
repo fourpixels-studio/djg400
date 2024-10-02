@@ -1,39 +1,63 @@
-{% extends 'base.html' %}
 {% load static %}
-{% block body %}
-<div class="container-xl">
-    {% if signin_form.non_field_errors %}
-    <header class="container">
-        {% for error in signin_form.non_field_errors %}
-        <div class="alert alert-warning list-unstyled text-center" role="alert">{{ error }}</div>
-        {% endfor %}
-    </header>
-    {% endif %}
-    <main class="container my-5">
-        <div class="row justify-content-evenly align-items-center">
-            <div class="col-6 d-none d-lg-block">
-                <img style="max-height: 70vh; border-radius: 34px;" src="{% static 'img/account/astronaut_signup.jpg' %}" class="img-fluid"/>
-            </div>
-            <div class="col-sm-12 col-md-5">
-                <h1 class="grey-1">Already a member?</h1>
-                <p class="grey-2">Log in to enjoy an ad-free listening experience.</p>
-                <form method="POST" action="{% url 'account_signin' %}" class="mb-3" onsubmit="showSpinner()">
-                    {% csrf_token %}
-                    <div class="form-floating my-4">
-                        <input placeholder="Password" type="text" class="form-control form-control-lg" id="id_username" name="username" required/>
-                        <label for="username">Username</label>
-                        <div class="invalid-feedback">Username is required.</div>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% include "head.html" %}
+    </head>
+    <body style="background-color: #1a1a1a;" class="px-0">
+        <main class="container-fluid">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-sm-12 col-lg-6">
+                    <div class="container px-3">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-10 col-xl-8 col-xxl-6 col-sm-12 my-5">
+                                <button onclick="goBack()" class="no-btn text-white mb-4"><i class="fa-solid fa-xl fa-arrow-left"></i></button>
+                                {% include "messages.html" %}
+                                {% if signin_form.non_field_errors %}
+                                {% for error in signin_form.non_field_errors %}
+                                <div class="alert alert-warning list-unstyled text-center" role="alert">{{ error }}</div>
+                                {% endfor %}
+                                {% endif %}
+                                <h1 class="grey-1">Log in</h1>
+                                <p class="grey-2 mb-4">Enjoy an ad-free listening experience.</p>
+                                <form method="POST" action="{% url 'account_signin' %}" class="mb-3" onsubmit="showSpinner()">
+                                    {% csrf_token %}
+                                    <label class="grey-2 small">Enter Username</label>
+                                    <div class="form-floating mt-2 grey-1 mb-4">
+                                        <input placeholder="username" type="text" class="form-control form-control-lg rounded-4" id="id_username" name="username" required/>
+                                        <label for="username">username</label>
+                                        <div class="invalid-feedback">Username is required.</div>
+                                    </div>
+                                    <label class="grey-2 small">Enter Password</label>
+                                    <div class="form-floating mt-2 grey-1">
+                                        <input placeholder="Password" type="password" class="form-control form-control-lg rounded-4" id="id_password" name="password" required/>
+                                        <label for="password">Password</label>
+                                        <div class="invalid-feedback">Password is required.</div>
+                                    </div>
+                                    <button type="submit" value="Sign In" class="btn submit-btn my-4 w-100 btn-lg btn-primary rounded-4">Sign In</button>
+                                    <small class="small grey-2">Don't have an account yet? <span class="hover-underline grey-1"><a href="{% url 'account_signup' %}" class="grey-1 hover-underline">Create account.</a></span></small>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-floating">
-                        <input placeholder="Password" type="password" class="form-control form-control-lg" id="id_password" name="password" required/>
-                        <label for="password">Password</label>
-                        <div class="invalid-feedback">Password is required.</div>
+                </div>
+                <div class="col-lg-6 d-none d-lg-block pe-0">
+                    <div class="position-relative" style="height: 100vh; width: 100%;">
+                        <img style="height: 100vh; width: 100%; object-fit: cover;" src="https://images.pexels.com/photos/17485710/pexels-photo-17485710/free-photo-of-an-artist-s-illustration-of-artificial-intelligence-ai-this-image-visualises-the-input-and-output-of-neural-networks-and-how-ai-systems-perceive-data-it-was-created-by-rose-pilkington.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="background image"/>
+                        <div class="position-absolute" style="top: 2rem; right: 2rem;">
+                            <a class="no-btn" href="{% url 'index' %}">
+                                <img src="{% static 'logo/logo.svg' %}" style="height: 70px; filter: contrast(0) brightness(0);" class="img-fluid">
+                            </a>
+                        </div>
                     </div>
-                    <button type="submit" value="Sign In" class="btn submit-btn my-3 w-100 btn-lg btn-primary">Sign In</button>
-                    <p class="grey-2">Don't have an account yet? <span class="hover-underline grey-1"><a href="{% url 'account_signup' %}" class="grey-1 hover-underline">Create an account instead.</a></span></p>
-                </form>
+                </div>
             </div>
-        </div>
-    </main>
-</div>
-{% endblock %}
+        </main>
+        {% include "footer.html" %}
+        {% include "modals/loading_spinner.html" %}
+        <script src="{% static 'js/footerYear.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+    </body>
+</html>
