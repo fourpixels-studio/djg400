@@ -1,19 +1,20 @@
 <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
-    <div class="modal-dialog text-default modal-dialog-scrollable modal-dialog-centered">
-        <div style="border-radius: 14px;" class="modal-content">
-            <div class="modal-body">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-5">
+            <div class="modal-body bg-grey rounded-4">
                 <div class="container">
                     <div class="row justify-content-center align-items-center g-3">
-                        <form method="POST" class="col mb-3" onsubmit="showSpinner()">
-                            {% csrf_token %}
+                        <form method="GET" action="{% url 'search_mixes' %}" class="col mb-3" onsubmit="showSpinner()">
                             <div class="d-flex mt-3 justify-content-between">
-                                <h3 class="grey-4">Search...</h3>
-                                <button type="button" class="btn-close btn-light text-light btn-lg" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <h3 class="grey-1">Search...</h3>
+                                <button type="button" class="btn-close-white btn-close btn-lg" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="frpw my-4">
-                                <input placeholder="Search for mixes, albums, artists" type="text" class="form-control form-control-lg" id="id_search" name="search" required/>
+                            <div class="my-4 input-group">
+                                <input required placeholder="Search for mixes, albums, artists..." type="text" class="form-control form-control-lg rounded-start rounded-start-4" name="q" value="{{ query }}">
+                                <button class="btn btn-primary rounded-end-4" id="search-addon" value="Search" type="submit" aria-describedby="search">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
                             </div>
-                            <input type="submit" value="Search" class="btn rounded-2 btn-dark btn-lg w-100"/>
                         </form>
                     </div>
                 </div>

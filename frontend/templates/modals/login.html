@@ -1,28 +1,31 @@
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-    <div class="modal-dialog text-default modal-dialog-scrollable modal-dialog-centered">
-        <div style="border-radius: 18px;" class="modal-content border-0">
-            <div class="modal-body">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-5">
+            <div class="modal-body bg-grey rounded-4">
                 <div class="container">
                     <div class="row justify-content-center align-items-center g-3">
                         <form action="{% url 'account_signin' %}" method="POST" enctype="multipart/form-data" class="col mb-3" onsubmit="showSpinner()">
                             {% csrf_token %}
                             <div class="d-flex mt-3 justify-content-between">
-                                <h2 class="grey-4">Welcome back!</h3>
-                                <button type="button" class="btn-close btn-lg" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <h2 class="grey-1">Welcome back!</h3>
+                                <button type="button" class="btn-close-white btn-close btn-lg" data-bs-dismiss="modal" aria-label="Close" data-bs-theme=light></button>
                             </div>
-                            <p class="grey-3">Sign In</p>
+                            <p class="grey-2">Log in to enjoy an ad-free listening experience.</p>
                             <div class="form-floating my-4">
-                                <input placeholder="Password" type="text" class="form-control form-control-lg" id="id_username" name="username" required/>
+                                <input placeholder="Password" type="text" class="form-control form-control-lg rounded-4" id="id_username" name="username" required/>
                                 <label for="username" class="grey-2">Username</label>
                                 <div class="invalid-feedback">Username is required.</div>
                             </div>
                             <div class="form-floating">
-                                <input placeholder="Password" type="password" class="form-control form-control-lg" id="id_password" name="password" required/>
+                                <input placeholder="Password" type="password" class="form-control form-control-lg rounded-4" id="id_password" name="password" required/>
                                 <label for="password" class="grey-2">Password</label>
                                 <div class="invalid-feedback">Password is required.</div>
                             </div>
-                            <input type="submit" value="Sign in" class="btn rounded-2 mt-4 btn-dark btn-lg w-100"/>
-                            <p class="grey-3">Don't have an account? <span><a href="{% url 'account_signup' %}" class="grey-4">Create an account here.</a></span></p>
+                            <button id="submit-btn" type="submit" class="btn rounded-2 my-4 btn-primary btn-lg w-100">
+                                <span id="submit-text">Sign In</span>
+                                <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                            </button>
+                            <small class="small text-grey-4">Don't have an account? <span><a href="{% url 'account_signup' %}" class="text-primary-6 hover-underline">Create account</a></span></small>
                         </form>
                     </div>
                 </div>
