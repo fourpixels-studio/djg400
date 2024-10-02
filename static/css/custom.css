@@ -165,11 +165,20 @@ body{
 .grey-1{
     color: #e0e0e0 !important;
 }
+.rounded-5{
+    border-radius: 0.75rem !important;
+}
 .rounded-4{
-    border-radius: 14px;
+    border-radius: 0.5rem !important;
+}
+.rounded-3{
+    border-radius: 0.375rem !important;
 }
 .rounded-2{
-    border-radius: 10px;
+    border-radius: 0.25rem !important;
+}
+.rounded-1{
+    border-radius: 0.2rem !important;
 }
 
 .no-btn{
@@ -224,7 +233,7 @@ body{
     background: linear-gradient(270deg, #141414, #15151500); /* Example gradient colors */
 }
 .bg-gradientToDown {
-    background: linear-gradient(180deg, #141414, #00000000); /* Example gradient colors */
+    background: linear-gradient(180deg, #1a1a1a, #000000); /* Example gradient colors */
 }
 .bg-gradientToUp {
     background: linear-gradient(0deg, #141414, #00000000); /* Example gradient colors */
@@ -329,6 +338,9 @@ background-color: rgb(52, 89, 52);
 .secondary-color{
     color: #2bb2a6;
 }
+.bg-secondary-color{
+    background-color: #2bb2a6;
+}
 .highlight-color{
     color: #42e1d6;
 }
@@ -345,3 +357,10 @@ background-color: rgb(52, 89, 52);
     color: #ff6b6b;
 }
 /* Text */
+.bg-grey-1{
+    background-color: #383838;
+}
+.alert-error{
+    background-color: rgb(178, 66, 66);
+    color: #fff;
+}
