@@ -1,54 +1,101 @@
-{% extends 'base.html' %}
 {% load static %}
-{% block body %}
-<div class="container-xl">
-    {% if register_user_form.non_field_errors %}
-    <header class="container">
-        {% for error in register_user_form.non_field_errors %}
-        <div class="alert alert-warning list-unstyled text-center" role="alert">{{ error }}</div>
-        {% endfor %}
-    </header>
-    {% endif %}
-    <main class="container my-4">
-        <div class="row justify-content-evenly align-items-center">
-            <div class="col-6 d-none d-lg-block">
-                <img style="max-height: 70vh; border-radius: 34px" src="{% static 'img/account/space_login.jpg' %}" class="img-fluid"/>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% include "head.html" %}
+    </head>
+    <body style="background-color: #1a1a1a;" class="px-0">
+        <main class="container-fluid">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-sm-12 col-lg-6">
+                    <div class="container px-3">
+                        <div class="row justify-content-center align-items-start">
+                            <div class="col-lg-10 col-xl-8 col-xxl-6 col-sm-12 py-5 py-lg-3">
+                                <button onclick="goBack()" class="no-btn text-white mb-4"><i class="fa-solid fa-xl fa-arrow-left"></i></button>
+                                {% if messages %}
+                                    <ul class="list-unstyled">
+                                        {% for message in messages %}
+                                        {% if message.tags == 'error' %}
+                                            <li class="alert alert-{{ message.tags }} alert-dismissible fade show text-center mb-3" role="alert">
+                                                {{ message }}
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </li>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                                <h1 class="grey-1 display-5">Create account</h1>
+                                <p class="grey-2 mb-4">Access exclusive releases and curated playlists.</p>
+                                <form method="POST" action="{% url 'account_signup' %}" onsubmit="showSpinner()">
+                                    {% csrf_token %}
+                                    <div id="email-password">
+                                        <label class="mb-2 grey-2">What's your email?</label>
+                                        <div class="form-floating mb-4">
+                                            <input placeholder="Email" type="email" class="form-control form-control-lg rounded-4" id="id_email" name="email" required/>
+                                            <label for="email">Email</label>
+                                            <div class="invalid-feedback">Email is required.</div>
+                                        </div>
+                                        <label class="mb-2 grey-2">Password</label>
+                                        <div class="form-floating mb-4">
+                                            <input placeholder="Password" type="password" class="form-control form-control-lg rounded-4" id="id_password1" name="password1" required/>
+                                            <label for="passwordq">Password</label>
+                                            <div class="invalid-feedback">Password is required.</div>
+                                        </div>
+                                        <label class="mb-2 grey-2">Confirm Password</label>
+                                        <div class="form-floating mb-4">
+                                            <input placeholder="Confirm Password" type="password" class="form-control form-control-lg rounded-4" id="id_password2" name="password2" required/>
+                                            <label for="password2">Confirm Password</label>
+                                            <div class="invalid-feedback">Confirm your Password.</div>
+                                        </div>
+                                        <div class="d-flex flex-row justify-content-between align-items-center gap-4 mb-3">
+                                            <div id="show-username-names" class="btn w-25 btn-lg btn-outline-light rounded-4">Back</div>
+                                            <button type="submit" value="Create Account" class="btn submit-btn w-100 btn-lg btn-primary rounded-4">Create Account</button>
+                                        </div>
+                                    </div>
+                                    <div id="username-names">
+                                        <label class="mb-2 grey-2 username">What's a good username?</label>
+                                        <div class="form-floating mb-4">
+                                            <input placeholder="Username" type="text" class="form-control form-control-lg rounded-4" id="id_username" name="username" required/>
+                                            <label for="username">Username</label>
+                                            <div class="invalid-feedback">Username is required.</div>
+                                        </div>
+                                        <label class="mb-2 grey-2 first_name">First Name</label>
+                                        <div class="form-floating mb-4">
+                                            <input placeholder="First Name" type="text" class="form-control form-control-lg rounded-4" id="id_first_name" name="first_name" required/>
+                                            <label for="first_name">First Name</label>
+                                            <div class="invalid-feedback">First Name is required.</div>
+                                        </div>
+                                        <label class="mb-2 grey-2 last_name">Last Name</label>
+                                        <div class="form-floating mb-4">
+                                            <input placeholder="Last Name" type="text" class="form-control form-control-lg rounded-4" id="id_flast_name" name="last_name" required/>
+                                            <label for="last_name">Last Name</label>
+                                        </div>
+                                        <div id="show-email-password" class="btn w-100 mb-3 btn-lg btn-primary rounded-4">Next <i style="font-size: 1rem;" class="ms-1 fa-solid fa-chevron-right"></i></div>
+                                    </div>
+                                    <small class="small grey-2">Already have an account? <span class="hover-underline grey-2"><a href="{% url 'account_signin' %}" class="grey-1 hover-underline">Sign in.</a></span></small>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-none d-lg-block pe-0">
+                    <div class="position-relative" style="height: 100vh; width: 100%;">
+                        <img style="height: 100vh; width: 100%; object-fit: cover;" src="https://images.unsplash.com/photo-1656067638332-1d189bf81079?q=80&w=2454&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="background image"/>
+                        <div class="position-absolute" style="top: 2rem; left: 2rem;">
+                            <a class="no-btn" href="{% url 'index' %}">
+                                <img src="{% static 'logo/logo.svg' %}" style="height: 70px;" class="img-fluid">
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-sm-12 col-md-5">
-                <h1 class="grey-1">Create account</h1>
-                <p class="grey-2">Access exclusive releases and curated playlists.</p>
-                <form method="POST" action="{% url 'account_signup' %}" onsubmit="showSpinner()">
-                    {% csrf_token %}
-                    <div class="form-floating my-4">
-                        <input placeholder="Password" type="text" class="form-control form-control-lg" id="id_username" name="username" required/>
-                        <label for="username">Username</label>
-                        <div class="invalid-feedback">Username is required.</div>
-                    </div>
-                    <div class="form-floating">
-                        <input placeholder="Name" type="text" class="form-control form-control-lg" id="id_first_name" name="first_name" required/>
-                        <label for="first_name">Name</label>
-                        <div class="invalid-feedback">Name is required.</div>
-                    </div>
-                    <div class="form-floating my-4">
-                        <input placeholder="Email" type="email" class="form-control form-control-lg" id="id_email" name="email" required/>
-                        <label for="email">Email</label>
-                        <div class="invalid-feedback">Email is required.</div>
-                    </div>
-                    <div class="form-floating">
-                        <input placeholder="Password" type="password" class="form-control form-control-lg" id="id_password1" name="password1" required/>
-                        <label for="passwordq">Password</label>
-                        <div class="invalid-feedback">Password is required.</div>
-                    </div>
-                    <div class="form-floating my-4">
-                        <input placeholder="Confirm Password" type="password" class="form-control form-control-lg" id="id_password2" name="password2" required/>
-                        <label for="password2">Confirm Password</label>
-                        <div class="invalid-feedback">Confirm your Password.</div>
-                    </div>
-                    <button type="submit" value="Create Account" class="btn submit-btn w-100 btn-lg btn-primary">Create Account</button>
-                    <p class="grey-2 mt-3">Already have an account? <span class="hover-underline grey-2"><a href="{% url 'account_signin' %}" class="grey-1 hover-underline">Sign in.</a></span></p>
-                </form>
-            </div>
-        </div>
-    </main>
-</div>
-{% endblock %}
+        </main>
+        {% include "footer.html" %}
+        {% include "modals/loading_spinner.html" %}
+        <script src="{% static 'js/footerYear.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+        <script src="{% static 'js/signupFormValidation.js' %}"></script>
+    </body>
+</html>
