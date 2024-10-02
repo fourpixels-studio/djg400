@@ -14,37 +14,42 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-10 col-xl-8 col-xxl-6 col-sm-12 my-5">
                                 <button onclick="goBack()" class="no-btn text-white mb-4"><i class="fa-solid fa-xl fa-arrow-left"></i></button>
-                                {% include "messages.html" %}
-                                {% if signin_form.non_field_errors %}
-                                {% for error in signin_form.non_field_errors %}
-                                <div class="alert alert-warning list-unstyled text-center" role="alert">{{ error }}</div>
+                                {% if messages %}
+                                {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show text-center mb-3" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
                                 {% endfor %}
                                 {% endif %}
-                                <h1 class="grey-1">Log in</h1>
-                                <p class="grey-2 mb-4">Enjoy an ad-free listening experience.</p>
+                                <h1 class="text-grey-1">Log in</h1>
+                                <p class="text-grey-3 mb-5">Enjoy an ad-free listening experience.</p>
                                 <form method="POST" action="{% url 'account_signin' %}" class="mb-3" onsubmit="showSpinner()">
                                     {% csrf_token %}
-                                    <label class="grey-2 small">Enter Username</label>
+                                    <label class="text-grey-2 small">Enter Username</label>
                                     <div class="form-floating mt-2 grey-1 mb-4">
                                         <input placeholder="username" type="text" class="form-control form-control-lg rounded-4" id="id_username" name="username" required/>
                                         <label for="username">username</label>
                                         <div class="invalid-feedback">Username is required.</div>
                                     </div>
-                                    <label class="grey-2 small">Enter Password</label>
+                                    <label class="text-grey-2 small">Enter Password</label>
                                     <div class="form-floating mt-2 grey-1">
                                         <input placeholder="Password" type="password" class="form-control form-control-lg rounded-4" id="id_password" name="password" required/>
                                         <label for="password">Password</label>
                                         <div class="invalid-feedback">Password is required.</div>
                                     </div>
-                                    <button type="submit" value="Sign In" class="btn submit-btn my-4 w-100 btn-lg btn-primary rounded-4">Sign In</button>
-                                    <small class="small grey-2">Don't have an account yet? <span class="hover-underline grey-1"><a href="{% url 'account_signup' %}" class="grey-1 hover-underline">Create account.</a></span></small>
+                                    <button id="submit-btn" type="submit" class="btn my-4 w-100 btn-lg btn-primary rounded-4">
+                                        <span id="submit-text">Sign In</span>
+                                        <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                    </button>
+                                    <small class="small text-grey-4">Don't have an account yet? <span><a href="{% url 'account_signup' %}" class="text-primary-6 hover-underline">Create account</a></span></small>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6 d-none d-lg-block pe-0">
-                    <div class="position-relative" style="height: 100vh; width: 100%;">
+                    <div class="position-relative fadeIn" style="height: 100vh; width: 100%;">
                         <img style="height: 100vh; width: 100%; object-fit: cover;" src="https://images.pexels.com/photos/17485710/pexels-photo-17485710/free-photo-of-an-artist-s-illustration-of-artificial-intelligence-ai-this-image-visualises-the-input-and-output-of-neural-networks-and-how-ai-systems-perceive-data-it-was-created-by-rose-pilkington.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="background image"/>
                         <div class="position-absolute" style="top: 2rem; right: 2rem;">
                             <a class="no-btn" href="{% url 'index' %}">
@@ -56,8 +61,8 @@
             </div>
         </main>
         {% include "footer.html" %}
-        {% include "modals/loading_spinner.html" %}
         <script src="{% static 'js/footerYear.js' %}"></script>
         <script src="{% static 'js/main.js' %}"></script>
+        <script src="{% static 'js/showSpinner.js' %}"></script>
     </body>
 </html>
