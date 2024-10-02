@@ -1,17 +1,19 @@
 {% load static %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#30d5c8" />
+
 <!-- Meta Tags -->
 <title>DJ G400 — {{ title_tag }}</title>
 <meta name="author" content="DJ G400" />
 <meta name="description" content="{{ meta_description }}" />
 <meta name="keywords" content="{{ meta_keywords }}" />
-<meta name="theme-color" content="#30d5c8" />
 {% if meta_thumbnail %}
 <meta name="image" content="https://djg400.com{{ meta_thumbnail }}">
 {% else %}
 <meta name="image" content="https://djg400.com{% static 'djg400_meta_thumbnail.jpg' %}">
 {% endif %}
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="{{ meta_url }}">
 
 <!-- Facebook Meta Tags -->
 <meta property="og:title" content="DJ G400 — {{ title_tag }}">
@@ -19,7 +21,6 @@
 <meta property="og:type" content="website">
 <meta property="og:description" content="{{ meta_description }}">
 <meta property="og:keywords" content="{{ meta_keywords }}">
-<meta property="og:url" content="{{ meta_url }}">
 <meta property="og:site_name" content="DJ G400">
 {% if meta_thumbnail %}
 <meta property="og:image" content="https://djg400.com{{ meta_thumbnail }}">
@@ -40,10 +41,9 @@
 <meta name="twitter:image" content="https://djg400.com{% static 'djg400_meta_thumbnail.jpg' %}">
 {% endif %}
 <meta name="twitter:image:width" content="1200">
-<meta name="twitter:image:height" content="600">
-<meta name="twitter:url" content="{{ meta_url }}">
+<meta name="twitter:image:height" content="630">
 <meta name="twitter:site" content="www.djg400.com">
-<meta name="twitter:creator" content="@djg400.com">
+<meta name="twitter:creator" content="@djg400">
 
 <!-- LinkedIn Meta Tags -->
 {% if meta_thumbnail %}
@@ -78,7 +78,8 @@
 <link rel="stylesheet" href="{% static 'css/custom.css' %}">
 <link rel="stylesheet" href="{% static 'css/animations.css' %}">
 <link rel="stylesheet" href="{% static 'css/mixes.css' %}">
-<link rel="stylesheet" href="{% static 'css/shop' %}">
+<link rel="stylesheet" href="{% static 'css/shop.css' %}">
+<link rel="stylesheet" href="{% static 'css/colors.css' %}">
 
 <!-- bootstrap -->
 <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
