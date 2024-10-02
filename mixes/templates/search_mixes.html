@@ -9,6 +9,18 @@
         {% include 'components/sidebar.html' %}
         </div>
         <div class="col-sm-12 col-lg-10">
+            <div class="container p-0 m-0">
+                <div class="row p-0 m-0">
+                    <form method="GET" action="{% url 'search_mixes' %}" class="col-sm-12 col-lg-8 mt-4" onsubmit="showSpinner()">
+                        <div class="input-group">
+                            <input required placeholder="Search for mixes, albums, artists..." type="text" class="form-control form-control-lg rounded-start rounded-start-4" name="q" value="{{ query }}">
+                            <button class="btn btn-primary rounded-end-4" id="search-addon" value="Search" type="submit" aria-describedby="search">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
             {% if num_results > 0 %}
             <div class="container p-0 m-0">
                 <div class="row p-0 m-0">
