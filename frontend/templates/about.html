@@ -76,6 +76,12 @@
                         <label for="email">Email</label>
                     </div>
                     <textarea name="message" placeholder="Message" rows="5" id="id_message" class="form-control" required></textarea>
+                    <div class="form-floating mt-3 w-100">
+                        {{ contact_form.captcha }}
+                        {% if contact_form.captcha.errors %}
+                        <div class="text-danger">{{ contact_form.captcha.errors }}</div>
+                        {% endif %}
+                    </div>
                     <button id="submit-btn" type="submit" class="btn btn-outline-primary mt-3 btn-lg rounded-4 w-100">
                         <span id="submit-text">Send message</span>
                         <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
