@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
-from django.contrib import messages
+from .models import About
 from mixes.models import Mix
-from .models import About, Contact
+from .forms import ContactForm
+from django.contrib import messages
 from seo_management.models import SEO
+from django.shortcuts import render, redirect
 
 seo = SEO.objects.first()
 
@@ -19,23 +20,22 @@ def index(request):
 
 def about(request):
     about = About.objects.first()
+    contact_form = ContactForm(request.POST or None)
     if request.method == 'POST':
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        message = request.POST.get('message')
-        contact = Contact(
-            name=name,
-            email=email,
-            message=message,
-        )
-        contact.save()
-        messages.success(
-            request, 'Your message has been received. I will get back to you soon.')
-        return redirect('about')
+        if contact_form.is_valid():
+            contact_form.save()
+            messages.success(request, 'Your message has been received. I will get back to you soon.')
+            return redirect('about')
+        else:
+            if contact_form.errors:
+                for field, errors in contact_form.errors.items():
+                    for error in errors:
+                        messages.error(request, error)
     context = {
-        'title_tag': "About DJ G400",
-        'meta_description': about.who_is_djg400_paragraph,
-        'meta_keywords': seo.meta_keywords,
         'about': about,
+        'title_tag': "About DJ G400",
+        'contact_form': contact_form,
+        'meta_keywords': seo.meta_keywords,
+        'meta_description': about.who_is_djg400_paragraph,
     }
     return render(request, 'about.html', context)
