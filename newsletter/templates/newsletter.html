@@ -14,15 +14,21 @@
         </div>
     </div>
     {% else %}
-    <div class="row align-items-center justify-content-center">
+    <div class="row align-items-center justify-content-center mt-5">
         <div class="col-sm-12 col-md-10 col-lg-6">
             <h1 class="display-6 text-white">DJ G400's Newsletter</h1>
             <p class="grey-2 my-3">Join my newsletter to stay updated on the latest mixes, playlists, exclusive art, merchandise drops, and more!</p>
             <form action="{% url 'newsletter' %}" method="POST" onsubmit="showSpinner()">
                 {% csrf_token %}
                 <div class="form-floating">
-                    <input type="email" class="form-control" name="email" id="id_email" placeholder="Email">
+                    <input type="email" class="form-control rounded-4" name="email" id="id_email" placeholder="Email">
                     <label for="email">Email</label>
+                </div>
+                <div class="form-floating mt-3 w-100">
+                    {{ newsletter_form.captcha }}
+                    {% if newsletter_form.captcha.errors %}
+                    <div class="text-danger">{{ newsletter_form.captcha.errors }}</div>
+                    {% endif %}
                 </div>
                 <button type="submit" class="btn submit-btn btn-outline-primary btn-lg my-4 w-100">Submit</button>
             </form>
