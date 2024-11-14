@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'seo_management',
     'playlists',
     'django_recaptcha',
+    'remixes',
 ]
 
 MIDDLEWARE = [
