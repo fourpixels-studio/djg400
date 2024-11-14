@@ -1,4 +1,19 @@
 {% load static %}
-<header class="mx-0 px-0 fadeInUp" id="header">
-
-</header>
+<div class="container px-4 py-5">
+    <div class="row justify-content-center mt-5">
+        <div class="col-sm-12 col-lg-7">
+            <h1 class="display-2 grey-1 text-center">400 Miles Above The Competition</h1>
+            <p class="text-center fw-300 grey-2 my-4">Stay 400 miles above the competition and be part of a community that celebrates the intersection of art, music and urban culture.</p>
+            <div class="d-flex flex-row gap-3 align-items-center justify-content-center">
+                <a href="{% url 'mix_list' %}" class="btn btn-light rounded-4 px-4">Play Mixes</a>
+                <a href="{% url 'newsletter' %}"  class="btn btn-outline-light rounded-4 px-4">Subscribe</a>
+            </div>
+        </div>
+    </div>
+</div>
+<picture>
+    <source media="(min-width: 1200px)" srcset="{% static 'img/homepage/Ethnic_Version_2_Meta_Thumbnail_xl.jpg' %}">
+    <source media="(min-width: 992px)" srcset="{% static 'img/homepage/Ethnic_Version_2_Meta_Thumbnail_lg.jpg' %}">
+    <source media="(min-width: 576px)" srcset="{% static 'img/homepage/Ethnic_Version_2_Meta_Thumbnail_sm.jpg' %}">
+    <img src="{% static 'img/homepage/Ethnic_Version_2_Meta_Thumbnail_lg.jpg' %}" alt="" class="img-fluid w-100 my-5">
+</picture>
