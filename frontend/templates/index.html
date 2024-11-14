@@ -1,67 +1,61 @@
 {% extends 'base.html' %}
-{% load static %}
 {% block body %}
-{% include 'hero.html' %}
-<div class="container-fluid">
-
-    <div class="container my-5">
-        <section class="row gy-5 featurette justify-content-evenly align-items-center">
-            <div class="col-md-5 col-sm-12 order-md-2 fadeIn">
-                <h2 class="display-6 fw-bold grey-1">Dazzling Outfits</h2>
-                <p class="lead grey-2 my-4">Shop the latest collection of urban, modern, and fresh merchandise inspired by Arap Trap's unique style.</p>
-                <a class="btn btn-outline-light rounded-pill btn-lg py-2 px-5" href="{% url 'shop' %}">Shop now</a>
+<div class="container-fluid px-0">
+    {% include "hero.html" %}
+    <section class="container px-4 my-5">
+        <div class="d-flex flex-row justify-content-center">
+            <div class="col-sm-12 col-lg-9">
+                <h1 class="text-center text-white">Beyond the Sound, Into the Experience</h1>
+                <p class="grey-2 text-center">Discover the best in DJ mixes, shop exclusive apparel, and dive into curated playlists to elevate your music experience.</p>
             </div>
-            <div class="col-md-5 col-sm-12 order-md-1">
-                <img style="max-height: 80vh; width: 100%; object-fit: cover" src="{% static 'img/homepage/merchandise_homepage.png' %}" alt="" class="img-fluid fadeIn">
-            </div>
-        </section>
-    </div>
-
-    <div class="container my-5">
-        <div class="bg-grey-gradient rounded-4 p-5">
-            <section class="row gy-5 justify-content-evenly align-items-center featurette">
-                <div class="col-md-5 col-sm-12 fadeIn">
-                    <h2 class="fw-bold display-6 grey-1">Latest release</h2>
-                    <p class="lead grey-2 my-4">{{ latest_mix.get_title }} is the latest in the {{ latest_mix.album.name }} series. This mix evokes a world of sophistication, luxury, and refinement in the world of {{ latest_mix.genre.name }} music.</p>
-                    <a href="{{ latest_mix.get_url }}" class="btn btn-outline-light rounded-pill btn-lg py-2 px-5">Play now</a>
-                </div>
-                <div class="col-md-5 col-sm-12">
-                    <img src="{{ latest_mix.get_landscape_cover }}" alt="" class="img-fluid rounded-4 img-fluid fadeIn">
-                </div>
-            </section>
         </div>
-    </div>
-
-    <section class="container px-3 my-5">
-        <div class="row g-4 my-5 py-5">
+        <div class="row g-4 mb-5 justify-content-center py-5">
             <div class="col-sm-12 col-md-4">
-                <div class="bg-grey-gradient rounded-5 p-4">
-                    <div class="feature-icon mt-5 d-inline-flex align-items-center justify-content-center fs-2 mb-3">
-                        <i class="fa-solid grey-1 fa-music fa-xl"></i>
-                    </div>
-                    <h3 class="fs-2 grey-1 mt-3">Mixes</h3>
-                    <p class="grey-2">Explore DJ sets, latest mixes and fire mixes.</p>
-                    <a href="{% url 'mix_list' %}" class="btn btn-outline-light btn-sm rounded-pill px-4">Play mixes <span><i style="font-size: .6rem;" class="fa-solid fa-chevron-right"></i></span></a>
+                <div class="bg-grey rounded-5 p-4">
+                    <a href="{% url 'mix_list' %}" class="no-link">
+                        <div class="mt-2 mb-5 d-flex flex-row align-items-center justify-content-between fs-2">
+                            <i class="fa-solid grey-1 fa-music fa-xl"></i>
+                            <span class="grey-1">&#8599;</span>
+                        </div>
+                        <h5 class="grey-1 mt-5">Mixes</h5>
+                        <p class="grey-2 fw-300">Exclusive DJ sets and fresh mixes bringing energy to you.</p>
+                    </a>
                 </div>
             </div>
             <div class="col-sm-12 col-md-4">
-                <div class="bg-grey-gradient rounded-5 p-4">
-                    <div class="feature-icon mt-5 d-inline-flex align-items-center justify-content-center fs-2 mb-3">
-                        <i class="fa-brands grey-1 fa-shopify fa-xl"></i>
-                    </div>
-                    <h3 class="fs-2 grey-1 mt-3">Shop</h3>
-                    <p class="grey-2">Shop fresh apparel, creative art and wallpapers.</p>
-                    <a href="{% url 'shop' %}" class="btn btn-outline-light btn-sm rounded-pill px-4">Shop now <span><i style="font-size: .6rem;" class="fa-solid fa-chevron-right"></i></span></a>
+                <div class="bg-grey rounded-5 p-4">
+                    <a href="{% url 'shop' %}" class="no-link">
+                        <div class="mt-2 mb-5 d-flex flex-row align-items-center justify-content-between fs-2">
+                            <i class="fa-brands grey-1 fa-shopify fa-xl"></i>
+                            <span class="grey-1">&#8599;</span>
+                        </div>
+                        <h5 class="grey-1 mt-5">Shop</h5>
+                        <p class="grey-2 fw-300">From merch, digital downloads, artworks, wallpapers, and more.</p>
+                    </a>
                 </div>
             </div>
             <div class="col-sm-12 col-md-4">
-                <div class="bg-grey-gradient rounded-5 p-4">
-                    <div class="feature-icon mt-5 d-inline-flex align-items-center justify-content-center fs-2 mb-3">
-                        <i class="fa-brands grey-1 fa-spotify fa-xl"></i>
-                    </div>
-                    <h3 class="fs-2 grey-1 mt-3">Playlists</h3>
-                    <p class="grey-2">Discover handpicked playlists across various genres and mixes.</p>
-                    <a href="{% url 'playlists' %}" class="btn btn-outline-light btn-sm rounded-pill px-4">Explore playlist <span><i style="font-size: .6rem;" class="fa-solid fa-chevron-right"></i></span></a>
+                <div class="bg-grey rounded-5 p-4">
+                    <a href="{% url 'playlists' %}" class="no-link">
+                        <div class="mt-2 mb-5 d-flex flex-row align-items-center justify-content-between fs-2">
+                            <i class="fa-brands grey-1 fa-spotify fa-xl"></i>
+                            <span class="grey-1">&#8599;</span>
+                        </div>
+                        <h5 class="grey-1 mt-5">Playlists</h5>
+                        <p class="grey-2 fw-300">Vibe to handpicked collections, perfect for every moment and mood.</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="px-0 py-5" style="background-color: #141414; margin-bottom: 7rem">
+        <div class="container px-4 py-5">
+            <div class="row justify-content-center">
+                <div class="col-sm-12 col-lg-10 text-center">
+                    <h1 class="text-white">Stay in the Mix with DJ G400</h1>
+                    <p class="grey-1 mb-0">Get exclusive access to the latest drops, playlists, event updates, and behind-the-scenes content!</p>
+                    <p class="grey-1">Sign up for the newsletter and never miss a beat.</p>
+                    <a href="{% url 'newsletter' %}" class="btn btn-outline-light px-4 rounded-pill">Subscribe Now</a>
                 </div>
             </div>
         </div>
