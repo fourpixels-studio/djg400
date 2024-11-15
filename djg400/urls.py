@@ -29,6 +29,8 @@ urlpatterns = [
     path("newsletter/", include("newsletter.urls")),
     path("hitcount/", include("hitcount.urls")),
     path("remixes/", include("remixes.urls")),
+    path("summernote/", include('django_summernote.urls')),
+    path("blogs/", include("blogs.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Configure admin titles
