@@ -15,28 +15,11 @@ class RemixGenre(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
     slug = models.SlugField(null=True, blank=True)
     image = models.TextField(null=True, blank=True)
-    square_cover = models.ImageField(
-        upload_to="remixes/covers/", blank=True, null=True)
-    landscape_cover = models.ImageField(
-        upload_to="remixes/covers/", blank=True, null=True)
-    meta_thumbnail = ResizedImageField(
-        size=[1200, 630],
-        crop=['middle', 'center'],
-        quality=75,
-        upload_to='remixes/thumbnails/',
-        blank=True,
-        null=True
-    )
-    square_thumbnail = ResizedImageField(
-        size=[1200, 1200],
-        crop=['middle', 'center'],
-        quality=75,
-        upload_to='remixes/thumbnails/',
-        blank=True,
-        null=True
-    )
-    hit_count_generic = GenericRelation(
-        HitCount, object_id_field='object_pk', related_query_name='hit_count_generic_relation')
+    square_cover = models.ImageField(upload_to="remixes/covers/", blank=True, null=True)
+    landscape_cover = models.ImageField(upload_to="remixes/covers/", blank=True, null=True)
+    meta_thumbnail = ResizedImageField(size=[1200, 630], crop=['middle', 'center'], quality=75, upload_to='remixes/thumbnails/', blank=True, null=True)
+    square_thumbnail = ResizedImageField( size=[1200, 1200], crop=['middle', 'center'], quality=75, upload_to='remixes/thumbnails/', blank=True, null=True)
+    hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk', related_query_name='hit_count_generic_relation')
 
     def __str__(self):
         return self.name
@@ -50,14 +33,11 @@ class RemixGenre(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
-
         super().save(*args, **kwargs)
-
         if self.landscape_cover and (not self.meta_thumbnail or self.meta_thumbnail.name != f"{self.landscape_cover.name}"):
             self.landscape_cover.save(
                 f"{self.landscape_cover.name}", self.landscape_cover, save=False)
             super().save(update_fields=['meta_thumbnail'])
-
         if self.square_cover and (not self.meta_thumbnail or self.meta_thumbnail.name != f"{self.square_cover.name}"):
             self.square_cover.save(
                 f"{self.square_cover.name}", self.square_cover, save=False)
@@ -67,46 +47,25 @@ class RemixGenre(models.Model):
 class Remix(models.Model):
     title = models.CharField(max_length=150, blank=True, null=True)
     artist = models.TextField(blank=True, null=True)
-    square_cover = models.ImageField(
-        upload_to="remixes/covers/", blank=True, null=True)
-    landscape_cover = models.ImageField(
-        upload_to="remixes/covers/", blank=True, null=True)
-    meta_thumbnail = ResizedImageField(
-        size=[1200, 630],
-        crop=['middle', 'center'],
-        quality=75,
-        upload_to='remixes/thumbnails/',
-        blank=True,
-        null=True
-    )
-    square_thumbnail = ResizedImageField(
-        size=[150, 150],
-        crop=['middle', 'center'],
-        quality=75,
-        upload_to='remixes/thumbnails/',
-        blank=True,
-        null=True
-    )
-    genre = models.ForeignKey(
-        RemixGenre, on_delete=models.CASCADE, blank=True, null=True)
+    square_cover = models.ImageField(upload_to="remixes/covers/", blank=True, null=True)
+    landscape_cover = models.ImageField(upload_to="remixes/covers/", blank=True, null=True)
+    meta_thumbnail = ResizedImageField(size=[1200, 630], crop=['middle', 'center'], quality=75, upload_to='remixes/thumbnails/', blank=True, null=True)
+    square_thumbnail = ResizedImageField(size=[150, 150], crop=['middle', 'center'], quality=75, upload_to='remixes/thumbnails/', blank=True, null=True)
+    genre = models.ForeignKey(RemixGenre, on_delete=models.CASCADE, blank=True, null=True)
     is_popular = models.BooleanField(default=False, blank=True, null=True)
     video_download_link = models.TextField(blank=True, null=True)
     audio_download_link = models.TextField(blank=True, null=True)
     similar_remixes = models.CharField(max_length=100, blank=True, null=True)
     release_date = models.DateField(blank=True, null=True)
-    video_download_count = models.PositiveIntegerField(
-        default=0, blank=True, null=True)
-    audio_download_count = models.PositiveIntegerField(
-        default=0, blank=True, null=True)
-    reshare_count = models.PositiveIntegerField(
-        default=0, blank=True, null=True)
+    video_download_count = models.PositiveIntegerField(default=0, blank=True, null=True)
+    audio_download_count = models.PositiveIntegerField(default=0, blank=True, null=True)
+    reshare_count = models.PositiveIntegerField(default=0, blank=True, null=True)
     like_count = models.PositiveIntegerField(default=0, blank=True, null=True)
     slug = models.SlugField(unique=True, null=True, blank=True)
     color = models.CharField(max_length=10, null=True, blank=True)
     dark_color = models.CharField(max_length=10, null=True, blank=True)
     light_color = models.CharField(max_length=10, null=True, blank=True)
-    hit_count_generic = GenericRelation(
-        HitCount, object_id_field='object_pk', related_query_name='hit_count_generic_relation')
+    hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk', related_query_name='hit_count_generic_relation')
 
     def save(self, *args, **kwargs):
         if not self.slug:
