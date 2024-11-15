@@ -1,0 +1,23 @@
+{% load custom_filters %}
+<div class="row g-4 justify-content-between align-items-center">
+    <div class="col-md-4 col-sm-12">
+        <a href="{{ blog.get_url }}" class="no-btn">
+            <img class="img-fluid rounded-2" src="{{ blog.meta_thumbnail.url }}" alt="{{ blog.title }}'s thumbnail">
+        </a>
+    </div>
+    <div class="col-md-8 col-sm-12">
+        <div class="d-flex flex-column justify-content-between">
+            <a href="{{ blog.get_url }}" class="no-btn">
+                <h4 class="grey-1 hover-underline">{{ blog.title|truncatechars:88 }}</h4>
+                <p class="grey-2 d-none d-lg-block">{{ blog.summary|truncatechars:200 }}</p>
+                <div class="d-flex justify-content-between flex-row align-items-center">
+                    <div class="d-flex flex-row gap-4 align-items-center">
+                        <small class="small grey-2">{{ blog.published_date|date:"M j, Y"}}</small>
+                        <small class="small badge bg-muted grey-2">{{ blog.category }}</small>
+                    </div>
+                    <small class="hover-underline small">Read more <span><i style="font-size: .6rem;" class="fa-solid fa-chevron-right"></i></span></small>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

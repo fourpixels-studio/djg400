@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+{% load custom_filters %}
+{% load hitcount_tags %}
+<main class="container-fluid px-0 my-4">
+    <div class="container px-4 mb-5">
+        <div class="row justify-content-center mt-5">
+            <h1 class="text-brown fs-heading text-white display-5 mt-3">{{ blog.title }}</h1>
+            <p class="grey-2 lead font-alt fw-300 mt-3 fw-300"><em>{{ blog.summary }}</em></p> 
+            <div class="d-flex mb-5 mt-4 flex-row flex-wrap gap-4 justify-content-between align-items-center">
+                <div class="d-flex flex-row align-items-start gap-1">
+                    <h6 class="my-0 fw-400 font-alt text-muted">{{ blog.published_date|date:"M j, Y" }} | {{ blog.read_time }} min read</h6>
+                    {% if request.user.is_superuser  %}
+                    <h6 class="my-0 text-muted fw-300 font-alt">&#183; Read {% get_hit_count for blog %} times</h6>
+                    {% endif %}
+                </div>
+                <ul class="d-flex flex-row align-items-center gap-3 m-0 justify-content-end list-unstyled">
+                    <li><i class="fa-brands fa-instagram fa-xl text-muted"></i></li>
+                    <li><i class="fa-brands fa-twitter fa-xl text-muted"></i></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <img src="{{ blog.cover_image.url }}" alt="{{ blog.title }}'s cover image" class="img-fluid w-100 text-center">
+    <div class="container px-4 px-lg-0">
+        <div class="row justify-content-between gx-4 gy-5 my-5">
+            <div class="col-sm-12 col-md-8">
+                <article id="article-post" class="text-white">{{ blog.content|safe }}</article>
+            </div>
+            <div class="col-sm-12 col-md-4">
+                <div class="position-sticky" style="top: 5rem;">
+                    {% for blog in recent_blogs %}
+                    {% include "components/blog_small_landscape_card.html" %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="px-0 py-5 mt-5" style="background-color: #141414;">
+        {% include "components/newsletter_banner.html" %}
+    </section>
+</main>
+<script>
+    var article = document.getElementById("article-post");
+    if (article) {
+        var img_elements = article.getElementsByTagName("img");
+        for (var i = 0; i < img_elements.length; i++) {
+        img_elements[i].classList.add("img-fluid");
+        img_elements[i].classList.add("w-100");
+        }
+    }
+</script>
+{% endblock %}
