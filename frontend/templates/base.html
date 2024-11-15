@@ -23,8 +23,10 @@
             {% endblock %}
         </div>
         {% include "footer.html" %}
-        {% include "modals/login.html" %}
         {% include "modals/search.html" %}
+        {% if not request.user.is_authenticated %}
+        {% include "modals/login.html" %}
+        {% endif %}
         <script src="{% static 'js/footerYear.js' %}"></script>
         <script src="{% static 'js/searchMixes.js' %}"></script>
         <script src="{% static 'js/main.js' %}"></script>
