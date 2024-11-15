@@ -5,14 +5,14 @@
     <section class="container px-4 my-5">
         <div class="d-flex flex-row justify-content-center">
             <div class="col-sm-12 col-lg-9">
-                <h1 class="text-center text-white">Beyond the Sound, Into the Experience</h1>
+                <h2 class="text-center text-white">Beyond the Sound, Into the Experience</h2>
                 <p class="grey-2 text-center">Discover the best in DJ mixes, shop exclusive apparel, and dive into curated playlists to elevate your music experience.</p>
             </div>
         </div>
         <div class="row g-4 mb-5 justify-content-center py-5">
             <div class="col-sm-12 col-md-4">
                 <div class="bg-grey rounded-5 p-4">
-                    <a href="{% url 'mix_list' %}" class="no-link">
+                    <a href="{% url 'mix_list' %}" class="no-link hover">
                         <div class="mt-2 mb-5 d-flex flex-row align-items-center justify-content-between fs-2">
                             <i class="fa-solid grey-1 fa-music fa-xl"></i>
                             <span class="grey-1">&#8599;</span>
@@ -24,7 +24,7 @@
             </div>
             <div class="col-sm-12 col-md-4">
                 <div class="bg-grey rounded-5 p-4">
-                    <a href="{% url 'shop' %}" class="no-link">
+                    <a href="{% url 'shop' %}" class="no-link hover">
                         <div class="mt-2 mb-5 d-flex flex-row align-items-center justify-content-between fs-2">
                             <i class="fa-brands grey-1 fa-shopify fa-xl"></i>
                             <span class="grey-1">&#8599;</span>
@@ -36,7 +36,7 @@
             </div>
             <div class="col-sm-12 col-md-4">
                 <div class="bg-grey rounded-5 p-4">
-                    <a href="{% url 'playlists' %}" class="no-link">
+                    <a href="{% url 'playlists' %}" class="no-link hover">
                         <div class="mt-2 mb-5 d-flex flex-row align-items-center justify-content-between fs-2">
                             <i class="fa-brands grey-1 fa-spotify fa-xl"></i>
                             <span class="grey-1">&#8599;</span>
@@ -49,15 +49,40 @@
         </div>
     </section>
     <section class="px-0 py-5" style="background-color: #141414; margin-bottom: 7rem">
-        <div class="container px-4 py-5">
-            <div class="row justify-content-center">
-                <div class="col-sm-12 col-lg-10 text-center">
-                    <h1 class="text-white">Stay in the Mix with DJ G400</h1>
-                    <p class="grey-1 mb-0">Get exclusive access to the latest drops, playlists, event updates, and behind-the-scenes content!</p>
-                    <p class="grey-1">Sign up for the newsletter and never miss a beat.</p>
-                    <a href="{% url 'newsletter' %}" class="btn btn-outline-light px-4 rounded-pill">Subscribe Now</a>
-                </div>
+        {% include "components/newsletter_banner.html" %}
+    </section>
+    <section class="container px-4 my-5 pb-5">
+        <div class="d-flex flex-row flex-wrap align-items-center justify-content-between mb-4">
+            <div class="col-sm-12 col-lg-7">
+                <h1 class="text-white">Get Lost in the Remix</h1>
+                <p class="grey-2">Unlock a world of reimagined hits, exclusive mashups, and DJ G400’s unique sound twists!</p>
             </div>
+            <div class="col-sm-12 col-lg-2 text-end">
+                <a href="{% url 'remixes_list' %}" class="btn btn-outline-light rounded-pill px-4 w-100">See All Remixes</a>
+            </div>
+        </div>
+        <div class="row g-4 row-cols-2 align-items-start justify-content-start">
+            {% for remix in remixes %}
+            <div class="col-sm-6 col-md-4">
+                {% include 'components/remix_card.html' %}
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    <section class="container px-4 my-5 py-5">
+        <div class="d-flex flex-row flex-wrap align-items-center justify-content-between mb-4">
+            <div class="col-sm-12 col-lg-7">
+                <h1 class="text-white">Inside the Beat: <br>DJ G400’s Music Insights</h1>
+                <p class="grey-2">Stay updated with album reviews, music news, exclusive DJ G400 insights, and all things fresh in the world of sound. Dive deeper into the beats that move you.</p>
+            </div>
+            <div class="col-sm-12 col-lg-2 text-end">
+                <a href="{% url 'blog_list' %}" class="btn btn-outline-light rounded-pill px-4 w-100">Blogs</a>
+            </div>
+        </div>
+        <div class="container pt-4 px-0">
+            {% for blog in blogs %}
+            {% include "components/blog_landscape_card.html" %}
+            {% endfor %}
         </div>
     </section>
 </div>
