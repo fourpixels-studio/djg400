@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load hitcount_tags %}
+<div class="container-fluid mt-5 px-0" style="background-color: '{{ remix.dark_color }}';">
+    <div class="px-4 pb-4">
+        <button onclick="goBack()" class="no-btn text-white d-lg-none d-sm-block mb-3"><i class="fa-solid fa-xl fa-arrow-left"></i></button>
+        <div class="row gy-4 justify-content-evenly">
+            <div class="col-sm-12 col-lg-6">
+                <picture>
+                    <source media="(min-width: 1200px)" srcset="{{ remix.landscape_cover.url }}">
+                    <source media="(min-width: 992px)" srcset="{{ remix.meta_thumbnail.url }}">
+                    <source media="(min-width: 576px)" srcset="{{ remix.meta_thumbnail.url }}">
+                    <img src="{{ remix.landscape_cover.url }}" alt="{{ remix.title }}'s cover" class="img-fluid rounded-4">
+                </picture>
+            </div>
+            <div class="col-sm-12 col-lg-6">
+                <h1 class="text-white mb-3">{{ remix.title }}</h1>
+                <p class="grey-1 my-0">Artists: {{ remix.artist }}</p>
+                <p class="grey-1 my-0">Released: {{ remix.release_date|date:"jS F, Y" }}</p>
+                <p class="grey-1 my-0">Vibes: {{ remix.genre }}</p>
+                <p class="grey-1 my-0">{{ remix.get_download_count }} Downloads &#183; Viewed {% get_hit_count for remix %} Times</p>
+                <div class="d-flex mt-2 flex-row align-items-center gap-3 justify-content-between">
+                    {% if remix.is_video_link %}
+                    <a href="{{ remix.video_download_link }}" target="_blank" class="btn btn-outline-light rounded-4 w-100 mt-3">Download Video <i class="ms-1 fa-solid fa-circle-down"></i></a>
+                    {% endif %}
+                    {% if remix.is_audio_link %}
+                    <a href="{{ remix.audio_download_link }}" target="_blank" class="btn btn-outline-light rounded-4 w-100 mt-3">Download Audio <i class="ms-1 fa-solid fa-circle-down"></i></a>
+                    {% endif %}
+                </div>
+                <button class="btn btn-primary rounded-4 w-100 mt-3 btn-lg">Support <i class="ms-1 fa-solid fa-hand-holding-dollar"></i></button>
+            </div>
+        </div>
+    </div>
+    <section class="px-0 py-5 mt-5" style="background-color: #141414;">
+        {% include "components/newsletter_banner.html" %}
+    </section>
+</div>
+{% endblock %}

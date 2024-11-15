@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container-fluid mt-5 px-0">
+    <div class="container px-4 py-4">
+        <h1 class="display-4 fw-bold text-white">Remixes by DJ G400</h1>
+        <small class="small grey-1">Unlock a world of reimagined hits, exclusive mashups, and DJ G400’s unique sound twists!</small>
+        <div class="row g-4 row-cols-2 mt-3">
+            {% for remix in remixes %}
+            <div class="col-sm-6 col-md-4">
+                {% include "components/remix_card.html" %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <section class="px-0 py-5 mt-5" style="background-color: #141414;">
+        {% include "components/newsletter_banner.html" %}
+    </section>
+</div>
+{% endblock %}
