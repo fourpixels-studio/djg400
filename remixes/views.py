@@ -1,11 +1,10 @@
 from .models import Remix
-from products.models import Product
 from seo_management.models import SEO
 from frontend.utils import update_views
 from django.shortcuts import render, get_object_or_404
 
 
-seo = SEO.objects.first()
+seo = SEO.objects.get(pk=3)
 
 
 def remixes_list(request):
@@ -24,10 +23,9 @@ def remix_detail(request, slug):
     context = {
         'remix': remix,
         'title_tag': remix.title,
-        'meta_description': remix.title,
         'meta_keywords': remix.artist,
+        'meta_description': remix.title,
         'meta_thumbnail': remix.meta_thumbnail,
-        'products': Product.objects.all(),
     }
     update_views(request, remix)
     return render(request, 'remix_detail.html', context)
