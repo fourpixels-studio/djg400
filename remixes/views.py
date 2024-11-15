@@ -20,12 +20,15 @@ def remixes_list(request):
 
 def remix_detail(request, slug):
     remix = get_object_or_404(Remix, slug=slug)
+    meta_keywords = f"{remix.genre}, {remix.artist}, {seo.meta_keywords}"
+    meta_description = f"Listen to {remix.title} featuring {remix.artist}"
+    title_tag = f"{remix.title} featuring {remix.artist}"
     context = {
         'remix': remix,
-        'title_tag': remix.title,
-        'meta_keywords': remix.artist,
-        'meta_description': remix.title,
-        'meta_thumbnail': remix.meta_thumbnail,
+        'title_tag': title_tag,
+        'meta_keywords': meta_keywords,
+        'meta_description': meta_description,
+        'meta_thumbnail': remix.meta_thumbnail.url,
     }
     update_views(request, remix)
     return render(request, 'remix_detail.html', context)
