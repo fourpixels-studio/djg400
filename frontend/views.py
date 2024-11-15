@@ -1,9 +1,12 @@
 from .models import About
 from mixes.models import Mix
+from blogs.models import Blog
 from .forms import ContactForm
+from remixes.models import Remix
 from django.contrib import messages
 from seo_management.models import SEO
 from django.shortcuts import render, redirect
+
 
 seo = SEO.objects.first()
 
@@ -11,8 +14,10 @@ seo = SEO.objects.first()
 def index(request):
     context = {
         'title_tag': seo.title_tag,
-        'meta_description': seo.meta_description,
+        'blogs': Blog.objects.all()[:3],
         'meta_keywords': seo.meta_keywords,
+        'remixes': Remix.objects.order_by("-pk"),
+        'meta_description': seo.meta_description,
         'latest_mix': Mix.objects.latest("release_date"),
     }
     return render(request, 'index.html', context)
