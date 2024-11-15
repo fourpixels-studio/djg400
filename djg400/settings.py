@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'playlists',
     'django_recaptcha',
     'remixes',
+    'django_summernote',
+    'blogs',
 ]
 
 MIDDLEWARE = [
@@ -172,3 +174,20 @@ SAFARICOM_PASSKEY = os.environ.get('SAFARICOM_PASSKEY')
 RECAPTCHA_PUBLIC_KEY = os.environ.get('RECAPTCHA_PUBLIC_KEY')
 RECAPTCHA_PRIVATE_KEY = os.environ.get('RECAPTCHA_PRIVATE_KEY')
 # recaptcha keys
+
+custom_file_limit = 20 * 1024 * 1024
+SUMMERNOTE_CONFIG = {
+    'attachment_filesize_limit': custom_file_limit,
+    'attachment_upload_to': 'blogs/attachments',
+    'width': '100%',
+    'height': 300,
+    'toolbar': [
+        ['style', ['style']],
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['fontsize', ['fontsize']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['insert', ['link', 'picture', 'video', 'hr']],
+        ['view', ['fullscreen', 'undo', 'redo']],
+    ],
+    'toolbarSticky': True
+}
