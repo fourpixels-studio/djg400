@@ -68,9 +68,12 @@ def account_signup(request):
                     messages.error(
                         request, "There was an error with authentication.")
             else:
-                for field, errors in register_user_form.errors.items():
-                    for error in errors:
-                        messages.error(request, error)
+                if 'captcha' in register_user_form.errors:
+                    messages.error(request, "Please complete the captcha.")
+                else:
+                    for field, errors in register_user_form.errors.items():
+                        for error in errors:
+                            messages.error(request, error))
         except ValidationError as e:
             messages.error(request, f"Error: {', '.join(e.messages)}")
     else:
