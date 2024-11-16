@@ -7,7 +7,7 @@
                     <img src="{% static 'logo/logo.svg' %}" style="height: 120px;" class="img-fluid">
                 </div>
                 <div class="col-6 col-md-2">
-                    <h5 class="grey-1">Quick Link</h5>
+                    <h5 class="grey-1">DJ G400</h5>
                     <ul class="nav flex-column">
                         <li class="nav-item mb-2"><a href="{% url 'index' %}" class="nav-link p-0">Home</a></li>
                         <li class="nav-item mb-2"><a href="{% url 'about' %}" class="nav-link p-0">About</a></li>
@@ -19,27 +19,28 @@
                     <ul class="nav flex-column">
                         <li class="nav-item mb-2"><a href="{% url 'mix_list' %}" class="nav-link p-0">Mixes</a></li>
                         <li class="nav-item mb-2"><a href="{% url 'playlists' %}" class="nav-link p-0">Playlists</a></li>
-                        <li class="nav-item mb-2"><a href="{% url 'mix_list' %}" class="nav-link p-0">Latest</a></li>
+                        <li class="nav-item mb-2"><a href="{% url 'remixes_list' %}" class="nav-link p-0">Remixes</a></li>
                     </ul>
                 </div>
                 <div class="col-6 col-md-2">
                     <h5 class="grey-1">Shop</h5>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="{% url 'shop' %}" class="nav-link p-0">Merchandise</a></li>
+                        <li class="nav-item mb-2"><a href="{% url 'shop' %}#remixes" class="nav-link p-0">Remixes</a></li>
+                        <li class="nav-item mb-2"><a href="{% url 'shop' %}#clothing" class="nav-link p-0">Clothing</a></li>
+                        <li class="nav-item mb-2"><a href="{% url 'shop' %}#wallpapers" class="nav-link p-0">Wallpapers</a></li>
                     </ul>
                 </div>
-
-                <div class="col-md-4">
-                    <form action="{% url 'newsletter' %}" method="POST" onsubmit="showSpinner()">
-                        {% csrf_token %}
-                        <h5 class="grey-1">Newsletter</h5>
-                        <p class="grey-2">Subscribe to get monthly digest of what's new and exciting from DJ G400</p>
-                        <div class="d-flex flex-column flex-sm-row w-100 gap-2">
-                            <label for="email" class="visually-hidden">Email address</label>
-                            <input required class="form-control me-2 border-0" name="email" id="email" type="email" placeholder="Email address" data-sb-validations="required,email" />
-                            <button class="btn btn-outline-light submit-btn" type="submit">Subscribe</button>
-                        </div>
-                    </form>
+                <div class="col-6 col-md-2">
+                    <h5 class="grey-1">Subscribe</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="{% url 'newsletter' %}" class="nav-link p-0">Newsletter</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-2">
+                    <h5 class="grey-1">Blogs</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="{% url 'blog_list' %}" class="nav-link p-0">Blogs</a></li>
+                    </ul>
                 </div>
             </div>
             <hr class="grey-2 mt-5">
