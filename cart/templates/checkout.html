@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container px-4 px-lg-0 py-5">
+    <form action="{% url 'buy_product' %}" method="POST" onsubmit="showSpinner()">
+        {% csrf_token %}
+        <!-- start of navigation -->
+        <header class="row justify-content-start">
+            <div class="col-sm-12 col-lg-6">
+                <div class="d-flex my-4 flex-row align-items-center justify-content-between flex-wrap">
+                    <button onclick="goBack()" class="no-btn"><i class="fa-solid fa-arrow-left-long fa-2xl"></i></button>
+                    <div class="col text-center align-items-center d-flex flex-row justify-content-center">
+                        <span class="rounded-pill p-2 fw-400 grey-3 badge me-2 border-color">01</span>
+                        <span class="grey-3 fw-400">Cart</span>
+                        <span class="grey-3 fw-400 ms-3"></span>
+                    </div>
+                    <div class="col text-center align-items-center d-flex flex-row justify-content-center">
+                        <span class="rounded-circle grey-4 p-2 fw-500 bg-white badge me-2">02</span>
+                        <span class="grey-1 fw-600">Checkout</span>
+                        <span class="grey-1 fw-600 ms-3"></span>
+                    </div>
+                    <div class="col text-center align-items-center d-flex flex-row justify-content-center">
+                        <span class="rounded-pill p-2 fw-400 grey-3 badge me-2 border-color">03</span>
+                        <span class="grey-3 fw-400">Payment</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- end of navigation -->
+        <section class="row gy-4 justify-content-between">
+            <!-- start of contact and delivery details -->
+            <div class="col-sm-12 col-lg-8">
+                <h1 class="text-white">Billing Address</h1>
+                <p class="grey-2 mb-3">Provide your contact information. This will be used to send your order</p>
+                <div class="form-floating mb-3">
+                    <input class="form-control rounded-3" type="text" name="first_name" id="id_first_name" placeholder="First Name" required>
+                    <label for="first_name">First Name</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control rounded-3" type="text" name="last_name" id="id_last_name" placeholder="Last Name" required>
+                    <label for="last_name">Last Name</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control rounded-3" type="email" name="email" id="id_email" placeholder="Email Address" required>
+                    <label for="email">Email Address</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control rounded-3" type="tel" name="phone_number" id="id_phone_number" placeholder="Phone Number" required>
+                    <label for="phone_number">Phone Number</label>
+                </div>
+                <input type="hidden" name="amount" value="{{ product.price }}">
+                <input type="hidden" name="product_id" value="{{ product.id }}">
+            </div>
+            <div class="col-sm-12 col-lg-4">
+                <div class="position-sticky" style="top: 5rem;">
+                    <div class="rounded-4 border-color p-3">
+                        <div class="d-flex flex-row gap-2 align-items-start mb-3">
+                            <img style="height: 80px; width: 80px; object-fit: cover" class="rounded-3 img-fluid" src="{{ product.img_sm.url }}" alt="{{ product.name }}'s Image"/>
+                            <div>
+                                <h6 class="fw-600 text-white">{{ product.name }} - {{ product.product_category.name }}</h6>
+                                <p class="grey-2">x 1</p>
+                            </div>
+                        </div>
+                        <hr class="grey-3">
+                        <div class="d-flex flex-row align-items-center justify-content-between">
+                            <span class="small grey-2">Subtotal</span>
+                            <span class="small grey-1">Ksh {{ product.price }}</span>
+                        </div>
+                        <div class="d-flex mb-3 mt-1 flex-row align-items-center justify-content-between">
+                            <span class="small grey-2">Discount</span>
+                            <span class="small grey-1">Ksh 0</span>
+                        </div>
+                        <div style="border-bottom: 2px dashed #ababab; width: 100%;"></div>
+                        <div class="d-flex justify-content-between mt-3">
+                            <h4 class="grey-1">Grand total</h4>
+                            <h4 class="fw-bold text-white">Ksh {{ product.price }}</h4>
+                        </div>
+                        <button id="submit-btn" type="submit" class="btn btn-primary rounded-4 w-100 btn-lg mt-2">
+                            <span id="submit-text">Pay Now</span>
+                            <span id="processing-text" class="d-none">Processing payment...</span>
+                            <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+<a href="{{ product.get_url }}" class="no-link">
+    <div class="rounded-3 d-flex flex-column gap-3" style="background-color: #141414; padding: 8px">
+        <picture>
+            <source media="(min-width: 1200px)" srcset="{{ product.img_lg.url }}">
+            <source media="(min-width: 992px)" srcset="{{ product.img_md.url }}">
+            <source media="(min-width: 576px)" srcset="{{ product.img_sm.url }}">
+            <img src="{{ product.img_md.url }}" alt="{{ product.name }}'s image" style="height: 236px; width: 100%; object-fit: cover" class="rounded-3">
+        </picture>
+        <div class="mt-2">
+            <h6 href="{{ product.get_url }}" class="mb-0 hover-underline grey-1 fw-500 font-alt">{{ product.name }}</h6>
+            <p class="my-0 grey-3 small fw-300">Type: {{ product.product_category }}</p>
+            <button class="btn mt-3 btn-outline-light w-100" style="border-radius: 10px;">View</button>
+        </div>
+    </div>
+</a>

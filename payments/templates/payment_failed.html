@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block body %}
+<main class="container px-4">
+    <div class="row justify-content-center my-5 py-5 align-items-center">
+        <div class="col-sm-12 col-lg-6 text-center">
+            <i style="font-size: 4rem;" class="fa-regular fa-circle-xmark text-danger"></i>
+            <h1 class="display-3 text-white mb-4 mt-3">Payment Failed!</h1>
+            <p class="grey-1 mb-4">Unfortunately, your payment for the <strong class="text-white">{{ order.description }}</strong> has failed. Please try again or <span><a href="{% url 'about' %}#contact" class="text-white">contact support</a></span> if the issue persists.</p>
+            <a href="{% url 'cart' slug=order.product.slug %}" class="btn btn-outline-light btn-lg px-5 mt-3 rounded-pill text-center">Visit Shop</a>
+        </div>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container px-lg-0 px-4 mb-5 pt-5">
+    <button onclick="goBack()" class="no-btn text-white mb-4 d-lg-none"><i class="fa-solid fa-xl fa-arrow-left"></i></button>
+    <div class="row gy-4 align-items-start justify-content-start">
+        {% if product.product_category.slug == "wallpaper" %}
+        <div class="col-12">
+            <img class="mb-3 img-fluid w-100" src="{{ product.img_lg.url }}" loading="lazy"/>
+        </div>
+        {% else %}
+        <div class="col-sm-12 col-lg-6">
+            <img style="height: 60vh; width: 100%; object-fit: cover;" class="mb-3 rounded-3 w-100" src="{{ product.img_lg.url }}" loading="lazy"/>
+            {% if product.product_category == "clothing" %}
+            <div class="d-flex flex-row flex-wrap gap-2">
+                <img src="{{ product.img_sm.url }}" alt="{{ product.name }}'s thumbnail" class="img-fluid rounded-2" style="height: 50px; width: 50px; object-fit: cover;">
+            </div>
+            {% endif%}
+        </div>
+        {% endif %}
+        <div class="col-sm-12 col-lg-6">
+            <div class="d-flex flex-column">
+                <h4 class="grey-1">{{ product.name }} - {{ product.product_category.name }}</h4>
+                <a href="{% url 'cart' slug=product.slug %}" class="btn btn-primary w-100 btn-lg rounded-5 mt-3">Buy Now</a>
+                <h3 class="grey-1 mt-4">Description</h3>
+                <p class="grey-2">{{ product.description }}</p>
+            </div>
+        </div>
+    </div>
+    {% if product.get_similar_products %}
+    <h3 class="grey-2 mt-5">You may also like</h3>
+    <div class="row mt-4 align-items-start justify-content-start g-3">
+        {% for product in product.get_similar_products %}
+        <div class="col-sm-6 col-lg-3">
+            {% include "components/product.html" %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
