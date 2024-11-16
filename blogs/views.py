@@ -3,7 +3,7 @@ from django.shortcuts import render
 from seo_management.models import SEO
 from frontend.utils import update_views
 
-blogs_seo = SEO.objects.get(pk=1)
+blogs_seo = SEO.objects.get(pk=2)
 
 
 def blog_detail(request, slug):
@@ -11,10 +11,10 @@ def blog_detail(request, slug):
     context = {
         "blog": blog,
         "meta_description": blog.summary,
-        "recent_blogs": Blog.objects.all(),
         "meta_thumbnail": blog.get_thumbnail,
         "title_tag": f"{blog.category} | {blog.title}",
         "meta_keywords": f"{blog.category}, {blogs_seo.meta_keywords}",
+        "recent_blogs": Blog.objects.order_by("-published_date").exclude(pk=blog.pk),
         "latest_articles": Blog.objects.filter(is_published=True).exclude(pk=blog.pk).order_by("-published_date")[:3],
         "trending_articles": Blog.objects.filter(is_published=True).exclude(pk=blog.pk).order_by('hit_count_generic')[:3],
     }
@@ -24,10 +24,10 @@ def blog_detail(request, slug):
 
 def blog_list(request):
     context = {
-        "blogs": Blog.objects.all(),
         "title_tag": blogs_seo.title_tag,
         "meta_keywords": blogs_seo.meta_keywords,
         "meta_thumbnail": blogs_seo.get_thumbnail,
         "meta_description": blogs_seo.meta_description,
+        "blogs": Blog.objects.order_by("-published_date"),
     }
     return render(request, "blog_list.html", context)
