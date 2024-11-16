@@ -1,8 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from products.models import Product
+from seo_management.models import SEO
 from .models import Album, Genre, Mix
 from frontend.utils import update_views
-from seo_management.models import SEO
-from shop.models import Product
+from django.shortcuts import render, get_object_or_404
 
 
 seo = SEO.objects.first()
