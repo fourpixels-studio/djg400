@@ -48,9 +48,14 @@ INSTALLED_APPS = [
     'seo_management',
     'playlists',
     'django_recaptcha',
-    'remixes',
     'django_summernote',
+    'remixes',
     'blogs',
+    'products',
+    'orders',
+    'cart',
+    'payments',
+    'emails',
 ]
 
 MIDDLEWARE = [
@@ -191,3 +196,10 @@ SUMMERNOTE_CONFIG = {
     ],
     'toolbarSticky': True
 }
+
+SITE_DOMAIN = "https://www.djg400.com/"
+
+PESAPAL_CONSUMER_KEY = os.environ.get('PESAPAL_CONSUMER_KEY')
+PESAPAL_CONSUMER_SECRET = os.environ.get('PESAPAL_CONSUMER_SECRET')
+DEMO_PESAPAL_CONSUMER_KEY = os.environ.get('DEMO_PESAPAL_CONSUMER_KEY')
+DEMO_PESAPAL_CONSUMER_SECRET = os.environ.get('DEMO_PESAPAL_CONSUMER_SECRET')
