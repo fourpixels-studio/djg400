@@ -1,8 +1,10 @@
 <a href="{{ blog.get_url}}" class="no-btn">
-    <img class="img-fluid rounded-2 mb-3" src="{{ blog.meta_thumbnail.url }}" alt="{{ blog.title }}'s thumbnail">
+    <div style="position: relative; width: 100%; padding-top: 56.25%; overflow: hidden; border-radius: 0.5rem;" class="mb-3">
+        <img class="rounded-2" src="{{ blog.meta_thumbnail.url }}" alt="{{ blog.title }}'s thumbnail" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+    </div>
     <div class="d-flex flex-column justify-content-between">    
         <h6 class="text-white hover-underline">{{ blog.title|truncatechars:88 }}</h6>
-        <small class="small grey-2 mb-3 d-none d-lg-block">{{ blog.summary|truncatechars:100 }}</small>
+        <small class="small grey-2 mb-3 d-none d-lg-block">{{ blog.summary|truncatechars:82 }}</small>
         <p class="mb-0 text-white hover-underline">Read more <span><i style="font-size: .6rem;" class="fa-solid fa-chevron-right"></i></span></p>
     </div>
 </a>

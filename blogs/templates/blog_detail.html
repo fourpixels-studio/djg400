@@ -30,14 +30,18 @@
             </div>
             <div class="col-sm-12 col-md-4">
                 <div class="position-sticky" style="top: 5rem;">
+                    <hr class="grey-3 mt-0">
+                    <h3 class="grey-1 mb-4">Read recent blogs</h3>
                     {% for blog in recent_blogs %}
-                    {% include "components/blog_small_landscape_card.html" %}
+                    <div class="mb-3">
+                        {% include "components/blog_small_landscape_card.html" %}
+                    </div>
                     {% endfor %}
                 </div>
             </div>
         </div>
     </div>
-    <section class="px-0 py-5 mt-5" style="background-color: #141414;">
+    <section class="px-0 py-5" style="background-color: #141414; margin-top: 5rem">
         {% include "components/newsletter_banner.html" %}
     </section>
 </main>
@@ -45,9 +49,18 @@
     var article = document.getElementById("article-post");
     if (article) {
         var img_elements = article.getElementsByTagName("img");
+        var iframe_elements = article.getElementsByTagName("iframe");
         for (var i = 0; i < img_elements.length; i++) {
-        img_elements[i].classList.add("img-fluid");
-        img_elements[i].classList.add("w-100");
+            img_elements[i].classList.add("img-fluid");
+            img_elements[i].classList.add("w-100");
+        }
+        for (var i = 0; i < iframe_elements.length; i++) {
+            var wrapper = document.createElement("div");
+            wrapper.classList.add("ratio");
+            wrapper.classList.add("ratio-16x9");
+            iframe_elements[i].parentNode.insertBefore(wrapper, iframe_elements[i]);
+            wrapper.appendChild(iframe_elements[i]);
+            iframe_elements[i].classList.remove("img-fluid");
         }
     }
 </script>

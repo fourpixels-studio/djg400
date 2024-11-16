@@ -2,7 +2,9 @@
 <div class="row g-4 justify-content-between align-items-center">
     <div class="col-md-4 col-sm-12">
         <a href="{{ blog.get_url }}" class="no-btn">
-            <img class="img-fluid rounded-2" src="{{ blog.meta_thumbnail.url }}" alt="{{ blog.title }}'s thumbnail">
+            <div style="position: relative; width: 100%; padding-top: 56.25%; overflow: hidden; border-radius: 0.5rem;">
+                <img class="rounded-2" src="{{ blog.meta_thumbnail.url }}" alt="{{ blog.title }}'s thumbnail" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+            </div>
         </a>
     </div>
     <div class="col-md-8 col-sm-12">
