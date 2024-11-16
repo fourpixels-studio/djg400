@@ -2,7 +2,10 @@ asgiref==3.8.1
 beautifulsoup4==4.12.3
 bleach==6.2.0
 bs4==0.0.2
+certifi==2024.8.30
+charset-normalizer==3.4.0
 colorthief==0.2.1
+defusedxml==0.7.1
 Django==5.0.6
 django-dotenv==1.4.2
 django-etc==1.4.0
@@ -10,8 +13,14 @@ django-hitcount==1.3.5
 django-recaptcha==4.0.0
 django-resized==1.0.2
 django-summernote==0.8.20.0
+fonttools==4.55.0
+fpdf2==2.8.1
+idna==3.10
 pillow==11.0.0
 python-dotenv==1.0.1
+qrcode==8.0
+requests==2.32.3
 soupsieve==2.6
 sqlparse==0.5.0
+urllib3==2.2.3
 webencodings==0.5.1
