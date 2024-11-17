@@ -8,15 +8,20 @@ blogs_seo = SEO.objects.get(pk=2)
 
 def blog_detail(request, slug):
     blog = Blog.objects.get(slug=slug)
+    keywords = [
+        keyword.strip()
+        for keyword in blog.keywords.split(',')
+        if keyword.strip()
+    ]
     context = {
         "blog": blog,
+        "keywords": keywords,
         "meta_description": blog.summary,
         "meta_thumbnail": blog.get_thumbnail,
         "title_tag": f"{blog.category} | {blog.title}",
-        "meta_keywords": f"{blog.category}, {blogs_seo.meta_keywords}",
-        "recent_blogs": Blog.objects.order_by("-published_date").exclude(pk=blog.pk),
-        "latest_articles": Blog.objects.filter(is_published=True).exclude(pk=blog.pk).order_by("-published_date")[:3],
-        "trending_articles": Blog.objects.filter(is_published=True).exclude(pk=blog.pk).order_by('hit_count_generic')[:3],
+        "meta_keywords": f"{blog.category}, {blog.keywords}, {blogs_seo.meta_keywords}",
+        "recent_blogs": Blog.objects.filter(is_published=True).exclude(pk=blog.pk).order_by("-published_date")[:5],
+        "most_popular_articles": Blog.objects.filter(is_published=True).exclude(pk=blog.pk).order_by('hit_count_generic')[:5],
     }
     update_views(request, blog)
     return render(request, "blog_detail.html", context)
