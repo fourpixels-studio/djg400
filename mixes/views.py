@@ -1,6 +1,6 @@
 from products.models import Product
-from seo_management.models import SEO
 from .models import Album, Genre, Mix
+from seo_management.models import SEO
 from frontend.utils import update_views
 from django.shortcuts import render, get_object_or_404
 
@@ -22,20 +22,6 @@ def mix_list(request):
     return render(request, 'mix_list.html', context)
 
 
-def video_mix_list(request):
-    context = {
-        'title_tag': "Video Mixes",
-        'meta_description': seo.meta_description,
-        'meta_keywords': seo.meta_keywords,
-        'meta_thumbnail': seo.get_thumbnail,
-        'mixes': Mix.objects.order_by("-pk"),
-        'latest_mix': Mix.objects.latest("release_date"),
-        'albums': Album.objects.all(),
-        'genres': Genre.objects.all(),
-    }
-    return render(request, 'video_mix_list.html', context)
-
-
 def filtered_albums(request, slug):
     album = get_object_or_404(Album, slug=slug)
     context = {
@@ -47,11 +33,10 @@ def filtered_albums(request, slug):
         'title_tag': f'Showing all {album} Mixes',
         'meta_description': f'Showing all {album} mixes from DJ G400.',
         'album': album,
-        'cover_image': album.image,
         'meta_keywords': seo.meta_keywords,
     }
     update_views(request, album)
-    return render(request, 'filtered_mixes.html', context)
+    return render(request, 'mix_list.html', context)
 
 
 def filtered_genres(request, slug):
@@ -64,11 +49,10 @@ def filtered_genres(request, slug):
         'title_tag': f'Showing all {genre} Mixes',
         'meta_description': f'Showing all {genre} mixes from DJ G400.',
         'genre': genre,
-        'cover_image': genre.image,
         'meta_keywords': seo.meta_keywords,
     }
     update_views(request, genre)
-    return render(request, 'filtered_mixes.html', context)
+    return render(request, 'mix_list.html', context)
 
 
 def audio_mix_detail(request, slug):
@@ -109,12 +93,25 @@ def video_mix_detail(request, slug):
     }
     update_views(request, mix)
     return render(request, 'audio_mix_detail.html', context)
-
+    
+    
+def video_mix_list(request):
+    context = {
+        'title_tag': "Video Mixes",
+        'meta_description': seo.meta_description,
+        'meta_keywords': seo.meta_keywords,
+        'meta_thumbnail': seo.get_thumbnail,
+        'mixes': Mix.objects.order_by("-pk"),
+        'latest_mix': Mix.objects.latest("release_date"),
+        'albums': Album.objects.all(),
+        'genres': Genre.objects.all(),
+    }
+    return render(request, 'video_mix_list.html', context)
+    
 def search_mixes(request):
-    meta_description = f'Showing "{request.GET.get("q")}" results in DJ G400. {seo.meta_description}'
     context = {
         "title_tag": f'"{request.GET.get("q")}" results',
-        'meta_description': meta_description,
+        'meta_description': seo.meta_description,
         'meta_keywords': seo.meta_keywords,
     }
-    return render(request, 'search_mixes.html', context)
+    return render(request, 'mix_list.html', context)
