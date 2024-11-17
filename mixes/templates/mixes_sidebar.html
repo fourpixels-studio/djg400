@@ -1,0 +1,42 @@
+{% load static %}
+<div class="d-flex flex-column">
+    <a href="{% url 'mix_list' %}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <span class="fs-4">Mixes</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+            <a href="{% url 'mix_list' %}" class="nav-link active" aria-current="page"><i class="fa-solid fa-play me-2"></i> Latest Mixes</a>
+        </li>
+        <li>
+            <a href="{% url 'mix_list' %}" class="nav-link text-white"><i class="fa-solid fa-music me-2"></i> Playlists</a>
+        </li>
+        <li>
+            <a href="{% url 'mix_list' %}" class="nav-link text-white"><i class="fa-solid fa-icons me-2"></i> Genres</a>
+        </li>
+    </ul>
+    {% if request.user.is_superuser %}
+    <hr>
+    <div class="dropdown">
+        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdown{{ request.user.username }}" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="{% static 'img/djg400-blog-thumbnail.jpg' %}" alt="DJ G400's Photo" width="32" height="32" class="rounded-circle me-2">
+            <strong>{{ request.user.username }}</strong>
+        </a>
+        <ul class="dropdown-menu bg-gradient-down text-small shadow" aria-labelledby="dropdown{{ request.user.username }}">
+            <li><a class="dropdown-item" href="#">New Playlist</a></li>
+            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li><a class="dropdown-item" href="#">Profile</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Sign out</a></li>
+        </ul>
+    </div>
+    {% endif %}
+    <hr>
+    <form method="GET" action="{% url 'search_mixes' %}" onsubmit="showSpinner()" class="input-group">
+        <input required placeholder="Search mixes..." type="text" class="form-control bg-dark border-color" name="q" value="{{ query }}">
+        <button id="submit-btn" type="submit" class="btn btn-outline-light" id="search-addon" value="Search" type="submit" aria-describedby="search">
+            <span id="submit-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+            <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+        </button>
+    </form>
+</div>
