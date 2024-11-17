@@ -1,6 +1,7 @@
 import math
 from django.db import models
 from bs4 import BeautifulSoup
+from django.db.models import Q
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
@@ -12,19 +13,16 @@ from django.contrib.contenttypes.fields import GenericRelation
 class Blog(models.Model):
     title = models.TextField(blank=True, null=True)
     summary = models.TextField(blank=True, null=True)
-    cover_image = models.ImageField(
-        upload_to="blog_images/", blank=True, null=True)
+    cover_image = models.ImageField(upload_to="blog_images/", blank=True, null=True)
     category = models.CharField(max_length=100, blank=True, null=True)
     content = models.TextField(blank=True, null=True)
-    meta_thumbnail = ResizedImageField(
-        size=[1200, 600], quality=75, upload_to='thumbnails/', blank=True, null=True)
-    published_date = models.DateTimeField(
-        default=timezone.now, blank=True, null=True)
+    keywords = models.TextField(blank=True, null=True)
+    meta_thumbnail = ResizedImageField(size=[1200, 600], quality=75, upload_to='thumbnails/', blank=True, null=True)
+    published_date = models.DateTimeField(default=timezone.now, blank=True, null=True)
     date = models.DateTimeField(default=timezone.now)
     is_published = models.BooleanField(default=False)
     slug = models.SlugField(unique=True, blank=True, null=True)
-    hit_count_generic = GenericRelation(
-        HitCount, object_id_field='object_pk', related_query_name='hit_count_generic_relation')
+    hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk', related_query_name='hit_count_generic_relation')
     read_time = models.IntegerField(blank=True, null=True, editable=False)
 
     def calculate_read_time(self):
@@ -66,8 +64,23 @@ class Blog(models.Model):
 
     @property
     def get_related_blogs(self):
-        if self.category:
-            articles = Blog.objects.filter(
-                category=self.category, is_published=True).exclude(pk=self.pk)
-            return articles
+        if self.keywords:
+            keywords = [
+                item.strip()
+                for item in self.keywords.split(',')
+                if item.strip()
+            ]
+            query = Q()
+            for keyword in keywords:
+                query |= Q(keywords__icontains=keyword)
+
+            blogs = Blog.objects.filter(query).exclude(
+                pk=self.pk, is_published=True).order_by("-published_date")
+            if blogs:
+                return blogs
+            else:
+                category_query = Q(category__icontains=self.category)
+                related_category_blogs = Blog.objects.filter(category_query).exclude(
+                    pk=self.pk, is_published=True).order_by("-published_date")
+            return related_category_blogs
         return None
