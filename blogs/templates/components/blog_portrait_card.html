@@ -1,10 +1,23 @@
+{% load hitcount_tags %}
 <a href="{{ blog.get_url}}" class="no-btn">
-    <div style="position: relative; width: 100%; padding-top: 56.25%; overflow: hidden; border-radius: 0.5rem;" class="mb-3">
-        <img class="rounded-2" src="{{ blog.meta_thumbnail.url }}" alt="{{ blog.title }}'s thumbnail" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
-    </div>
-    <div class="d-flex flex-column justify-content-between">    
-        <h6 class="text-white hover-underline">{{ blog.title|truncatechars:88 }}</h6>
-        <small class="small grey-2 mb-3 d-none d-lg-block">{{ blog.summary|truncatechars:82 }}</small>
-        <p class="mb-0 text-white hover-underline">Read more <span><i style="font-size: .6rem;" class="fa-solid fa-chevron-right"></i></span></p>
+    <div class="row g-3 row-cols-2 align-items-center">
+        <div class="col-sm-6 col-md-12">
+            <div style="position: relative; width: 100%; padding-top: 56.25%; overflow: hidden; border-radius: 0.5rem;" class="mb-3">
+                <img class="rounded-2" src="{{ blog.meta_thumbnail.url }}" alt="{{ blog.title }}'s thumbnail" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-12">
+            <div class="d-flex flex-column justify-content-between">    
+                <h6 class="text-white hover-underline">{{ blog.title|truncatechars:77 }}</h6>
+                <small class="small grey-2 mb-3 d-none d-lg-block">{{ blog.summary|truncatechars:77 }}</small>
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                    <p class="my-0 text-white hover-underline">Read more <span><i style="font-size: .6rem;" class="fa-solid fa-chevron-right"></i></span></p>
+                    {% if request.user.is_superuser  %}
+                    <small class="my-0 grey-2 fw-300">Read {% get_hit_count for blog %} times</small>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </div>
 </a>
+
