@@ -1,10 +1,16 @@
-<div class="d-flex flex-row gap-2 align-items-center">
-    <div class="col-4">
-        <div style="position: relative; width: 100%; padding-top: 56.25%; overflow: hidden; border-radius: 0.5rem;">
-            <img class="rounded-2" src="{{ blog.meta_thumbnail.url }}" alt="{{ blog.title }}'s thumbnail" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+{% load hitcount_tags %}
+<a href="{{ blog.get_url }}" class="no-link">
+    <div class="d-flex flex-row gap-2 align-items-center">
+        <div class="col-4">
+            <div style="position: relative; width: 100%; padding-top: 56.25%; overflow: hidden; border-radius: 0.5rem;">
+                <img class="rounded-2" src="{{ blog.meta_thumbnail.url }}" alt="{{ blog.title }}'s thumbnail" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+            </div>
+        </div>
+        <div class="col-8">
+            <small class="my-0 small grey-1 hover-underline">{{ blog.title|truncatechars:88 }}</small>
+            {% if request.user.is_superuser  %}
+            <small class="my-0 grey-2 fw-300"> | Read {% get_hit_count for blog %} times</small>
+            {% endif %}
         </div>
     </div>
-    <div class="col-8">
-        <small class="my-0 small grey-1 hover-underline">{{ blog.title|truncatechars:88 }}</small>
-    </div>
-</div>
+</a>
