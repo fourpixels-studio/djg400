@@ -1,3 +1,4 @@
+{% load hitcount_tags %}
 {% load custom_filters %}
 <div class="row g-4 justify-content-between align-items-center">
     <div class="col-md-4 col-sm-12">
@@ -16,6 +17,9 @@
                     <div class="d-flex flex-row gap-4 align-items-center">
                         <small class="small grey-2">{{ blog.published_date|date:"M j, Y"}}</small>
                         <small class="small badge bg-muted grey-2">{{ blog.category }}</small>
+                        {% if request.user.is_superuser  %}
+                        <small class="my-0 grey-2 fw-300"> Read {% get_hit_count for blog %} times</small>
+                        {% endif %}
                     </div>
                     <small class="hover-underline small">Read more <span><i style="font-size: .6rem;" class="fa-solid fa-chevron-right"></i></span></small>
                 </div>
