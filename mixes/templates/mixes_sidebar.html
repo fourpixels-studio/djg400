@@ -32,11 +32,11 @@
     </div>
     {% endif %}
     <hr>
-    <form method="GET" action="{% url 'search_mixes' %}" onsubmit="showSpinner()" class="input-group">
-        <input required placeholder="Search mixes..." type="text" class="form-control bg-dark border-color" name="q" value="{{ query }}">
-        <button id="submit-btn" type="submit" class="btn btn-outline-light" id="search-addon" value="Search" type="submit" aria-describedby="search">
+    <form method="GET" action="{% url 'search_mixes' %}" onsubmit="showSpinner()" class="input-group border-color bg-grey rounded-2">
+        <button id="submit-btn" type="submit" class="no-btn" id="search-addon" value="Search" type="submit" aria-describedby="search">
             <span id="submit-text"><i class="fa-solid fa-magnifying-glass"></i></span>
             <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
         </button>
+        <input required placeholder="Search mixes..." type="text" class="form-control bg-grey border-0" name="q" value="{{ query }}">
     </form>
 </div>
