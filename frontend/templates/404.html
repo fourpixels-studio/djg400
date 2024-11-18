@@ -1,18 +1,23 @@
 {% extends 'base.html' %}
 {% block body %} 
-<section class="error-content text-center">
-    <div class="error-wrapper mb-5">
-        <h1 class="display-1 text-primary">404</h1>
-        {% if exception %}
-            <h1 class="mb-4">Error: {{ exception }}</h1>
-        {% else %}
-            <h1 class="mb-4">Page Not Found</h1>
-        {% endif %}
-        <p class="mb-4">
-            We’re sorry, the page you have looked for does not exist in our website! <br>
-            Maybe go to our home page or try to use a search?
-        </p>
-        <a class="btn btn-primary rounded-pill py-3 px-5" href="{% url 'index' %}">Go Back To Home</a>
-    </div>
-</section>
+<main class="container px-lg-0 px-4 my-5 fadeIn">
+    <section class="row justify-content-center">
+        <div class="col-sm-12 col-lg-7 text-center">
+            <h1 class="text-primary fw-bold display-4" style="font-size: 10rem;">404</h1>
+            {% if exception %}
+            <h1 class="mb-2 font-alt grey-1">{{ exception }}</h1>
+            {% else %}
+            <h1 class="mb-2 font-alt grey-1">Page Not Found</h1>
+            {% endif %}
+            <p class="mb-4 grey-1">
+                Look's like we are missing some page, or you typed <br>
+                something wrong in the URL, here's a way to get back &#8595;
+            </p>
+            <div class="d-flex flex-row flex-wrap gap-3 align-items-center justify-content-center">
+                <a class="btn btn-light rounded-pill px-5 btn-lg" href="{% url 'index' %}">Go Home</a>
+                <a class="btn btn-outline-light rounded-pill px-5 btn-lg" href="{% url 'about' %}#contact">Contact</a>
+            </div>
+        </div>
+    </section>
+</main>
 {% endblock %}
