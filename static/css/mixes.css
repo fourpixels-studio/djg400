@@ -276,3 +276,65 @@
     display: inline-block;
     vertical-align: top;
 }
+
+.genre-filter {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    padding: 10px 0;
+}
+
+.genres-container {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px;
+    white-space: nowrap;
+    flex-grow: 1;
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer */
+}
+
+.genres-container::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+}
+
+.genre-item {
+    padding: 8px 16px;
+    border: 1px solid #282828;
+    background-color: #282828;
+    white-space: nowrap;
+    cursor: pointer;
+    color: #c8c8c8;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.genre-item:hover {
+    background-color: #f8f8f8;
+    color: #282828;
+}
+
+.scroll-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 1.5rem;
+    color: #e0e0e0;
+    z-index: 2;
+    position: absolute;
+}
+
+.scroll-btn.left-btn {
+    left: 0;
+}
+
+.scroll-btn.right-btn {
+    right: 0;
+}
+.genre-item.active{
+    background-color: #f8f8f8;
+    color: #282828;
+}
