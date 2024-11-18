@@ -49,6 +49,7 @@ def filtered_genres(request, slug):
         'title_tag': f'Showing all {genre} Mixes',
         'meta_description': f'Showing all {genre} mixes from DJ G400.',
         'genre': genre,
+        'active_genre': genre.slug,
         'meta_keywords': seo.meta_keywords,
     }
     update_views(request, genre)
