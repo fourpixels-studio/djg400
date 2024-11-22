@@ -2,18 +2,28 @@
 {% block body %}
 <div class="container-fluid px-0">
     <div class="container px-4">
+        <hr class="grey-2 mt-5">
         <div class="row">
             <div class="col-sm-12 col-lg-7">
-                <h1 class="text-white mt-5 display-2 font-alt">Blogs</h1>
-                <p class="fw-300 mb-4 grey-1">Stay updated with album reviews, music news, exclusive DJ G400 insights, and all things fresh in the world of sound. Dive deeper into the beats that move you.</p>
+                <h1 class="text-white display-2 font-alt mt-0">Blogs</h1>
+                <p class="fw-300 mb-2 grey-1">Stay updated with album reviews, music news, exclusive DJ G400 insights, and all things fresh in the world of sound. Dive deeper into the beats that move you.</p>
             </div>
         </div>
+        <hr class="grey-2 mb-4">
         <div class="row g-4 mt-2 mb-5">
             {% for blog in blogs %}
-            <article class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+            <article class="col-sm-12 col-md-6 col-lg-4 col-xxl-3">
                 {% include "components/blog_portrait_card.html" %}
             </article>
             {% endfor %}
+            <div class="col-12 mt-5">
+                <div class="d-flex flex-row justify-content-center align-items-center gap-2">
+                    <h6 class="grey-2 my-0">Page</h6>
+                    {% for num_page in blogs.paginator.page_range %}
+                    <a class="btn btn-sm rounded-4 {% if num_page == blogs.number %}btn-light{% else %}btn-outline-light{% endif %}" href="?page={{ num_page }}">{{ num_page }}</a>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
     <section class="px-0 py-5 mt-5" style="background-color: #141414;">
