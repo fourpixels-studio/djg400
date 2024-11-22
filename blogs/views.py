@@ -2,6 +2,8 @@ from .models import Blog
 from django.shortcuts import render
 from seo_management.models import SEO
 from frontend.utils import update_views
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+
 
 blogs_seo = SEO.objects.get(pk=2)
 
@@ -28,11 +30,20 @@ def blog_detail(request, slug):
 
 
 def blog_list(request):
+    all_blogs = Blog.objects.filter(is_published=True).order_by("-published_date")
+    paginator = Paginator(all_blogs, 4)
+    page = request.GET.get("page", 1)
+
+    try:
+        blogs = paginator.page(page)
+    except (PageNotAnInteger, EmptyPage):
+        blogs = paginator.page(1)
+
     context = {
+        "blogs": blogs,
         "title_tag": blogs_seo.title_tag,
         "meta_keywords": blogs_seo.meta_keywords,
         "meta_thumbnail": blogs_seo.get_thumbnail,
         "meta_description": blogs_seo.meta_description,
-        "blogs": Blog.objects.order_by("-published_date"),
     }
     return render(request, "blog_list.html", context)
