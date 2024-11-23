@@ -34,21 +34,37 @@
                                 <i class="fas fa-chevron-right"></i>
                             </button>
                         </div>
-                        {% if num_results > 0 %}
-                            <h3 class="grey-1">Found {{ num_results }} items in "{{ query }}"</h3>
-                            {% for mix in results %}
+                        {% if num_results.mixes > 0 %}
+                            <h3 class="grey-1">Found {{ num_results.mixes }} mixes in "{{ query }}"</h3>
+                            {% for mix in results.mixes %}
                             <article class="col-sm-12 col-md-6 col-lg-4 col-xxl-3">
                                 {% include "components/mix_portrait_card.html" %}
                             </article>
                             {% endfor %}
-                        {% elif num_results == 0 %}
+                        {% endif %}
+                        {% if num_results.blogs > 0  %}
+                            <hr class="grey-3 mb-0">
+                            {% if num_results.blogs == 1  %}
+                            <h3 class="grey-1">Found {{ num_results.blogs }} blog in "{{ query }}"</h3>
+                            {% else %}
+                            <h3 class="grey-1">Found {{ num_results.blogs }} blogs in "{{ query }}"</h3>
+                            {% endif %}
+                            {% for blog in results.blogs %}
+                            <article class="col-sm-12 col-md-6 col-lg-4 col-xxl-3">
+                                {% include "components/blog_portrait_card.html" %}
+                            </article>
+                            {% endfor %}
+                        <hr class="grey-3 mt-4">
+                        {% endif %}
+                        {% if num_results.mixes == 0 and not random_mixes %}
                             <h3 class="grey-1">I've got nothing on "{{ query }}"</h3>
                             {% for mix in random_mixes %}
                             <article class="col-sm-12 col-md-6 col-lg-4 col-xxl-3">
                                 {% include "components/mix_portrait_card.html" %}
                             </article>
                             {% endfor %}
-                        {% else %}
+                        {% endif %}
+                        {% if mixes %}
                             {% for mix in mixes %}
                             <article class="col-sm-12 col-md-6 col-lg-4 col-xxl-3">
                                 {% include "components/mix_portrait_card.html" %}
@@ -59,6 +75,14 @@
                                 {% include "components/mix_portrait_card.html" %}
                             </article>
                             {% endfor %}
+                            <div class="col-12 mt-5">
+                                <div class="d-flex flex-row justify-content-center align-items-center gap-2">
+                                    <h6 class="grey-2 my-0">Page</h6>
+                                    {% for num_page in mixes.paginator.page_range %}
+                                    <a class="btn btn-sm rounded-4 {% if num_page == mixes.number %}btn-light{% else %}btn-outline-light{% endif %}" href="?page={{ num_page }}">{{ num_page }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
                         {% endif %}
                     </div>
                 </div>
