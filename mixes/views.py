@@ -3,21 +3,30 @@ from .models import Album, Genre, Mix
 from seo_management.models import SEO
 from frontend.utils import update_views
 from django.shortcuts import render, get_object_or_404
-
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 seo = SEO.objects.first()
 
 
 def mix_list(request):
+    all_mixes = Mix.objects.order_by("-pk")
+    paginator = Paginator(all_mixes, 9)
+    page = request.GET.get("page", 1)
+
+    try:
+        mixes = paginator.page(page)
+    except (PageNotAnInteger, EmptyPage):
+        mixes = paginator.page(1)
+
     context = {
+        'mixes': mixes,
         'title_tag': seo.title_tag,
-        'meta_description': seo.meta_description,
-        'meta_keywords': seo.meta_keywords,
-        'meta_thumbnail': seo.get_thumbnail,
-        'mixes': Mix.objects.order_by("-pk"),
-        'latest_mix': Mix.objects.latest("release_date"),
         'albums': Album.objects.all(),
         'genres': Genre.objects.all(),
+        'meta_keywords': seo.meta_keywords,
+        'meta_thumbnail': seo.get_thumbnail,
+        'meta_description': seo.meta_description,
+        'latest_mix': Mix.objects.latest("release_date"),
     }
     return render(request, 'mix_list.html', context)
 
@@ -108,11 +117,14 @@ def video_mix_list(request):
         'genres': Genre.objects.all(),
     }
     return render(request, 'video_mix_list.html', context)
-    
+
+
 def search_mixes(request):
+    meta_description = f'Showing "{request.GET.get("q")}" results in DJ G400. {seo.meta_description}'
     context = {
-        "title_tag": f'"{request.GET.get("q")}" results',
-        'meta_description': seo.meta_description,
+        'genres': Genre.objects.all(),
         'meta_keywords': seo.meta_keywords,
+        'meta_description': meta_description,
+        "title_tag": f'"{request.GET.get("q")}" results',
     }
     return render(request, 'mix_list.html', context)
