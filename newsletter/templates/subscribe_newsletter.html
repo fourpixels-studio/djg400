@@ -29,7 +29,11 @@
                     <div class="text-danger">{{ newsletter_form.captcha.errors }}</div>
                     {% endif %}
                 </div>
-                <button type="submit" class="btn submit-btn btn-outline-primary btn-lg my-4 w-100">Submit</button>
+                <button id="submit-btn" type="submit" class="btn submit-btn btn-outline-primary btn-lg my-4 w-100">
+                    <span id="submit-text">Subscribe</span>
+                    <span id="processing-text" class="d-none">Subscribing...</span>
+                    <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                </button>
             </form>
             <small class="grey-3">By subscribing, you agree to receive email notifications about new mixes, playlists, exclusive art, merchandise drops, and other updates. We respect your privacy and will never share your information with third parties. You can unsubscribe at any time.</small>
         </div>
