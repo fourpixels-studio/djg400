@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block body %}
+<main class="container pt-5 px-4">
+    <section class="row justify-content-center">
+        <div class="col-sm-12 col-lg-6">
+            {% if success %}
+            <div class=" text-center px-3 pb-5 pt-3">
+                <div class="display-4"><i class="fa-solid fa-circle-check text-primary"></i></div>
+                <h3 class="my-3 font-alt fw-500 text-white">You have successfully unsubscribed from the newsletter.</h3>
+                <a href="{% url 'index' %}" class="btn btn-primary px-5 btn-lg mt-3 w-50 rounded-pill">Done</a>
+            </div>
+            {% else %}
+            <form action="{% url 'unsubscribe_newsletter' %}" method="POST" onsubmit="showSpinner()">
+                {% csrf_token %}
+                <h2 class="text-white font-alt mt-3 fw-500">Unsubscribe from newsletter</h2>
+                <p class="font-alt grey-2 fw-300">Enter your email to unsubscribe from our newsletter.</p>
+                <div class="form-floating">
+                    {{ unsubscribe_form.email }}
+                    <label for="email" class="grey-1 fw-300">Email address</label>
+                    {% if unsubscribe_form.email.errors %}
+                        <div class="text-danger small mt-2">{{ newsletter_form.email.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="mt-3">
+                    {{ unsubscribe_form.captcha }}
+                    {% if unsubscribe_form.captcha.errors %}
+                        <div class="text-danger small">{{ unsubscribe_form.captcha.errors.1 }}</div>
+                    {% endif %}
+                </div>
+                <button id="submit-btn" type="submit" class="w-100 btn btn-outline-light btn-lg my-3 rounded-4">
+                    <span id="submit-text">Unsubscribe</span>
+                    <span id="processing-text" class="d-none">Unubscribing...</span>
+                    <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                </button>
+                <div class="text-center mt-4">
+                    <a href="{% url 'subscribe_newsletter' %}" class="small link grey-2">Click here to subscribe</a>
+                </div>
+            </form>
+            {% endif %}
+        </div>
+    </section>
+</main>
+{% endblock %}
