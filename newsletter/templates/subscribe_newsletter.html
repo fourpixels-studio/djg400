@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load static %}
 {% block body %}
 <div class="container p-4">
     {% if success %}
@@ -18,7 +17,7 @@
         <div class="col-sm-12 col-md-10 col-lg-6">
             <h1 class="display-6 text-white">DJ G400's Newsletter</h1>
             <p class="grey-2 my-3">Join my newsletter to stay updated on the latest mixes, playlists, exclusive art, merchandise drops, and more!</p>
-            <form action="{% url 'newsletter' %}" method="POST" onsubmit="showSpinner()">
+            <form action="{% url 'subscribe_newsletter' %}" method="POST" onsubmit="showSpinner()">
                 {% csrf_token %}
                 <div class="form-floating">
                     <input type="email" class="form-control rounded-4" name="email" id="id_email" placeholder="Email">
