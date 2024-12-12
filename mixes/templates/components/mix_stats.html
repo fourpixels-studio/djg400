@@ -2,7 +2,7 @@
     <div class="d-flex flex-row gap-2 align-items-center">
         <img src="{{ mix.album.image }}" style="height: 40px; width: 40px; border-radius: 50px; object-fit: cover" alt="{{ mix.album.name }}'s cover image">
         <p class="mb-0 grey-2">DJ G400</p>
-        <a href="{% url 'newsletter' %}" class="btn btn-light rounded-pill px-3 ms-4">Subscribe</a>
+        <a href="{% url 'subscribe_newsletter' %}" class="btn btn-light rounded-pill px-3 ms-4">Subscribe</a>
     </div>
     <div class="d-flex flex-row gap-3 align-items-center">
         <div id="like-btn" class="bg-grey py-2 rounded-pill px-3 grey-2 hover-like" data-mix-slug="{{ mix.slug }}" data-csrf-token="{{ csrf_token }}">
