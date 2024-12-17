@@ -9,20 +9,21 @@
             <i class="fa-solid fa-thumbs-up"></i> 
             <small class="mb-0">{{ mix.like_count }} Likes</small>
         </div>
-        <div class="bg-grey py-2 rounded-pill px-3 grey-2">
-            <i class="fa-solid fa-share"></i> 
-            <small class="mb-0">{{ mix.reshare_count }} Shares</small>
-        </div>
+        <!--<div class="bg-grey py-2 rounded-pill px-3 grey-2">-->
+        <!--    <i class="fa-solid fa-share"></i> -->
+        <!--    <small class="mb-0">{{ mix.reshare_count }} Shares</small>-->
+        <!--</div>-->
 
-        <div class="bg-grey rounded-circle" style="padding: 10px 15px;">
-            <div class="dropdown">
-                <i class="fa-solid fa-ellipsis dropdown-toggle"id="dropdownMixMenu" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMixMenu">
-                    <li><a class="dropdown-item" href="#">Share</a></li>
-                    <li><a class="dropdown-item" href="#">Save</a></li>
-                    <li><a class="dropdown-item" href="#">Download</a></li>
-                </ul>
-            </div>
+        <div class="dropdown bg-grey py-2 rounded-pill px-3 grey-2">
+            <button class="no-btn dropdown-toggle" id="dropdownMixMenu" data-bs-toggle="dropdown" aria-expanded="false">Share</button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMixMenu">
+                <li>
+                    <button class="no-btn dropdown-item" data-bs-toggle="modal" data-bs-target="#share"> <i class="fa-solid fa-link me-2"></i> Link</button>
+                </li>
+                <li><a class="dropdown-item" href="https://twitter.com/intent/tweet?url={{ mix.get_share_link }}&text={{ mix.title }}"> <i class="fa-brands fa-twitter me-2"></i> Twitter</a></li>
+                <li><a class="dropdown-item" href="https://www.facebook.com/sharer/sharer.php?u={{ mix.get_share_link }}"> <i class="fa-brands fa-facebook-f me-2"></i> Facebook</a></li>
+                <li><a class="dropdown-item" href="https://wa.me/?text={{ mix.get_share_link }}" target="_blank"> <i class="fa-brands fa-whatsapp me-2"></i> Whatsapp</a></li>
+            </ul>
         </div>
     </div>
 </div>
