@@ -34,7 +34,7 @@ body{
     position: absolute;
     height: 3px;
     width: 100%;
-    background: #30d5c8;
+    background: #f8f8f8;
     border-radius: 1px;
     opacity: 1;
     left: 0;
@@ -79,7 +79,7 @@ body{
 
 /* Color of the three lines */
 .navbar-toggler.collapsed .toggler-icon{
-    background: linear-gradient(263deg, #30d5c8, #30d5c8 100%);
+    background: linear-gradient(263deg, #f8f8f8, #e0e0e0 100%);
 }
 
 /* Navbar toggler button animation end */
@@ -166,19 +166,19 @@ body{
     color: #e0e0e0 !important;
 }
 .rounded-5{
-    border-radius: 0.75rem !important;
+    border-radius: 1rem !important;
 }
 .rounded-4{
-    border-radius: 0.5rem !important;
+    border-radius: 0.75rem !important;
 }
 .rounded-3{
-    border-radius: 0.375rem !important;
+    border-radius: 0.5rem !important;
 }
 .rounded-2{
-    border-radius: 0.25rem !important;
+    border-radius: 0.375rem !important;
 }
 .rounded-1{
-    border-radius: 0.2rem !important;
+    border-radius: 0.25rem !important;
 }
 
 .no-btn{
@@ -364,6 +364,7 @@ background-color: rgb(52, 89, 52);
     background-color: rgb(178, 66, 66);
     color: #fff;
 }
+
 .link{
     text-decoration: underline;
 }
