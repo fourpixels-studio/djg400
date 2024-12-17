@@ -23,8 +23,26 @@
                 </div>
                 <ul class="d-flex flex-row align-items-center gap-3 m-0 justify-content-end list-unstyled">
                     <li><small class="grey-1">{{ blog.read_time }} Min read</small></li>
-                    <li><i class="fa-brands fa-instagram fa-xl grey-2"></i></li>
-                    <li><i class="fa-brands fa-twitter fa-xl grey-2"></i></li>
+                    <li>
+                        <button class="no-btn" data-bs-toggle="modal" data-bs-target="#share">
+                            <i class="fa-solid fa-link hover-underline fa-lg grey-2"></i>
+                        </button>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/intent/tweet?url={{ blog.get_share_link }}&text={{ blog.title }}"target="_blank" class="no-link">
+                            <i class="fa-brands fa-twitter fa-xl grey-2"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ blog.get_share_link }}" target="_blank" class="no-link">
+                            <i class="fa-brands fa-facebook-f fa-lg grey-2"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://wa.me/?text={{ blog.get_share_link }}" target="_blank" class="no-link">
+                            <i class="fa-brands fa-whatsapp fa-xl grey-2"></i>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -35,7 +53,7 @@
             <div class="col-sm-12 col-lg-8">
                 <article id="article-post" class="text-white">{{ blog.content|safe }}</article>
                 <ul class="d-flex flex-row list-unstyled flex-wrap gap-2 mt-5 mb-0">
-                    <li><span class="btn btn-outline-light rounded-5 px-3 btn-sm">{{ blog.category }}</span></li>
+                    <li><span class="btn btn-light rounded-5 px-3 btn-sm">{{ blog.category }}</span></li>
                     {% for keyword in keywords %}
                     <li><span class="btn btn-outline-light rounded-5 px-3 btn-sm">{{ keyword }}</span></li>
                     {% endfor %}
@@ -77,6 +95,7 @@
         {% include "components/newsletter_banner.html" %}
     </section>
 </main>
+{% include "modals/share.html" %}
 <script>
     var article = document.getElementById("article-post");
     if (article) {
