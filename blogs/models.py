@@ -3,6 +3,7 @@ from django.db import models
 from bs4 import BeautifulSoup
 from django.db.models import Q
 from django.urls import reverse
+from django.conf import settings
 from django.utils import timezone
 from django.utils.text import slugify
 from hitcount.models import HitCount
@@ -84,3 +85,9 @@ class Blog(models.Model):
                     pk=self.pk, is_published=True).order_by("-published_date")
             return related_category_blogs
         return None
+
+    @property
+    def get_share_link(self):
+        current_site = settings.PUBLIC_URL
+        blog_url = self.get_url
+        return f"{current_site}{blog_url}"
