@@ -25,22 +25,22 @@
                     <li><small class="grey-1">{{ blog.read_time }} Min read</small></li>
                     <li>
                         <button class="no-btn" data-bs-toggle="modal" data-bs-target="#share">
-                            <i class="fa-solid fa-link hover-underline fa-lg grey-2"></i>
+                            <i class="fa-solid fa-link fa-lg grey-2 hover-underline"></i>
                         </button>
                     </li>
                     <li>
-                        <a href="https://twitter.com/intent/tweet?url={{ blog.get_share_link }}&text={{ blog.title }}"target="_blank" class="no-link">
-                            <i class="fa-brands fa-twitter fa-xl grey-2"></i>
+                        <a href="https://twitter.com/intent/tweet?url={{ blog.get_share_link }}&text={{ blog.title }} - DJ G400" target="_blank" class="no-link">
+                            <i class="fa-brands fa-twitter fa-xl grey-2 hover-underline"></i>
                         </a>
                     </li>
                     <li>
                         <a href="https://www.facebook.com/sharer/sharer.php?u={{ blog.get_share_link }}" target="_blank" class="no-link">
-                            <i class="fa-brands fa-facebook-f fa-lg grey-2"></i>
+                            <i class="fa-brands fa-facebook-f fa-lg grey-2 hover-underline"></i>
                         </a>
                     </li>
                     <li>
                         <a href="https://wa.me/?text={{ blog.get_share_link }}" target="_blank" class="no-link">
-                            <i class="fa-brands fa-whatsapp fa-xl grey-2"></i>
+                            <i class="fa-brands fa-whatsapp fa-xl grey-2 hover-underline"></i>
                         </a>
                     </li>
                 </ul>
