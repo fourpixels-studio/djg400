@@ -15,7 +15,9 @@
                             {% elif mix.get_share_link %}
                             <input type="text" class="form-control" id="shareLink" value="{{ mix.get_share_link }}" readonly>
                             {% elif remix.get_share_link %}
-                            <input type="text" class="form-control" id="shareLink" value="{{ remix.get_share_link }}" readonly>
+                            <input type="text" class="form-control" id="shareLink" value="{{ mix.get_share_link }}" readonly>
+                            {% elif event.get_share_link %}
+                            <input type="text" class="form-control" id="shareLink" value="{{ event.get_share_link }}" readonly>
                             {% endif %}
                             <div class="d-flex flex-row gap-2 justify-content-end mt-3">
                                 <button data-bs-dismiss="modal" type="button" class="btn px-4 btn-outline-light">Done</button>
