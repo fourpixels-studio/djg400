@@ -1,0 +1,28 @@
+{% load hitcount_tags %}
+{% load custom_filters %}
+<a href="{{ event.get_url }}" class="no-btn">
+    <div class="row g-3 align-items-center">
+        <div class="col-sm-6 col-md-12">
+            <div style="position: relative; width: 100%; padding-top: 125%; overflow: hidden; border-radius: 0.5rem;" class="mb-3">
+                <img class="rounded-2" src="{{ event.portrait_thumbnail.url }}" alt="{{ event.name }}'s thumbnail" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-12">
+            <div class="d-flex flex-column justify-content-between">
+                <div class="d-flex flex-row flex-wrap gap-2 align-items-center justify-content-between">
+                    <h5 class="text-white hover-underline">{{ event.name|truncatechars:77 }}</h5>
+                    {% if request.user.is_superuser  %}
+                    <small class="my-0 grey-2 fw-300">Seen {% get_hit_count for event %} times</small>
+                    {% endif %}
+                </div>
+                {% if event.is_upcoming %}
+                <p class="small grey-2 mb-3">Happening on {{ event.date }} at {{ event.venue }}, {{ event.location }}</p>
+                {% else %}
+                <p class="small grey-2 mb-3">Happened {{ event.date|round_timesince }} ago at {{ event.venue }}, {{ event.location }}</p>
+                {% endif %}
+                <button class="my-0 btn btn-light w-100">Grab Ticket <span><i class="ms-2 fa-solid fa-ticket"></i></span></button>
+            </div>
+        </div>
+    </div>
+</a>
+

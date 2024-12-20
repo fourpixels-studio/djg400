@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+{% load hitcount_tags %}
+<main class="container-fluid pt-5 px-0 fadeInUp">
+    <div class="d-flex flex-row align-items-start justify-content-center flex-wrap gap-4">
+        <div class="col-sm-12 col-md-4 col-xxl-6">
+            <button onclick="goBack()" class="no-btn mb-3 d-lg-none">
+                <i class="ms-3 text-white fa-solid fa-arrow-left-long fa-xl"></i>
+            </button>
+            <img src="{{ event.poster.url }}" alt="{{ event.name }}'s Poster" loading="lazy" class="img-fluid rounded"/>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <div class="container px-4">
+                <div class="row gy-2">
+                    <h1 class="fw-bold text-white mt-3">{{ event.name }}</h1>
+                    <div class="px-3">
+                        <hr class="grey-3">
+                    </div>
+                    <div class="d-flex flex-row align-items-center justify-content-start gap-4 flex-wrap">
+                        <h5 class="grey-2">
+                            <i class="fa-regular fa-calendar me-2"></i> 
+                            <span>{{ event.date }}</span>
+                        </h5>
+                        <h5 class="grey-2">
+                            <i class="fa-regular fa-clock me-2"></i> 
+                            <span>{{ event.start_time }}</span> - <span>{{ event.end_time }}</span>
+                        </h5>
+                        {% if request.user.is_superuser  %}
+                        <h5 class="grey-2">
+                            <i class="fa-solid fa-eye me-2"></i> 
+                            <span>Viewed {% get_hit_count for event %} times</span>
+                        </h5>
+                        {% endif %}
+                    </div>
+                    <h5 class="grey-2">
+                        <i class="fa-solid fa-location-dot me-2"></i> 
+                        <span>{{ event.venue }}</span>, 
+                        <span>{{ event.location }}</span>
+                    </h5>
+                    <div class="px-3">
+                        <hr class="grey-3">
+                    </div>
+                    <div class="row my-3">
+                        <h4 class="grey-1">About</h4>
+                        <div class="grey-1">{{ event.description|linebreaks }}</div>
+                    </div>
+                    {% if event.is_upcoming %}
+                    {% if event.ticket_link %}
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <a class="btn btn-lg w-100 py-2 btn-light rounded-2" href="{{ event.ticket_link }}" target="_blank">Buy Ticket</a>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% else %}
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <button class="btn btn-lg w-100 py-2 btn-outline-light rounded-2" disabled style="text-decoration: line-through; cursor: not-allowed;" type="submit">Buy Ticket</button>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="row justify-content-center mt-5">
+                        <ul class="d-flex flex-row flex-wrap align-items-center gap-3 justify-content-start list-unstyled">
+                            <li class="h5 grey-3 my-0">Share</li>
+                            <li>
+                                <button class="no-btn p-0" data-bs-toggle="modal" data-bs-target="#share">
+                                    <i class="fa-solid fa-link fa-lg hover-primary"></i>
+                                </button>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/intent/tweet?url={{ event.get_share_link }}&text={{ event.name }} - DJ G400 Events" target="_blank" class="no-link">
+                                    <i class="fa-brands fa-twitter fa-xl hover-primary"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ event.get_share_link }}" target="_blank" class="no-link">
+                                    <i class="fa-brands fa-facebook-f fa-lg hover-primary"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://wa.me/?text={{ event.get_share_link }}" target="_blank" class="no-link">
+                                    <i class="fa-brands fa-whatsapp fa-xl hover-primary"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://t.me/share/url?url={{ event.get_share_link }}&text={{ event.name }} - DJ G400 Events" target="_blank" class="no-link">
+                                    <i style="font-size: 1.25rem;" class="fa-solid fa-paper-plane hover-primary"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.threads.net/share?url={{ event.get_share_link }}" target="_blank" class="no-link">
+                                    <i style="font-size: 1.35rem;" class="fa-brands fa-threads hover-primary"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if images %}
+    <div class="container px-4 mt-5">
+        <hr class="grey-3">
+        <h3 class="grey-1 mb-4">Posters and Media</h3>
+        <div class="row row-cols-2 g-4">
+            {% for image in images %}
+            <div class="col-sm-6 col-lg-4">
+                <img src="{{ image }}" class="rounded img-fluid">
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    {% if upcoming_events %}
+    <div class="container px-4 mt-5">
+        <hr class="grey-3">
+        <h3 class="grey-1 mb-4 display-4">Upcoming Events</h3>
+        <div class="row g-4">
+            {% for event in upcoming_events %}
+            <article class="col-sm-12 col-md-6 col-lg-4 col-xxl-3">
+                {% include "components/event.html" %}
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</main>
+{% include "modals/share.html" %}
+{% endblock %}

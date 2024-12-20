@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container-fluid px-0 fadeInUp">
+    <div class="container px-4">
+        <hr class="grey-2 mt-5">
+        <div class="row">
+            <div class="col-sm-12 col-lg-7">
+                <h1 class="text-white display-2 font-alt mt-0">Explore events</h1>
+                <p class="fw-300 mb-2 grey-1">Check all past and upcoming events that DJ G400 will be performing.</p>
+            </div>
+        </div>
+        <hr class="grey-2 mb-4">
+        <div class="row g-4 mt-2 mb-5">
+            {% for event in events %}
+            <article class="col-sm-12 col-md-6 col-lg-4 col-xxl-3">
+                {% include "components/event.html" %}
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+    <section class="px-0 py-5 mt-5" style="background-color: #141414;">
+        {% include "components/newsletter_banner.html" %}
+    </section>
+</div>
+{% endblock %}
