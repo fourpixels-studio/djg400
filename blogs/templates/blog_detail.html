@@ -23,34 +23,50 @@
                 </div>
                 <ul class="d-flex flex-row align-items-center gap-3 m-0 justify-content-end list-unstyled">
                     <li><small class="grey-1">{{ blog.read_time }} Min read</small></li>
-                    <li>
-                        <button class="no-btn" data-bs-toggle="modal" data-bs-target="#share">
-                            <i class="fa-solid fa-link fa-lg grey-2 hover-underline"></i>
-                        </button>
-                    </li>
-                    <li>
-                        <a href="https://twitter.com/intent/tweet?url={{ blog.get_share_link }}&text={{ blog.title }} - DJ G400" target="_blank" class="no-link">
-                            <i class="fa-brands fa-twitter fa-xl grey-2 hover-underline"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ blog.get_share_link }}" target="_blank" class="no-link">
-                            <i class="fa-brands fa-facebook-f fa-lg grey-2 hover-underline"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://wa.me/?text={{ blog.get_share_link }}" target="_blank" class="no-link">
-                            <i class="fa-brands fa-whatsapp fa-xl grey-2 hover-underline"></i>
-                        </a>
-                    </li>
                 </ul>
             </div>
         </div>
     </div>
     <img src="{{ blog.cover_image.url }}" alt="{{ blog.title }}'s cover image" class="img-fluid w-100 text-center">
-    <div class="container px-4">
+    <div class="container-fluid px-4">
         <div class="row justify-content-between gx-4 gy-5 my-5">
-            <div class="col-sm-12 col-lg-8">
+            <div class="col-sm-12 col-lg-1">
+                <div class="position-sticky" style="top: 6rem;">
+                    <ul class="d-flex flex-lg-column flex-row flex-wrap align-items-center gap-3 justify-content-start list-unstyled">
+                        <li>
+                            <button class="no-btn p-0" data-bs-toggle="modal" data-bs-target="#share">
+                                <i class="fa-solid fa-link fa-lg hover-primary"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <a href="https://twitter.com/intent/tweet?url={{ blog.get_share_link }}&text={{ blog.title }} - DJ G400" target="_blank" class="no-link">
+                                <i class="fa-brands fa-twitter fa-xl hover-primary"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ blog.get_share_link }}" target="_blank" class="no-link">
+                                <i class="fa-brands fa-facebook-f fa-lg hover-primary"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://wa.me/?text={{ blog.get_share_link }}" target="_blank" class="no-link">
+                                <i class="fa-brands fa-whatsapp fa-xl hover-primary"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://t.me/share/url?url={{ blog.get_share_link }}&text={{ blog.title }} - DJ G400" target="_blank" class="no-link">
+                                <i style="font-size: 1.25rem;" class="fa-solid fa-paper-plane hover-primary"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.threads.net/share?url={{ blog.get_share_link }}" target="_blank" class="no-link">
+                                <i style="font-size: 1.35rem;" class="fa-brands fa-threads hover-primary"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-12 col-lg-7">
                 <article id="article-post" class="text-white">{{ blog.content|safe }}</article>
                 <ul class="d-flex flex-row list-unstyled flex-wrap gap-2 mt-5 mb-0">
                     <li><span class="btn btn-light rounded-5 px-3 btn-sm">{{ blog.category }}</span></li>
@@ -60,7 +76,7 @@
                 </ul>
             </div>
             <div class="col-sm-12 col-lg-4">
-                <div class="position-sticky" style="top: 5rem;">
+                <div class="position-sticky" style="top: 6rem;">
                     <hr class="grey-3 mt-0 mb-4">
                     <h3 class="grey-1">Related</h3>
                     {% if blog.get_related_blogs %}
