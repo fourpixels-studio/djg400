@@ -2,6 +2,7 @@ from .models import About
 from mixes.models import Mix
 from blogs.models import Blog
 from .forms import ContactForm
+from events.models import Event
 from remixes.models import Remix
 from django.contrib import messages
 from seo_management.models import SEO
@@ -18,6 +19,7 @@ def index(request):
         'meta_keywords': seo.meta_keywords,
         'remixes': Remix.objects.order_by("-pk"),
         'meta_description': seo.meta_description,
+        'events': Event.objects.order_by("-date")[:3],
         'latest_mix': Mix.objects.latest("release_date"),
     }
     return render(request, 'index.html', context)
