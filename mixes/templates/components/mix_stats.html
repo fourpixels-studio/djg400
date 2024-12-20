@@ -10,20 +10,57 @@
             <i class="fa-solid fa-thumbs-up"></i> 
             <small class="mb-0">{{ mix.like_count }} Likes</small>
         </div>
-        <!--<div class="bg-grey py-2 rounded-pill px-3 grey-2">-->
-        <!--    <i class="fa-solid fa-share"></i> -->
-        <!--    <small class="mb-0">{{ mix.reshare_count }} Shares</small>-->
-        <!--</div>-->
-
         <div class="dropdown bg-grey py-2 rounded-pill px-3 grey-2">
             <button class="no-btn dropdown-toggle" id="dropdownMixMenu" data-bs-toggle="dropdown" aria-expanded="false">Share</button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMixMenu">
                 <li>
-                    <button class="no-btn dropdown-item" data-bs-toggle="modal" data-bs-target="#share"> <i class="fa-solid fa-link me-2"></i> Link</button>
+                    <button class="no-btn dropdown-item" data-bs-toggle="modal" data-bs-target="#share"> 
+                        <div class="d-flex flex-row align-items-center justify-content-start gap-3">
+                            <div class="col-2 text-center"><i class="fa-solid fa-link"></i></div>
+                            <div class="col-8"><span class="text-start">Copy Link</span></div>
+                        </div>
+                    </button>
                 </li>
-                <li><a class="dropdown-item" href="https://twitter.com/intent/tweet?url={{ mix.get_share_link }}&text=Listen to '{{ mix.get_title }}' on DJ G400's Website"> <i class="fa-brands fa-twitter me-2"></i> Twitter</a></li>
-                <li><a class="dropdown-item" href="https://www.facebook.com/sharer/sharer.php?u={{ mix.get_share_link }}"> <i class="fa-brands fa-facebook-f me-2 hover-underline"></i> Facebook</a></li>
-                <li><a class="dropdown-item" href="https://wa.me/?text={{ mix.get_share_link }}" target="_blank"> <i class="fa-brands fa-whatsapp me-2 hover-underline"></i> Whatsapp</a></li>
+                <li>
+                    <a class="dropdown-item" href="https://twitter.com/intent/tweet?url={{ mix.get_share_link }}&text=Listen to '{{ mix.get_title }}' on DJ G400's Website"> 
+                        <div class="d-flex flex-row align-items-center justify-content-start gap-3">
+                            <div class="col-2 text-center"><i class="fa-brands fa-twitter"></i></div>
+                            <div class="col-8"><span class="text-start">Twitter</span></div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="https://www.facebook.com/sharer/sharer.php?u={{ mix.get_share_link }}"> 
+                        <div class="d-flex flex-row align-items-center justify-content-start gap-3">
+                            <div class="col-2 text-center"><i class="fa-brands fa-facebook-f"></i></div>
+                            <div class="col-8"><span class="text-start">Facebook</span></div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="https://wa.me/?text={{ mix.get_share_link }}" target="_blank"> 
+                        <div class="d-flex flex-row align-items-center justify-content-start gap-3">
+                            <div class="col-2 text-center"><i class="fa-brands fa-whatsapp"></i></div>
+                            <div class="col-8"><span class="text-start">Whatsapp</span></div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="https://t.me/share/url?url={{ mix.get_share_link }}&text={{ mix.title }} - DJ G400" target="_blank">
+                        <div class="d-flex flex-row align-items-center justify-content-start gap-3">
+                            <div class="col-2 text-center"><i class="fa-solid fa-paper-plane"></i></div>
+                            <div class="col-8"><span class="text-start">Telegram</span></div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="https://www.threads.net/share?url={{ mix.get_share_link }}" target="_blank">
+                        <div class="d-flex flex-row align-items-center justify-content-start gap-3">
+                            <div class="col-2 text-center"><i class="fa-brands fa-threads"></i></div>
+                            <div class="col-8"><span class="text-start">Threads</span></div>
+                        </div>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
