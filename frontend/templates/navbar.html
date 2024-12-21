@@ -11,19 +11,19 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav me-auto me-4 my-3 my-lg-0">
-                <li class="nav-item"><a class="nav-link me-lg-2" href="{% url 'mix_list' %}">Mixes</a></li>
+                <li class="nav-item"><a class="nav-link me-lg-2 {% if '/mixes/' in request.path %}text-primary{% endif %}" href="{% url 'mix_list' %}">Mixes</a></li>
                 <li class="nav-item">
-                    <div class="dropdown nav-link me-lg-2">
+                    <div class="dropdown nav-link me-lg-2 {% if '/remixes/' in request.path %}text-primary{% endif %} {% if '/playlists/' in request.path %}text-primary{% endif %}">
                         <a class="no-btn mb-2 mb-lg-0 dropdown-toggle hover"  id="dropdownAdmin" data-bs-toggle="dropdown" aria-expanded="false">Music</a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownAdmin">
-                            <li><a class="dropdown-item" href="{% url 'remixes_list' %}">Remixes</a></li>
-                            <li><a class="dropdown-item" href="{% url 'playlists' %}">Playlists</a></li>
+                            <li><a class="dropdown-item {% if '/remixes/' in request.path %}bg-light text-dark{% endif %}" href="{% url 'remixes_list' %}">Remixes</a></li>
+                            <li><a class="dropdown-item {% if '/playlists/' in request.path %}bg-light text-dark{% endif %}" href="{% url 'playlists' %}">Playlists</a></li>
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item"><a class="nav-link me-lg-3" href="{% url 'shop' %}">Shop</a></li>
-                <li class="nav-item"><a class="nav-link me-lg-3" href="{% url 'blog_list' %}">Blogs</a></li>
-                <li class="nav-item"><a class="nav-link me-lg-3" href="{% url 'event_list' %}">Events</a></li>
+                <li class="nav-item"><a class="nav-link me-lg-3 {% if '/shop/' in request.path %}text-primary{% endif %}" href="{% url 'shop' %}">Shop</a></li>
+                <li class="nav-item"><a class="nav-link me-lg-3 {% if '/blogs/' in request.path %}text-primary{% endif %}" href="{% url 'blog_list' %}">Blogs</a></li>
+                <li class="nav-item"><a class="nav-link me-lg-3 {% if '/events/' in request.path %}text-primary{% endif %}" href="{% url 'event_list' %}">Events</a></li>
             </ul>
             <button class="btn btn-light mb-2 me-2 rounded-2 mb-lg-0" data-bs-toggle="modal" data-bs-target="#searchModal">
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -48,15 +48,6 @@
                 <span class="d-flex align-items-center hover">
                     <i class="fa-solid fa-user me-2"></i>
                     <span>Log in</span>
-                </span>
-            </button>
-            {% endif %}
-            {% if '/shop/' in request.path %}
-            <button type="button" class="no-btn mb-2 mb-lg-0 position-relative" data-bs-toggle="modal" data-bs-target="#cartModal">
-                <i class="fa-solid grey-1 fa-shopping-cart fa-lg"></i>
-                <span id="shoppingCartBadge" style="font-size: .6rem;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary-color text-dark">
-                    0
-                    <span class="visually-hidden">cart items</span>
                 </span>
             </button>
             {% endif %}
