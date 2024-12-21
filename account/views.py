@@ -1,6 +1,8 @@
 from django.contrib import messages
 from .forms import CustomUserCreationForm
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
+from .email import send_user_verification_email
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
@@ -56,13 +58,19 @@ def account_signup(request):
         register_user_form = CustomUserCreationForm(request.POST)
         try:
             if register_user_form.is_valid():
+                email = register_user_form.cleaned_data.get('email')
+                existing_email = User.objects.filter(email=email).first()
+                if existing_email:
+                    messages.error(request, f"There is a user with that email, please use a dirrefent email!")
+                    return redirect("account_signup")
                 user = register_user_form.save()
                 username = register_user_form.cleaned_data.get('username')
                 password = register_user_form.cleaned_data.get('password1')
                 user = authenticate(username=username, password=password)
                 if user is not None:
                     login(request, user)
-                    messages.success(request, f"Welcome, {username}! You have successfully signed up.")
+                    messages.success(request, f"Welcome, {user.get_full_name()}! You have successfully signed up.")
+                    send_user_verification_email(user)
                     return redirect("index")
                 else:
                     messages.error(
@@ -73,7 +81,7 @@ def account_signup(request):
                 else:
                     for field, errors in register_user_form.errors.items():
                         for error in errors:
-                            messages.error(request, error))
+                            messages.error(request, error)
         except ValidationError as e:
             messages.error(request, f"Error: {', '.join(e.messages)}")
     else:
