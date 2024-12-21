@@ -2,22 +2,27 @@
 {% load static %}
 {% block body %}
 {% load hitcount_tags %}
-<main class="container-fluid pt-5 px-0 fadeInUp">
+<main class="container-fluid pt-5 px-0">
     <div class="d-flex flex-row align-items-start justify-content-center flex-wrap gap-4">
-        <div class="col-sm-12 col-md-4 col-xxl-6">
+        <div class="col-sm-12 col-lg-4">
             <button onclick="goBack()" class="no-btn mb-3 d-lg-none">
                 <i class="ms-3 text-white fa-solid fa-arrow-left-long fa-xl"></i>
             </button>
-            <img src="{{ event.poster.url }}" alt="{{ event.name }}'s Poster" loading="lazy" class="img-fluid rounded"/>
+            <picture class="fadeIn bg-black">
+                <source media="(min-width: 1200px)" srcset="{{ event.poster.url }}">
+                <source media="(min-width: 992px)" srcset="{{ event.poster.url }}">
+                <source media="(min-width: 576px)" srcset="{{ event.portrait_thumbnail.url }}">
+                <img src="{{ event.portrait_thumbnail.url }}" alt="{{ event.name }}'s Poster" loading="lazy"  class="img-fluid rounded w-100">
+            </picture>
         </div>
-        <div class="col-sm-12 col-md-6">
-            <div class="container px-4">
+        <div class="col-sm-12 col-lg-6 fadeInUp">
+            <div class="container w-100 px-4">
                 <div class="row gy-2">
-                    <h1 class="fw-bold text-white mt-3">{{ event.name }}</h1>
+                    <h1 class="fw-bold text-white">{{ event.name }}</h1>
                     <div class="px-3">
-                        <hr class="grey-3">
+                        <hr class="grey-3 my-1">
                     </div>
-                    <div class="d-flex flex-row align-items-center justify-content-start gap-4 flex-wrap">
+                    <div class="d-flex flex-row align-items-center mt-3 justify-content-start gap-4 flex-wrap">
                         <h5 class="grey-2">
                             <i class="fa-regular fa-calendar me-2"></i> 
                             <span>{{ event.date }}</span>
@@ -38,7 +43,7 @@
                         <span>{{ event.venue }}</span>, 
                         <span>{{ event.location }}</span>
                     </h5>
-                    <div class="px-3">
+                    <div class="px-3 my-1">
                         <hr class="grey-3">
                     </div>
                     <div class="row my-3">
@@ -106,9 +111,24 @@
         <div class="row row-cols-2 g-4">
             {% for image in images %}
             <div class="col-sm-6 col-lg-4">
-                <img src="{{ image }}" class="rounded img-fluid">
+                <img src="{{ image }}" class="rounded img-fluid image-thumbnail" data-index="{{ forloop.counter0 }}">
             </div>
             {% endfor %}
+        </div>
+    </div>
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4">
+                <div class="modal-body text-center p-0 position-relative">
+                    <img id="modalImage" class="img-fluid rounded w-100" alt="Preview">
+                    <button id="prevButton" class="no-btn position-absolute top-50 start-0 translate-middle-y">
+                        <i class="fa-solid fa-circle-chevron-left fa-2xl text-white"></i>
+                    </button>
+                    <button id="nextButton" class="no-btn position-absolute top-50 end-0 translate-middle-y">
+                        <i class="fa-solid fa-circle-chevron-right fa-2xl text-white"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
     {% endif %}
@@ -127,4 +147,5 @@
     {% endif %}
 </main>
 {% include "modals/share.html" %}
+<script src="{% static 'js/eventModal.js' %}"></script>
 {% endblock %}
