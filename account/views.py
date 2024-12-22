@@ -1,4 +1,6 @@
+from django.utils import timezone
 from django.contrib import messages
+from newsletter.models import Newsletter
 from .forms import CustomUserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
@@ -61,20 +63,31 @@ def account_signup(request):
                 email = register_user_form.cleaned_data.get('email')
                 existing_email = User.objects.filter(email=email).first()
                 if existing_email:
-                    messages.error(request, f"There is a user with that email, please use a dirrefent email!")
+                    messages.error(request, "Oops! It seems like this email is already registered with us. If you’ve forgotten your password, you can reset it to regain access.")
                     return redirect("account_signup")
                 user = register_user_form.save()
                 username = register_user_form.cleaned_data.get('username')
                 password = register_user_form.cleaned_data.get('password1')
                 user = authenticate(username=username, password=password)
+
                 if user is not None:
                     login(request, user)
-                    messages.success(request, f"Welcome, {user.get_full_name()}! You have successfully signed up.")
+                    try:
+                        subscription = Newsletter.objects.filter(email=email).first()
+                        if subscription:
+                            if subscription.consent == False:
+                                subscription.resubscribed_at = timezone.now()
+                                subscription.consent = True
+                                subscription.save()
+                        else:
+                            subscription = Newsletter.objects.create(email=email)
+                    except:
+                        subscription = None
+                    messages.success(request, f"Welcome aboard, {user.get_full_name()}! You are now 400 miles above the rest!")
                     send_user_verification_email(user)
                     return redirect("index")
                 else:
-                    messages.error(
-                        request, "There was an error with authentication.")
+                    messages.error(request, "There was an error with authentication.")
             else:
                 if 'captcha' in register_user_form.errors:
                     messages.error(request, "Please complete the captcha.")
