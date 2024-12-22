@@ -57,6 +57,16 @@ def get_email_backend(from_email):
             use_tls=False,
             use_ssl=True
         )
+    elif from_email == 'djg400@djg400.com':
+        return get_connection(
+            backend='django.core.mail.backends.smtp.EmailBackend',
+            host='mail.djg400.com',
+            port=465,
+            username='djg400@djg400.com',
+            password=os.environ.get('DJG400_EMAIL_PASSWORD'),
+            use_tls=False,
+            use_ssl=True
+        )
     elif from_email == 'localhost':
         return get_connection(
             backend='django.core.mail.backends.smtp.EmailBackend',
