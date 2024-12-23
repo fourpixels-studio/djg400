@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJ G400 Newsletter - {{ article.subject }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+</head>
+<body style="margin: 0; padding: 0; font-family: Space Grotesk, sans-serif; align-items: center; text-align: center">
+    <main style="width: 100%; max-width: 600px; margin: auto; padding: 20px;">
+        <img src="https://www.djg400.com/static/logo/g400.png" alt="DJ G400 Logo" style="height: 100px; width: auto; object-fit: cover; margin: 30px auto; text-align: center;">
+
+        <!-- Content Section -->
+        <section style="margin: 50px 0; display: flex; justify-content: center;">
+            <article style="font-size: 18px; line-height: 1.6; color: #1d1d1d; text-align: left; font-family: Space Grotesk, sans-serif ;">{{ content|safe }}</article>
+        </section>
+
+        <!-- Footer Section -->
+        <section style="margin-top: 100px; display: flex; justify-content: center;">
+            <div style="text-align: center; color: #585858; padding: 30px;background-color: #f9f9f9; border-radius: 12px">
+                <!-- Footer Content -->
+                <div style="padding-bottom: 20px; border-bottom: 1px solid #ddd;">
+                    <p style="margin: 0;">&#169;2025 DJ G400. All rights reserved.</p>
+                    <ul style="list-style: none; padding: 0; margin: 10px 0 0 0; display: inline-flex; gap: 10px; justify-content: center;">
+                        <li><a href="https://www.instagram.com/djg400.com/" style="color: #16675e; text-decoration: none; font-size: 1rem;">Instagram</a></li>
+                        <li><a href="https://podcasts.apple.com/ke/podcast/dj-g400-mixes/id1645709049" style="color: #16675e; text-decoration: none; font-size: 1rem; margin: auto 7px">Apple</a></li>
+                        <li><a href="https://www.youtube.com/channel/UC9HP_DqruMAplsz0-ynveaQ" style="color: #16675e; text-decoration: none; font-size: 1rem;">YouTube</a></li>
+                        <li><a href="https://x.com/djg400/" style="color: #16675e; text-decoration: none; font-size: 1rem; margin-left: 7px">Twitter</a></li>
+                    </ul>
+                </div>
+                <!-- Disclaimer Section -->
+                <div style="margin-top: 20px;">
+                    <p style="font-size: .9rem; color: #585858;">This email was sent to <a style="color: #16675e; text-decoration: none;" href="mailto:{{ subscriber_email }}">{{ subscriber_email }}</a> because you signed up at <a style="color: #16675e; text-decoration: none;" href="https://www.djg400.com/">djg400.com</a>. If you don't want to receive this type of emails anymore, you can <a href="https://www.djg400.com/newsletter/unsubscribe/" style="color: #16675e; text-decoration: none;">unsubscribe</a> at any time.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

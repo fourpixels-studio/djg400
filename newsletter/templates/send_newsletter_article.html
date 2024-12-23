@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% block body %}
+<form enctype="multipart/form-data" id="newsletterForm" action="{% url 'send_newsletter_article' %}" method="POST" onsubmit="showSpinner()">
+    {% csrf_token %}
+    <div class="container px-4">
+        <hr class="grey-1 my-5">
+        <div class="row justify-content-center align-items-start g-4">
+            <div class="col-sm-12 col-lg-8">
+                {{ newletter_article_form.as_p }}
+                <div class="text-center">
+                    <div class="btn btn-light rounded-4 btn-lg px-4" data-bs-toggle="modal" data-bs-target="#newsletterEmailsModal">Select Emails To Send</div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-lg-4">
+                <h4 class="grey-1">Previous newsletters</h4>
+                <ol class="list-group list-unstyled">
+                    {% for article in sent_newsletters %}
+                    <li class="list-group-item d-flex justify-content-between align-items-start" style="background-color: #141414;">
+                        <a href="{{ article.get_url }}" class="no-link">
+                            <div class="fw-300 text-white hover-underline">{{ article.subject }}</div>
+                            <span class="small grey-1">{{ article.date_sent }}</span>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="newsletterEmailsModal" tabindex="-1" aria-labelledby="newsletterEmailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content rounded-5">
+                <div class="modal-body bg-grey rounded-4">
+                    <div class="">
+                        <h2 class="modal-title text-white fw-500" id="newsletterEmailsModalLabel">Emails</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div id="all-emails" class="col-12">
+                        <input type="text" id="searchEmails" class="form-control" placeholder="Search emails...">
+                        <table class="table align-middle mt-4 table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="d-flex align-items-center fw-500"><input class="me-3 hover" type="checkbox" id="selectAll"><span class="grey-1">Email</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for newletter in newletters %}
+                                <tr>
+                                    <td>
+                                        <div class="d-flex flex-row justify-content-start gap-3 align-items-center">
+                                            <input type="checkbox" name="selected_emails" class="hover" value="{{ newletter.email }}">
+                                            <p class="my-0 grey-1">{{ newletter.email }}</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="float-end">
+                        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Close</button>
+                        <button id="submit-btn" type="submit" class="btn btn-light px-4">
+                            <span id="submit-text">Send Newsletter</span>
+                            <span id="processing-text" class="d-none">Sending...</span>
+                            <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    // Search all products
+    function searchEmails() {
+        // Declare variables
+        var input, filter, table, tbody, tr, td, i, txtValue;
+        input = document.getElementById("searchEmails");
+        filter = input.value.toUpperCase();
+        table = document.querySelector("#all-emails table");
+        tbody = table.querySelector("tbody");
+        tr = tbody.getElementsByTagName("tr");
+        // Loop through all table rows in tbody, and hide those that don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td"); // Select all td elements in the row
+            var found = false; // Flag to check if any match is found
+            for (var j = 0; j < td.length; j++) {
+                var column = td[j];
+                if (column) {
+                    txtValue = column.textContent || column.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        found = true;
+                        break; // Break the inner loop if match found in any column
+                    }
+                }
+            }
+            if (found) {
+                tr[i].style.display = ""; // Show the row if match found
+            } else {
+                tr[i].style.display = "none"; // Hide the row if no match found
+            }
+        }
+    }
+    // Attach event listener to the search input field
+    document.getElementById("searchEmails").addEventListener("keyup", searchEmails);
+    // Function to toggle all checkboxes
+    function toggleAllCheckboxes() {
+        var checkboxes = document.querySelectorAll('input[name="selected_emails"]');
+        var selectAllCheckbox = document.getElementById("selectAll");
+        checkboxes.forEach(function(checkbox) {
+        var row = checkbox.closest('tr');
+        if (row.style.display !== "none") {
+            checkbox.checked = selectAllCheckbox.checked;
+        }
+        });
+    }
+    // Attach event listener to the "Select All" checkbox
+    document.getElementById("selectAll").addEventListener("change", toggleAllCheckboxes);
+</script>
+{% endblock %}

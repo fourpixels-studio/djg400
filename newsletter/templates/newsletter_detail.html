@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-sm-12 col-lg-8">
+            <h1 class="text-white">{{ newsletter.subject }}</h1>
+            <small class="grey-2">Sent on {{ newsletter.get_date }} to {{ newsletter.num_emails_sent }} emails</small>
+            <hr class="grey-2">
+            <article id="blog-article" style="max-width: fit-content" class="row">
+                <div class="text-white">{{ newsletter.content|safe }}</div>
+            </article>
+        </div>
+    </div>
+</div>
+<script>
+    var article = document.getElementById("blog-article");
+    if (article) {
+        var img_elements = article.getElementsByTagName("img");
+        for (var i = 0; i < img_elements.length; i++) {
+        img_elements[i].classList.add("img-fluid");
+        }
+    }
+</script>
+{% endblock %}
