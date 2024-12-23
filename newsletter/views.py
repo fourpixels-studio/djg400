@@ -6,6 +6,7 @@ from .email import send_newsletter_email, send_newsletter_welcome_email
 from .forms import NewsletterForm, UnsubscribeForm, NewsletterArticleForm
 
 
+
 def subscribe_newsletter(request):
     if request.method == 'POST':
         newsletter_form = NewsletterForm(request.POST)
@@ -23,13 +24,17 @@ def subscribe_newsletter(request):
             else:
                 send_newsletter_welcome_email(email)
                 newsletter_form.save()
-                messages.success(request, "Successfully subscribed to our newsletter!")
-                return render(request, 'newsletter.html', {
+                return render(request, 'subscribe_newsletter.html', {
                     'newsletter_form': NewsletterForm(),
                     'success': True,
                 })
         else:
-            messages.error(request, "Please fix the errors below.")
+            if 'captcha' in newsletter_form.errors:
+                messages.error(request, "Please complete the captcha.")
+            else:
+                for field, errors in newsletter_form.errors.items():
+                    for error in errors:
+                        messages.error(request, error)
     else:
         newsletter_form = NewsletterForm()
 
