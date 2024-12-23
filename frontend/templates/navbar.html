@@ -14,8 +14,8 @@
                 <li class="nav-item"><a class="nav-link me-lg-2 {% if '/mixes/' in request.path %}text-primary{% endif %}" href="{% url 'mix_list' %}">Mixes</a></li>
                 <li class="nav-item">
                     <div class="dropdown nav-link me-lg-2 {% if '/remixes/' in request.path %}text-primary{% endif %} {% if '/playlists/' in request.path %}text-primary{% endif %}">
-                        <a class="no-btn mb-2 mb-lg-0 dropdown-toggle hover"  id="dropdownAdmin" data-bs-toggle="dropdown" aria-expanded="false">Music</a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownAdmin">
+                        <a class="no-btn mb-2 mb-lg-0 dropdown-toggle hover"  id="dropdownMusic" data-bs-toggle="dropdown" aria-expanded="false">Music</a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMusic">
                             <li><a class="dropdown-item {% if '/remixes/' in request.path %}bg-light text-dark{% endif %}" href="{% url 'remixes_list' %}">Remixes</a></li>
                             <li><a class="dropdown-item {% if '/playlists/' in request.path %}bg-light text-dark{% endif %}" href="{% url 'playlists' %}">Playlists</a></li>
                         </ul>
@@ -24,19 +24,23 @@
                 <li class="nav-item"><a class="nav-link me-lg-3 {% if '/shop/' in request.path %}text-primary{% endif %}" href="{% url 'shop' %}">Shop</a></li>
                 <li class="nav-item"><a class="nav-link me-lg-3 {% if '/blogs/' in request.path %}text-primary{% endif %}" href="{% url 'blog_list' %}">Blogs</a></li>
                 <li class="nav-item"><a class="nav-link me-lg-3 {% if '/events/' in request.path %}text-primary{% endif %}" href="{% url 'event_list' %}">Events</a></li>
+                {% if request.user.is_superuser %}
+                <li class="nav-item">
+                    <div class="dropdown nav-link me-lg-2">
+                        <a class="no-btn mb-2 mb-lg-0 dropdown-toggle hover"  id="dropdownAdmin" data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownAdmin">
+                            <li><a class="dropdown-item" href="/admin/">Admin</a></li>
+                            <li><a class="dropdown-item" href="{% url 'send_newsletter_article' %}">Newsletter</a></li>
+                            <li><a class="dropdown-item" href="{% url 'account_signout' %}">Log out</a></li>
+                        </ul>
+                    </div>
+                </li>
+                {% endif %}
             </ul>
             <button class="btn btn-light mb-2 me-2 rounded-2 mb-lg-0" data-bs-toggle="modal" data-bs-target="#searchModal">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </button>
-            {% if request.user.is_superuser %}
-            <div class="dropdown">
-                <a class="no-btn ms-2 mb-2 mb-lg-0 dropdown-toggle hover"  id="dropdownAdmin" data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
-                <ul class="dropdown-menu" aria-labelledby="dropdownAdmin">
-                    <li><a class="dropdown-item" href="/admin/">Admin</a></li>
-                    <li><a class="dropdown-item" href="{% url 'account_signout' %}">Log out</a></li>
-                </ul>
-            </div>
-            {% elif request.user.is_authenticated %}
+            {% if request.user.is_authenticated %}
             <a style="text-decoration: none;" class="hover grey-1 ms-2 mb-2 mb-lg-0" href="{% url 'account_signout' %}">
                 <span class="d-flex align-items-center">
                     <i class="fa-solid fa-right-from-bracket me-2"></i>
