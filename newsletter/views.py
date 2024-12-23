@@ -1,13 +1,14 @@
 from django.utils import timezone
 from django.contrib import messages
+from seo_management.models import SEO
 from .models import Newsletter, NewsletterArticle
 from django.shortcuts import render, get_object_or_404, redirect
 from .email import send_newsletter_email, send_newsletter_welcome_email
 from .forms import NewsletterForm, UnsubscribeForm, NewsletterArticleForm
 
 
-
 def subscribe_newsletter(request):
+    subscribe_seo = SEO.objects.get(pk=5)
     if request.method == 'POST':
         newsletter_form = NewsletterForm(request.POST)
         if newsletter_form.is_valid():
@@ -25,8 +26,11 @@ def subscribe_newsletter(request):
                 send_newsletter_welcome_email(email)
                 newsletter_form.save()
                 return render(request, 'subscribe_newsletter.html', {
-                    'newsletter_form': NewsletterForm(),
                     'success': True,
+                    'newsletter_form': NewsletterForm(),
+                    'title_tag': subscribe_seo.title_tag,
+                    'meta_keywords': subscribe_seo.meta_keywords,
+                    'meta_description': subscribe_seo.meta_description,
                 })
         else:
             if 'captcha' in newsletter_form.errors:
@@ -41,12 +45,16 @@ def subscribe_newsletter(request):
     context = {
         'title_tag': "Newsletter Subscription",
         'newsletter_form': newsletter_form,
+        'title_tag': subscribe_seo.title_tag,
+        'meta_keywords': subscribe_seo.meta_keywords,
+        'meta_description': subscribe_seo.meta_description,
     }
 
     return render(request, 'subscribe_newsletter.html', context)
 
 
 def unsubscribe_newsletter(request):
+    unsubscribe_seo = SEO.objects.get(pk=6)
     if request.method == 'POST':
         unsubscribe_form = UnsubscribeForm(request.POST)
         if unsubscribe_form.is_valid():
@@ -59,7 +67,8 @@ def unsubscribe_newsletter(request):
                 return render(request, 'unsubscribe_newsletter.html', {
                     "success": True,
                     "title_tag": "Successfully Unsubscribed",
-                    "meta_description": "Unsubscribe from our newsletter to stop receiving monthly updates.",
+                    'meta_keywords': unsubscribe_seo.meta_keywords,
+                    'meta_description': unsubscribe_seo.meta_description,
                 })
             except Exception as e:
                 messages.error(request, "We don't have a subscription with that email.")
@@ -75,7 +84,9 @@ def unsubscribe_newsletter(request):
 
     context = {
         'unsubscribe_form': unsubscribe_form,
-        "meta_description": "Unsubscribe from our newsletter to stop receiving monthly updates.",
+        'title_tag': unsubscribe_seo.title_tag,
+        'meta_keywords': unsubscribe_seo.meta_keywords,
+        'meta_description': unsubscribe_seo.meta_description,
     }
     return render(request, 'unsubscribe_newsletter.html', context)
 
