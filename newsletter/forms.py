@@ -1,7 +1,8 @@
 from django import forms
-from .models import Newsletter
 from django.forms import ModelForm
+from .models import Newsletter, NewsletterArticle
 from django_recaptcha.fields import ReCaptchaField
+from django_summernote.widgets import SummernoteWidget
 
 
 class NewsletterForm(forms.ModelForm):
@@ -16,6 +17,11 @@ class NewsletterForm(forms.ModelForm):
         if not captcha_value:
             raise forms.ValidationError("Please complete the captcha.")
         return captcha_value
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['email'].required = True
+        self.fields['captcha'].required = True
 
 
 class UnsubscribeForm(forms.Form):
@@ -37,3 +43,14 @@ class UnsubscribeForm(forms.Form):
         super().__init__(*args, **kwargs)
         self.fields['email'].required = True
         self.fields['captcha'].required = True
+
+
+class NewsletterArticleForm(forms.ModelForm):
+    class Meta:
+        model = NewsletterArticle
+        fields = ['subject', 'content']
+
+        widgets = {
+            'content': SummernoteWidget(),
+            'subject': forms.TextInput(attrs={'class': 'form-control'}),
+        }
