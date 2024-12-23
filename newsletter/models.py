@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.dateformat import DateFormat
 
@@ -39,3 +40,33 @@ class Newsletter(models.Model):
                 subscription_status = "Not Subscribed"
 
         return f"{self.email} | {subscription_status}"
+        
+        
+class NewsletterArticle(models.Model):
+    subject = models.TextField(blank=True, null=True)
+    content = models.TextField(blank=True, null=True)
+    is_sent = models.BooleanField(default=False, null=True, blank=False)
+    date_sent = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    num_emails_sent = models.IntegerField(default=1, blank=True, null=True)
+
+    @property
+    def get_url(self):
+        return reverse("newsletter_detail", kwargs={
+            "pk": self.pk
+        })
+
+    @property
+    def status(self):
+        if self.date_sent:
+            return self.date_sent
+        return str("Not Sent")
+
+    @property
+    def get_date(self):
+        date_format = DateFormat(self.date_sent.astimezone(
+            timezone.get_current_timezone()))
+        formatted_date = date_format.format('M. d, Y')
+        return formatted_date
+        
+    def __str__(self):
+        return f"{self.subject} - {self.status}"
