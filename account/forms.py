@@ -11,13 +11,13 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = (
-            'username',
             'email',
-            'first_name',
+            'captcha',
+            'username',
             'last_name',
             'password1',
             'password2',
-            'captcha',
+            'first_name',
         )
 
     def save(self, commit=True):
@@ -32,3 +32,14 @@ class CustomUserCreationForm(UserCreationForm):
         if not captcha_value:
             raise forms.ValidationError("Please complete the captcha.")
         return captcha_value
+
+
+class LoginForm(forms.Form):
+    email = forms.EmailField()
+    password = forms.CharField(label="Password", widget=forms.PasswordInput)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        email = cleaned_data.get("email")
+        password = cleaned_data.get("password")
+        return cleaned_data
