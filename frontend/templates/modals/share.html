@@ -1,21 +1,29 @@
-<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+<div class="modal fade" id="share" tabindex="-1" aria-labelledby="shareLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content rounded-5">
             <div class="modal-body bg-grey-9 rounded-4">
                 <div class="container">
-                    <div class="row justify-content-center align-items-center g-3">
-                        <form method="GET" action="{% url 'search' %}" class="col mb-3" onsubmit="showSpinner()">
-                            <div class="d-flex mt-3 justify-content-between">
-                                <h3 class="grey-1">Search...</h3>
-                                <button type="button" class="btn-close-white btn-close btn-lg" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="d-flex mb-3 flex-row align-items-center justify-content-between">
+                        <h5 class="modal-title text-white" id="shareLabel">Share</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="row justify-content-center align-items-center">
+                        <p class="grey-1">Copy the link below</p>
+                        <div class="col-lg-8 col-lg-12">
+                            {% if blog.get_share_link %}
+                            <input type="text" class="form-control" id="shareLink" value="{{ blog.get_share_link }}" readonly>
+                            {% elif mix.get_share_link %}
+                            <input type="text" class="form-control" id="shareLink" value="{{ mix.get_share_link }}" readonly>
+                            {% elif remix.get_share_link %}
+                            <input type="text" class="form-control" id="shareLink" value="{{ mix.get_share_link }}" readonly>
+                            {% elif event.get_share_link %}
+                            <input type="text" class="form-control" id="shareLink" value="{{ event.get_share_link }}" readonly>
+                            {% endif %}
+                            <div class="d-flex flex-row gap-2 justify-content-end mt-3">
+                                <button data-bs-dismiss="modal" type="button" class="btn px-4 btn-outline-light">Done</button>
+                                <button class="btn px-4 btn-light" type="button" id="copy-btn" onclick="copyToClipboard()">Copy</button>
                             </div>
-                            <div class="my-4 input-group">
-                                <input required placeholder="Search for mixes, albums, artists..." type="text" class="form-control form-control-lg rounded-start rounded-start-4" name="q" value="{{ query }}">
-                                <button class="btn btn-primary rounded-end-4" id="search-addon" value="Search" type="submit" aria-describedby="search">
-                                    <i class="fa-solid fa-magnifying-glass"></i>
-                                </button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
