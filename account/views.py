@@ -1,12 +1,12 @@
 from django.utils import timezone
 from django.contrib import messages
+from seo_management.models import SEO
 from newsletter.models import Newsletter
-from .forms import CustomUserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from .email import send_user_verification_email
 from django.core.exceptions import ValidationError
-from django.contrib.auth.forms import AuthenticationForm
+from .forms import CustomUserCreationForm, LoginForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, logout
 
@@ -16,18 +16,24 @@ def account_signin(request):
         return redirect("index")
     else:
         context = {}
-
-        signin_form = AuthenticationForm(request, data=request.POST)
+        seo = SEO.objects.get(pk=8)
+        signin_form = LoginForm(request.POST)
+        
         if request.method == "POST":
             try:
                 if signin_form.is_valid():
-                    username = signin_form.cleaned_data.get("username")
+                    email = signin_form.cleaned_data.get("email")
                     password = signin_form.cleaned_data.get("password")
-                    user = authenticate(username=username, password=password)
-                    if user is not None:
-                        login(request, user)
-                        messages.success(request, f"Welcome back, {user}")
-                        return redirect("index")
+                    try:
+                        user = User.objects.filter(email=email).first()
+                        username = user.username
+                        user = authenticate(username=username, password=password)
+                        if user is not None:
+                            login(request, user)
+                            messages.success(request, f"Welcome back, {user}")
+                            return redirect("index")
+                    except:
+                        messages.error(request, f"The email {email} does not exist.")
                 else:
                     for field, errors in signin_form.errors.items():
                         for error in errors:
@@ -37,9 +43,9 @@ def account_signin(request):
 
         context.update({
             "signin_form": signin_form,
-            "title_tag": "Secure Login",
-            "meta_keywords": "DJ G400, Sign In, Log In",
-            "meta_description": "Log in to access exclusive releases, latest mixes, ad-free experienec and curated playlists.",
+            "title_tag": seo.title_tag,
+            "meta_keywords": seo.meta_keywords,
+            "meta_description": seo.meta_description,
         })
         return render(request, "account_signin.html", context)
 
@@ -55,6 +61,7 @@ def account_signup(request):
         return redirect("index")
 
     context = {}
+    seo = SEO.objects.get(pk=7)
 
     if request.method == "POST":
         register_user_form = CustomUserCreationForm(request.POST)
@@ -101,10 +108,10 @@ def account_signup(request):
         register_user_form = CustomUserCreationForm()
 
     context.update({
-        "title_tag": "Create Account",
+        "title_tag": seo.title_tag,
+        "meta_keywords": seo.meta_keywords,
         "register_user_form": register_user_form,
-        "meta_keywords": "DJ G400, Sign Up, Create Account",
-        "meta_description": "Create your account to access exclusive releases, latest mixes, ad-free experience, and curated playlists.",
+        "meta_description": seo.meta_description,
     })
 
     return render(request, "account_signup.html", context)
