@@ -1,5 +1,5 @@
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog">
         <div class="modal-content rounded-5 border-0">
             <div class="modal-body bg-grey-9 rounded-4">
                 <div class="container">
@@ -7,25 +7,29 @@
                         <form action="{% url 'account_signin' %}" method="POST" enctype="multipart/form-data" class="col mb-3" onsubmit="showSpinner()">
                             {% csrf_token %}
                             <div class="d-flex mt-3 justify-content-between">
-                                <h2 class="grey-1">Welcome back!</h3>
+                                <h2 class="text-grey-1">Welcome back!</h3>
                                 <button type="button" class="btn-close-white btn-close btn-lg" data-bs-dismiss="modal" aria-label="Close" data-bs-theme=light></button>
                             </div>
-                            <p class="grey-2">Log in to enjoy an ad-free listening experience.</p>
-                            <div class="form-floating my-4">
-                                <input placeholder="Password" type="text" class="form-control form-control-lg rounded-4" id="id_username" name="username" required/>
-                                <label for="username" class="grey-2">Username</label>
-                                <div class="invalid-feedback">Username is required.</div>
+                            <p class="text-grey-5">Log in to enjoy an ad-free listening experience.</p>
+                            <div class="my-3">
+                                <label class="text-grey-3 mb-1 small">Email</label>
+                                <input placeholder="Enter your email" type="email" class="form-control py-2 rounded-2" id="id_email" name="email" required/>
+                                {% if signin_form.password.errors %}
+                                <div class="invalid-feedback">{{ signin_form.email.errors }}</div>
+                                {% endif %}
                             </div>
-                            <div class="form-floating">
-                                <input placeholder="Password" type="password" class="form-control form-control-lg rounded-4" id="id_password" name="password" required/>
-                                <label for="password" class="grey-2">Password</label>
-                                <div class="invalid-feedback">Password is required.</div>
+                            <div class="my-3">
+                                <label class="text-grey-3 mb-1 small">Password</label>
+                                <input placeholder="********" type="password" class="form-control py-2 rounded-2" id="id_password" name="password" required/>
+                                {% if signin_form.password.errors %}
+                                <div class="invalid-feedback">{{ signin_form.password.errors }}</div>
+                                {% endif %}
                             </div>
                             <button id="submit-btn" type="submit" class="btn rounded-2 my-4 btn-primary btn-lg w-100">
                                 <span id="submit-text">Sign In</span>
                                 <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                             </button>
-                            <small class="small text-grey-4">Don't have an account? <span><a href="{% url 'account_signup' %}" class="text-primary-6 hover-underline">Create account</a></span></small>
+                            <small class="small grey-2">Don't have an account? <span><a href="{% url 'account_signup' %}" class="grey-2 link">Create account</a></span></small>
                         </form>
                     </div>
                 </div>

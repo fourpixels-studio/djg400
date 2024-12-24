@@ -13,7 +13,7 @@
                     <div class="container px-3">
                         <div class="row justify-content-center">
                             <div class="col-lg-10 col-xl-8 col-xxl-6 col-sm-12 my-5">
-                                <button onclick="goBack()" class="no-btn text-white mb-4"><i class="fa-solid fa-xl fa-arrow-left"></i></button>
+                                <button onclick="goBack()" class="no-btn ps-0 text-white mb-4"><i class="fa-solid fa-xl fa-arrow-left"></i></button>
                                 {% if messages %}
                                 {% for message in messages %}
                                 <div class="alert alert-{{ message.tags }} alert-dismissible fade show text-center mb-3" role="alert">
@@ -23,26 +23,35 @@
                                 {% endfor %}
                                 {% endif %}
                                 <h1 class="text-grey-1">Log in</h1>
-                                <p class="text-grey-3 mb-5">Enjoy an ad-free listening experience.</p>
+                                <p class="text-grey-5 mb-4">Welcome back! Please enter your details to enjoy an ad-free listening experience.</p>
                                 <form method="POST" action="{% url 'account_signin' %}" class="mb-3" onsubmit="showSpinner()">
                                     {% csrf_token %}
-                                    <label class="text-grey-2 small">Enter Username</label>
-                                    <div class="form-floating mt-2 grey-1 mb-4">
-                                        <input placeholder="username" type="text" class="form-control form-control-lg rounded-4" id="id_username" name="username" required/>
-                                        <label for="username">username</label>
-                                        <div class="invalid-feedback">Username is required.</div>
+                                    <div class="my-3">
+                                        <label class="text-grey-3 mb-1 small">Email</label>
+                                        <input placeholder="Enter your email" type="email" class="form-control py-2 rounded-2" id="id_email" name="email" required/>
+                                        {% if signin_form.password.errors %}
+                                        <div class="invalid-feedback">{{ signin_form.email.errors }}</div>
+                                        {% endif %}
                                     </div>
-                                    <label class="text-grey-2 small">Enter Password</label>
-                                    <div class="form-floating mt-2 grey-1">
-                                        <input placeholder="Password" type="password" class="form-control form-control-lg rounded-4" id="id_password" name="password" required/>
-                                        <label for="password">Password</label>
-                                        <div class="invalid-feedback">Password is required.</div>
+                                    <div class="my-3">
+                                        <label class="text-grey-3 mb-1 small">Password</label>
+                                        <input placeholder="********" type="password" class="form-control py-2 rounded-2" id="id_password" name="password" required/>
+                                        {% if signin_form.password.errors %}
+                                        <div class="invalid-feedback">{{ signin_form.password.errors }}</div>
+                                        {% endif %}
                                     </div>
-                                    <button id="submit-btn" type="submit" class="btn my-4 w-100 btn-lg btn-primary rounded-4">
+                                    <div class="my-3 d-flex flex-row align-items-center justify-content-between">
+                                        <div class="d-flex flex-row align-items-center justify-content-start gap-1">
+                                            <input type="checkbox" class="hover" id="id_remember_login" name="remember_login"/>
+                                            <label for="remember_login" class="text-grey-4 small">Remember</label>
+                                        </div>
+                                        <a href="{% url 'about' %}#contact" class="text-grey-4 small hover-underline">Forgot password?</a>
+                                    </div>
+                                    <button id="submit-btn" type="submit" class="btn mb-4 w-100 btn-lg btn-primary rounded-2">
                                         <span id="submit-text">Sign In</span>
                                         <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                                     </button>
-                                    <small class="small text-grey-4">Don't have an account yet? <span><a href="{% url 'account_signup' %}" class="text-primary-6 hover-underline">Create account</a></span></small>
+                                    <small class="small text-grey-5">Don't have an account yet? <span><a href="{% url 'account_signup' %}" class="text-grey-5 link">Create account</a></span></small>
                                 </form>
                             </div>
                         </div>
