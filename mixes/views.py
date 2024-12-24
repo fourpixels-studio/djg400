@@ -117,14 +117,3 @@ def video_mix_list(request):
         'genres': Genre.objects.all(),
     }
     return render(request, 'video_mix_list.html', context)
-
-
-def search_mixes(request):
-    meta_description = f'Showing "{request.GET.get("q")}" results in DJ G400. {seo.meta_description}'
-    context = {
-        'genres': Genre.objects.all(),
-        'meta_keywords': seo.meta_keywords,
-        'meta_description': meta_description,
-        "title_tag": f'"{request.GET.get("q")}" results',
-    }
-    return render(request, 'mix_list.html', context)
