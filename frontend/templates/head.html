@@ -14,6 +14,11 @@
 <meta name="image" content="https://djg400.com{% static 'djg400_meta_thumbnail.jpg' %}">
 {% endif %}
 <meta name="robots" content="index, follow">
+{% if meta_url %}
+<meta property="url" content="{{ meta_url }}">
+{% else %}
+<meta property="url" content="https://www.djg400.com">
+{% endif %}
 
 <!-- Facebook Meta Tags -->
 <meta property="og:title" content="DJ G400 — {{ title_tag }}">
@@ -22,14 +27,22 @@
 <meta property="og:description" content="{{ meta_description }}">
 <meta property="og:keywords" content="{{ meta_keywords }}">
 <meta property="og:site_name" content="DJ G400">
+<meta property="og:author" content="DJ G400">
+<meta property="og:robots" content="index, follow">
 {% if meta_thumbnail %}
 <meta property="og:image" content="https://djg400.com{{ meta_thumbnail }}">
 {% else %}
 <meta property="og:image" content="https://djg400.com{% static 'djg400_meta_thumbnail.jpg' %}">
 {% endif %}
+{% if meta_url %}
+<meta property="og:url" content="{{ meta_url }}">
+{% else %}
+<meta property="og:url" content="https://www.djg400.com">
+{% endif %}
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{{ meta_description }}">
 
 <!-- Twitter Meta Tags -->
 <meta name="twitter:title" content="DJ G400 — {{ title_tag }}">
@@ -44,14 +57,13 @@
 <meta name="twitter:image:height" content="630">
 <meta name="twitter:site" content="www.djg400.com">
 <meta name="twitter:creator" content="@djg400">
+{% if meta_url %}
+<meta property="twitter:url" content="{{ meta_url }}">
+{% else %}
+<meta property="twitter:url" content="https://www.djg400.com">
+{% endif %}
 
 <!-- LinkedIn Meta Tags -->
-{% if meta_thumbnail %}
-<meta property="og:image" content="https://djg400.com{{ meta_thumbnail }}">
-{% else %}
-<meta property="og:image" content="https://djg400.com{% static 'djg400_meta_thumbnail.jpg' %}">
-{% endif %}
-<meta property="og:image:alt" content="{{ meta_description }}">
 <meta property="linkedin:site" content="https://www.linkedin.com/company/djg400/">
 
 <!-- Favicons Start -->
