@@ -1,10 +1,10 @@
 <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog">
         <div class="modal-content rounded-5">
             <div class="modal-body bg-grey-9 rounded-4">
                 <div class="container">
                     <div class="row justify-content-center align-items-center g-3">
-                        <form method="GET" action="{% url 'search_mixes' %}" class="col mb-3" onsubmit="showSpinner()">
+                        <form method="GET" action="{% url 'search' %}" class="col mb-3" onsubmit="showSpinner()">
                             <div class="d-flex mt-3 justify-content-between">
                                 <h3 class="grey-1">Search...</h3>
                                 <button type="button" class="btn-close-white btn-close btn-lg" data-bs-dismiss="modal" aria-label="Close"></button>
