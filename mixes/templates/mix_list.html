@@ -42,6 +42,20 @@
                             </article>
                             {% endfor %}
                         {% endif %}
+                        {% if num_results.events > 0  %}
+                            <hr class="grey-3 mb-0">
+                            {% if num_results.events == 1  %}
+                            <h3 class="grey-1">Found {{ num_results.events }} event in "{{ query }}"</h3>
+                            {% else %}
+                            <h3 class="grey-1">Found {{ num_results.events }} events in "{{ query }}"</h3>
+                            {% endif %}
+                            {% for event in results.events %}
+                            <article class="col-sm-12 col-md-6 col-lg-4 col-xxl-3">
+                                {% include "components/event.html" %}
+                            </article>
+                            {% endfor %}
+                        <hr class="grey-3 mt-4">
+                        {% endif %}
                         {% if num_results.blogs > 0  %}
                             <hr class="grey-3 mb-0">
                             {% if num_results.blogs == 1  %}
