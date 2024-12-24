@@ -1,9 +1,9 @@
 from .models import About
-from mixes.models import Mix
 from blogs.models import Blog
 from .forms import ContactForm
 from events.models import Event
 from remixes.models import Remix
+from mixes.models import Mix, Genre
 from django.contrib import messages
 from seo_management.models import SEO
 from django.shortcuts import render, redirect
@@ -46,3 +46,14 @@ def about(request):
         'meta_description': about.who_is_djg400_paragraph,
     }
     return render(request, 'about.html', context)
+
+
+def search(request):
+    meta_description = f'Showing "{request.GET.get("q")}" results in DJ G400. {seo.meta_description}'
+    context = {
+        'genres': Genre.objects.all(),
+        'meta_keywords': seo.meta_keywords,
+        'meta_description': meta_description,
+        "title_tag": f'"{request.GET.get("q")}" results',
+    }
+    return render(request, 'mix_list.html', context)
