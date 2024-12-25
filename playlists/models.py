@@ -1,10 +1,12 @@
 from django.db import models
-from mixes.models import Genre
+from django.db.models import Q
 from django.urls import reverse
 from colorthief import ColorThief
+from mixes.models import Genre, Mix
 from hitcount.models import HitCount
 from django.utils.text import slugify
 from django_resized import ResizedImageField
+from django.templatetags.static import static
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.contrib.contenttypes.fields import GenericRelation
@@ -82,10 +84,24 @@ class Playlist(models.Model):
 
     @property
     def get_similar_playlists(self):
-        playlists = []
         if self.genre:
-            playlists = Playlist.objects.filter(genre=self.genre)
-        return playlists
+            return Playlist.objects.filter(genre=self.genre)
+        return None
+
+    @property
+    def get_similar_mixes(self):
+        if self.similar_mixes:
+            pks = [
+                item.strip()
+                for item in self.similar_mixes.split(',')
+                if item.strip()
+            ]
+            query = Q()
+            for pk in pks:
+                query |= Q(pk__icontains=pk)
+            mixes = Mix.objects.filter(query).exclude(pk=self.pk)
+            return mixes
+        return None
 
     @property
     def get_hit_count(self):
@@ -107,6 +123,12 @@ class Playlist(models.Model):
 
     @property
     def get_url(self):
-        return reverse("remix_detail", kwargs={
+        return reverse("playlist_detail", kwargs={
             "slug": self.slug,
         })
+    
+    @property
+    def get_thumbnail(self):
+        if self.meta_thumbnail:
+            return self.meta_thumbnail.url
+        return static('playlist_thumbnail.jpg')
