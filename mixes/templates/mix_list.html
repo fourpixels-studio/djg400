@@ -54,7 +54,6 @@
                                 {% include "components/event.html" %}
                             </article>
                             {% endfor %}
-                        <hr class="grey-3 mt-4">
                         {% endif %}
                         {% if num_results.products > 0  %}
                             <hr class="grey-3 mb-0">
@@ -68,7 +67,6 @@
                                 {% include "components/product.html" %}
                             </article>
                             {% endfor %}
-                        <hr class="grey-3 mt-4">
                         {% endif %}
                         {% if num_results.blogs > 0  %}
                             <hr class="grey-3 mb-0">
@@ -82,7 +80,6 @@
                                 {% include "components/blog_portrait_card.html" %}
                             </article>
                             {% endfor %}
-                        <hr class="grey-3 mt-4">
                         {% endif %}
                         {% if num_results.remixes > 0  %}
                             <hr class="grey-3 mb-0">
@@ -96,7 +93,6 @@
                                 {% include "components/remix_card.html" %}
                             </article>
                             {% endfor %}
-                        <hr class="grey-3 mt-4">
                         {% endif %}
                         {% if num_results.playlists > 0  %}
                             <hr class="grey-3 mb-0">
@@ -110,7 +106,6 @@
                                 {% include "components/playlist.html" %}
                             </article>
                             {% endfor %}
-                        <hr class="grey-3 mt-4">
                         {% endif %}
                         {% if num_results.mixes == 0 and not random_mixes %}
                             <h3 class="grey-1">I've got nothing on "{{ query }}"</h3>
