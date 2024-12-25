@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container px-4 my-5">
+    <button onclick="goBack()" class="no-btn ps-0 text-white my-4"><i class="fa-solid fa-xl fa-arrow-left me-2"></i> Back to playlists</button>
+    <section class="row fadeIn">
+        <h1 class="display-4 fw-bold text-white">{{ playlist.title }}</h1>
+        <h5 class="text-grey-6 mb-4">Genre: {{ playlist.genre.name }}</h5>
+        <div class="col-12">{{ playlist.spotify_link|safe }}</div>
+    </section>
+    {% if playlist.get_similar_playlists %}
+    <section class="row g-4 my-4 align-items-start justify-content-start">
+        <div class="col-12"><hr class="text-grey-7"></div>
+        <h3 class="text-grey-3 mb-3">Similar {{ playlist.genre.name }} Playlists</h3>
+        {% for playlist in playlist.get_similar_playlists %}
+        <div class="col-sm-12 col-lg-4">
+            {% include "components/playlist.html" %}
+        </div>
+        {% endfor %}
+    </section>
+    {% endif %}
+    {% if playlist.get_similar_mixes %}
+    <section class="row g-4 mt-5 align-items-start justify-content-start">
+        <div class="col-12"><hr class="text-grey-7"></div>
+        <h3 class="text-grey-3 mb-3">You may like these mixes</h3>
+        {% for mix in playlist.get_similar_mixes %}
+        <div class="col-sm-12 col-lg-4">
+            {% include "components/mix_portrait_card.html" %}
+        </div>
+        {% endfor %}
+    </section>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,8 @@
+<a href="{{ playlist.get_url }}" class="no-link">
+    <div class="card bg-black border-0 rounded-2 position-relative overflow-hidden">
+        <img loading="lazy" src="{{ playlist.get_thumbnail }}" alt="{{ playlist.title }}'s cover" class="card-img rounded-2">
+        <div class="card-img-overlay d-flex align-items-center justify-content-center p-0">
+            <h5 class="text-center text-white hover-underline">{{ playlist.genre.name }}<br/>Playlist</h5>
+        </div>
+    </div>
+</a>
