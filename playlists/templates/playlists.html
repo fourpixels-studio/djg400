@@ -1,11 +1,18 @@
 {% extends 'base.html' %}
 {% block body %}
 <div class="container px-4 my-5">
-    <h1 class="display-4 fw-bold text-white mb-4">Spotify Playlists</h1>
-    <section class="row gy-5 featurette justify-content-start align-items-center">
+    <div class="row my-4">
+        <div class="col-sm-12 col-lg-8">
+            <h1 class="display-4 fw-bold text-white">Explore Curated Playlists</h1>
+            <p class="text-grey-4">Discover top playlists curated by DJ G400, featuring a blend of popular genres like Hip-Hop, R&B, Trap, and more. Perfect for Spotify and YouTube listeners.</p>
+        </div>
+    </div>
+    <section class="row g-4 row-cols-2 justify-content-start align-items-center">
         {% for playlist in playlists %}
-        <div class="col-md-4 col-sm-12 fadeIn">{{ playlist.spotify_link|safe }}</div>
-        {% endfor %}
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            {% include "components/playlist.html" %}
+        </div>
+            {% endfor %}
     </section>
 </div>
 {% endblock %}
