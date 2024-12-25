@@ -56,6 +56,20 @@
                             {% endfor %}
                         <hr class="grey-3 mt-4">
                         {% endif %}
+                        {% if num_results.products > 0  %}
+                            <hr class="grey-3 mb-0">
+                            {% if num_results.products == 1  %}
+                            <h3 class="grey-1">Found {{ num_results.products }} product in "{{ query }}"</h3>
+                            {% else %}
+                            <h3 class="grey-1">Found {{ num_results.products }} products in "{{ query }}"</h3>
+                            {% endif %}
+                            {% for product in results.products %}
+                            <article class="col-sm-12 col-md-6 col-lg-4 col-xxl-3">
+                                {% include "components/product.html" %}
+                            </article>
+                            {% endfor %}
+                        <hr class="grey-3 mt-4">
+                        {% endif %}
                         {% if num_results.blogs > 0  %}
                             <hr class="grey-3 mb-0">
                             {% if num_results.blogs == 1  %}
@@ -66,6 +80,34 @@
                             {% for blog in results.blogs %}
                             <article class="col-sm-12 col-md-6 col-lg-4 col-xxl-3">
                                 {% include "components/blog_portrait_card.html" %}
+                            </article>
+                            {% endfor %}
+                        <hr class="grey-3 mt-4">
+                        {% endif %}
+                        {% if num_results.remixes > 0  %}
+                            <hr class="grey-3 mb-0">
+                            {% if num_results.remixes == 1  %}
+                            <h3 class="grey-1">Found {{ num_results.remixes }} remix in "{{ query }}"</h3>
+                            {% else %}
+                            <h3 class="grey-1">Found {{ num_results.remixes }} remixes in "{{ query }}"</h3>
+                            {% endif %}
+                            {% for remix in results.remixes %}
+                            <article class="col-sm-12 col-md-6 col-lg-4 col-xxl-3">
+                                {% include "components/remix_card.html" %}
+                            </article>
+                            {% endfor %}
+                        <hr class="grey-3 mt-4">
+                        {% endif %}
+                        {% if num_results.playlists > 0  %}
+                            <hr class="grey-3 mb-0">
+                            {% if num_results.playlists == 1  %}
+                            <h3 class="grey-1">Found {{ num_results.playlists }} playlist in "{{ query }}"</h3>
+                            {% else %}
+                            <h3 class="grey-1">Found {{ num_results.playlists }} playlists in "{{ query }}"</h3>
+                            {% endif %}
+                            {% for playlist in results.playlists %}
+                            <article class="col-sm-12 col-md-6 col-lg-4 col-xxl-3">
+                                {% include "components/playlist.html" %}
                             </article>
                             {% endfor %}
                         <hr class="grey-3 mt-4">
