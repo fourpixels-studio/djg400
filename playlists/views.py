@@ -1,4 +1,5 @@
 from .models import Playlist
+from mixes.models import Genre
 from django.shortcuts import render
 from seo_management.models import SEO
 
@@ -7,6 +8,7 @@ def playlists(request):
     seo = SEO.objects.get(pk=9)
     context = {
         "title_tag": seo.title_tag,
+        "genres": Genre.objects.all(),
         "meta_keywords": seo.meta_keywords,
         "meta_thumbnail": seo.get_thumbnail,
         "meta_description": seo.meta_description,
