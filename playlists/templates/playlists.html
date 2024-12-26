@@ -1,18 +1,60 @@
 {% extends 'base.html' %}
 {% block body %}
-<div class="container px-4 my-5">
-    <div class="row my-4">
-        <div class="col-sm-12 col-lg-8">
-            <h1 class="display-4 fw-bold text-white">Explore Curated Playlists</h1>
-            <p class="text-grey-4">Discover top playlists curated by DJ G400, featuring a blend of popular genres like Hip-Hop, R&B, Trap, and more. Perfect for Spotify and YouTube listeners.</p>
+{% load static %}
+<main class="container-fluid pt-4 px-0">
+    <div class="px-4">
+        <div class="row gx-3">
+            <div class="col-sm-12 col-lg-2">
+                <div class="position-sticky" style="top: 3.8rem;">
+                    {% include "mixes_sidebar.html" %}
+                </div>
+            </div>
+            <div class="col-sm-12 col-lg-10">
+                <div class="container mt-4 px-0">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-8">
+                            <h1 class="display-4 fw-bold text-white">Playlists</h1>
+                            <p class="text-grey-4 mb-0">Discover top playlists curated by DJ G400, featuring a blend of popular genres like Hip-Hop, R&B, Trap, and more. Perfect for Spotify and YouTube listeners.</p>
+                        </div>
+                    </div>
+                    <div class="row gy-4">
+                        <div class="genre-filter" style="margin-bottom: -1rem; padding-right: 2rem; padding-left: 1rem">
+                            <button class="scroll-btn left-btn" aria-label="Scroll Left">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <div class="genres-container px-3">
+                                <a href="/mixes/" class="no-link">
+                                    <div class="genre-item rounded-4 {% if not active_genre %}active{% endif %}">
+                                        All
+                                    </div>
+                                </a>
+                                {% for genre in genres %}
+                                <a href="{{ genre.get_url }}" class="no-link">
+                                    <div class="genre-item rounded-4 {% if genre.slug == active_genre %}active{% endif %}">
+                                        {{ genre.name }}
+                                    </div>
+                                </a>
+                                {% endfor %}
+                            </div>
+                            <button class="scroll-btn right-btn" aria-label="Scroll Right">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <section class="row mt-2 g-4 row-cols-2 justify-content-start align-items-center">
+                        {% for playlist in playlists %}
+                        <div class="col-sm-6 col-md-4 col-lg-3">
+                            {% include "components/playlist.html" %}
+                        </div>
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
         </div>
     </div>
-    <section class="row g-4 row-cols-2 justify-content-start align-items-center">
-        {% for playlist in playlists %}
-        <div class="col-sm-6 col-md-4 col-lg-3">
-            {% include "components/playlist.html" %}
-        </div>
-            {% endfor %}
-    </section>
-</div>
+    <div class="px-0 py-5 mt-5" style="background-color: #141414;">
+        {% include "components/newsletter_banner.html" %}
+    </div>
+</main>
+<script src="{% static 'js/genreFilter.js' %}"></script>
 {% endblock %}
