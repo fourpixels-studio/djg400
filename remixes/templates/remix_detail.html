@@ -18,16 +18,22 @@
                 <p class="grey-1 my-0">Artists: {{ remix.artist }}</p>
                 <p class="grey-1 my-0">Released: {{ remix.release_date|date:"jS F, Y" }}</p>
                 <p class="grey-1 my-0">Vibes: {{ remix.genre }}</p>
-                <p class="grey-1 my-0">{{ remix.get_download_count }} Downloads &#183; Viewed {% get_hit_count for remix %} Times</p>
+                <p class="grey-1 my-0"> Downloads &#183; Viewed {% get_hit_count for remix %} Times</p>
+                <div class="d-flex flex-row gap-3 align-items-center mt-2">
+                    <a class="no-btn text-white hover fa-xl share-btn" data-remix-id="{{ remix.pk }}"><i class="fa-solid fa-heart"></i> {{ remix.get_like_count }}</a>
+                    <a class="no-btn text-white hover fa-xl like-btn" data-remix-id="{{ remix.pk }}"><i class="fa-solid fa-share"></i> {{ remix.get_reshare_count }}</a>
+                </div>
                 <div class="d-flex mt-2 flex-row align-items-center gap-3 justify-content-between">
                     {% if remix.is_video_link %}
-                    <a href="{{ remix.video_download_link }}" target="_blank" class="btn btn-outline-light rounded-4 w-100 mt-3">Download Video <i class="ms-1 fa-solid fa-circle-down"></i></a>
+                    <a href="{{ remix.video_download_link }}" data-remix-id="{{ remix.pk }}" data-url="{% url 'update_video_download_count' remix.pk %}" target="_blank" class="btn btn-outline-light rounded-4 w-100 mt-3">Download Video <i class="ms-1 fa-solid fa-circle-down"></i></a>
                     {% endif %}
                     {% if remix.is_audio_link %}
-                    <a href="{{ remix.audio_download_link }}" target="_blank" class="btn btn-outline-light rounded-4 w-100 mt-3">Download Audio <i class="ms-1 fa-solid fa-circle-down"></i></a>
+                    <a href="{{ remix.audio_download_link }}" data-remix-id="{{ remix.pk }}" data-url="{% url 'update_audio_download_count' remix.pk %}" target="_blank" class="btn btn-outline-light rounded-4 w-100 mt-3">Download Audio <i class="ms-1 fa-solid fa-circle-down"></i></a>
                     {% endif %}
                 </div>
-                <button class="btn btn-primary rounded-4 w-100 mt-3 btn-lg">Support <i class="ms-1 fa-solid fa-hand-holding-dollar"></i></button>
+                <button class="btn btn-primary rounded-4 w-100 mt-3 btn-lg" data-bs-toggle="modal" data-bs-target="#supportModal">
+                    Support <i class="ms-1 fa-solid fa-hand-holding-dollar"></i>
+                </button>
             </div>
         </div>
     </div>
@@ -35,4 +41,114 @@
         {% include "components/newsletter_banner.html" %}
     </section>
 </div>
+{% include "modals/support.html" %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.audio-download-btn').on('click', function(event) {
+            event.preventDefault();
+            var trackId = $(this).data('track-id');
+            var likeLink = $(this).attr('href');
+            var audioDownloadUrl = $(this).data('url');
+            $.ajax({
+                url: audioDownloadUrl,
+                type: 'POST',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    if (response.status === 'success') {
+                        window.location.href = likeLink;
+                    } else {
+                        alert('Failed to update download count.');
+                    }
+                },
+                error: function() {
+                    alert('Failed to update download count.');
+                }
+            });
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('.video-download-btn').on('click', function(event) {
+            event.preventDefault();
+            var trackId = $(this).data('track-id');
+            var likeLink = $(this).attr('href');
+            var videoDownloadUrl = $(this).data('url');
+            $.ajax({
+                url: videoDownloadUrl,
+                type: 'POST',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    if (response.status === 'success') {
+                        window.location.href = likeLink;
+                    } else {
+                        alert('Failed to update download count.');
+                    }
+                },
+                error: function() {
+                    alert('Failed to update download count.');
+                }
+            });
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('.like-btn').on('click', function(event) {
+            console.log("clicked!");
+            event.preventDefault();
+            var trackId = $(this).data('track-id');
+            var likeUrl = $(this).data('url');
+            $.ajax({
+                url: likeUrl,
+                type: 'POST',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    if (response.status === 'success') {
+                        console.log("Success!");
+                    } else {
+                        alert('Failed to update like count.');
+                    }
+                },
+                error: function() {
+                    alert('Failed to update like count.');
+                }
+            });
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('.reshare-btn').on('click', function(event) {
+            event.preventDefault();
+            var trackId = $(this).data('track-id');
+            var likeLink = $(this).attr('href');
+            var reshareUrl = $(this).data('url');
+            $.ajax({
+                url: reshareUrl,
+                type: 'POST',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    if (response.status === 'success') {
+                        window.location.href = likeLink;
+                    } else {
+                        alert('Failed to update reshare count.');
+                    }
+                },
+                error: function() {
+                    alert('Failed to update reshare count.');
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}
