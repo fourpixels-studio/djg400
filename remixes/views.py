@@ -1,7 +1,13 @@
+import uuid
 from .models import Remix
+from orders.models import Order
+from products.models import Product
+from django.contrib import messages
+from django.http import HttpResponse
 from seo_management.models import SEO
 from frontend.utils import update_views
-from django.shortcuts import render, get_object_or_404
+from payments.pesapal_payments import PesaPal
+from django.shortcuts import render, get_object_or_404, redirect
 
 
 seo = SEO.objects.get(pk=3)
@@ -20,15 +26,58 @@ def remixes_list(request):
 
 def remix_detail(request, slug):
     remix = get_object_or_404(Remix, slug=slug)
-    meta_keywords = f"{remix.genre}, {remix.artist}, {seo.meta_keywords}"
-    meta_description = f"Listen to {remix.title} featuring {remix.artist}"
-    title_tag = f"{remix.title} featuring {remix.artist}"
     context = {
         'remix': remix,
-        'title_tag': title_tag,
-        'meta_keywords': meta_keywords,
-        'meta_description': meta_description,
         'meta_thumbnail': remix.meta_thumbnail.url,
+        'title_tag': f"{remix.title} featuring {remix.artist}",
+        'meta_keywords': f"{remix.genre}, {remix.artist}, {seo.meta_keywords}",
+        'meta_description': f"Listen to {remix.title} featuring {remix.artist}",
     }
     update_views(request, remix)
     return render(request, 'remix_detail.html', context)
+
+
+def support_remix(request):
+    if request.method == 'POST':
+        order_number = str(uuid.uuid4())
+        amount = request.POST.get('supportAmount')
+        remix_id = request.POST.get('remix_id')
+        remix = Remix.objects.get(pk=remix_id)
+        product = Product.objects.get(pk=4)
+        description = f"Payment for '{remix.title}'"
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        phone_number = request.POST.get('phone_number')
+        order = Order(
+            paid=False,
+            email=email,
+            amount=1,
+            product=product,
+            status='pending',
+            last_name=last_name,
+            first_name=first_name,
+            description=description,
+            phone_number=phone_number,
+            order_number=order_number,
+        )
+        order.save()
+        try:
+            pesapal = PesaPal()
+            payment_response = pesapal.submit_order(order, description)
+            if 'redirect_url' in payment_response:
+                order.order_tracking_id = payment_response['order_tracking_id']
+                order.status = "Awaiting payment confirmation"
+                order.save()
+                return redirect(payment_response['redirect_url'])
+            else:
+                messages.error(request, "Missing redirect URL")
+                order.status = "Missing redirect URL"
+                order.save()
+                return redirect('payment_failed', order_number)
+        except KeyError as e:
+            messages.error(request, f"Payment initiation failed: {str(e)}")
+            order.status = str(e)
+            order.save()
+            return redirect('payment_failed', order_number)
+    return HttpResponse("Invalid request method", status=400)
