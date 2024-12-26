@@ -90,7 +90,9 @@ class Order(models.Model):
 
     @property
     def get_cart_total(self):
-        if self.product:
+        if self.amount:
+            return self.amount
+        elif self.product:
             return self.product.price
         return 0
 
@@ -108,7 +110,7 @@ class OrderItem(models.Model):
     size = models.CharField(max_length=20, null=True, blank=True)
     color = models.CharField(max_length=150, null=True, blank=True)
 
-    @property
+    @ property
     def get_total(self):
         total = self.product.price * self.quantity
         return total
@@ -116,7 +118,7 @@ class OrderItem(models.Model):
     def __str__(self):
         return self.product
 
-    @property
+    @ property
     def get_cart_items(self):
         orderitems = self.orderitem_set.all()
         total = sum([item.quantity for item in orderitems])
