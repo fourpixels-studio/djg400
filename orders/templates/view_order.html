@@ -63,11 +63,13 @@
             </div>
             <div class="text-center my-4">
                 <a href="{% url 'shop' %}" class="btn btn-light mb-4 w-100 py-2 rounded-5 rounded-4 btn-lg">Continue Shopping</a>
-                <a href="{{ order.receipt.url }}" download="" class="grey-3 link">Download Receipt</a>
+                <a href="{{ order.receipt.url }}" download="" class="text-grey-3 hover-underline link">Download Receipt</a>
             </div>
             <div class="text-center my-4">
                 <img src="{{ order.qr.url }}" alt="{{ order.description }}'s QR" style="height: 200px; width: 200px; object-fit: cover" class="img-fluid rounded-3">
             </div>
+            <hr class="text-grey-7">
+            <small class="text-grey-4 small">A copy of this receipt has been sent to your email <span class="text-grey-1">{{ order.get_email }}</span>. If you do not see the email <span class="text-grey-1">orders@djg400.com</span>, please check your spam.</small>
         </div>
     </div>
 </div>
