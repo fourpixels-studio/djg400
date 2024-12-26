@@ -1,19 +1,60 @@
 {% extends 'base.html' %}
 {% block body %}
-<div class="container-fluid mt-5 px-0">
-    <div class="container px-4 py-4">
-        <h1 class="display-4 fw-bold text-white">Remixes by DJ G400</h1>
-        <small class="small grey-1">Unlock a world of reimagined hits, exclusive mashups, and DJ G400’s unique sound twists!</small>
-        <div class="row g-4 row-cols-2 mt-3">
-            {% for remix in remixes %}
-            <div class="col-sm-6 col-md-4">
-                {% include "components/remix_card.html" %}
+{% load static %}
+<main class="container-fluid pt-4 px-0">
+    <div class="px-4">
+        <div class="row gx-3">
+            <div class="col-sm-12 col-lg-2">
+                <div class="position-sticky" style="top: 3.8rem;">
+                    {% include "mixes_sidebar.html" %}
+                </div>
             </div>
-            {% endfor %}
+            <div class="col-sm-12 col-lg-10">
+                <div class="container mt-4 px-0">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-8">
+                            <h1 class="display-4 fw-bold text-white">Remixes</h1>
+                            <p class="text-grey-4 mb-0">Unlock a world of reimagined hits, exclusive mashups, and DJ G400’s unique sound twists!</p>
+                        </div>
+                    </div>
+                    <div class="row gy-4">
+                        <div class="genre-filter" style="margin-bottom: -1rem; padding-right: 2rem; padding-left: 1rem">
+                            <button class="scroll-btn left-btn" aria-label="Scroll Left">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <div class="genres-container px-3">
+                                <a href="/mixes/" class="no-link">
+                                    <div class="genre-item rounded-4 {% if not active_genre %}active{% endif %}">
+                                        All
+                                    </div>
+                                </a>
+                                {% for genre in genres %}
+                                <a href="{{ genre.get_url }}" class="no-link">
+                                    <div class="genre-item rounded-4 {% if genre.slug == active_genre %}active{% endif %}">
+                                        {{ genre.name }}
+                                    </div>
+                                </a>
+                                {% endfor %}
+                            </div>
+                            <button class="scroll-btn right-btn" aria-label="Scroll Right">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <section class="row mt-2 g-4 row-cols-2 justify-content-start align-items-center">
+                        {% for remix in remixes %}
+                        <div class="col-sm-6 col-md-4">
+                            {% include "components/remix_card.html" %}
+                        </div>
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
         </div>
     </div>
-    <section class="px-0 py-5 mt-5" style="background-color: #141414;">
+    <div class="px-0 py-5 mt-5" style="background-color: #141414;">
         {% include "components/newsletter_banner.html" %}
-    </section>
-</div>
+    </div>
+</main>
+<script src="{% static 'js/genreFilter.js' %}"></script>
 {% endblock %}
