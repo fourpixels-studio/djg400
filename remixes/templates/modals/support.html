@@ -13,28 +13,28 @@
                             <div class="modal-body">
                                 <div class="row g-4 row-cols-2">
                                     <div class="col-6">
-                                        <div class="p-4 rounded-4 bg-grey-8">
+                                        <div class="p-4 rounded-4 border-grey-8">
                                             <input class="hover float-end form-check-input" type="radio" name="supportAmount" id="amount49" value="49" required>
                                             <h3 class="text-grey-1">49 Ksh</h3>
                                             <p class="text-grey-1 mb-0">Starter</p>
                                         </div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="p-4 rounded-4 bg-grey-8">
+                                        <div class="p-4 rounded-4 border-grey-8">
                                             <input class="hover float-end form-check-input" type="radio" name="supportAmount" id="amount99" value="99" checked>
                                             <h3 class="text-grey-1">99 Ksh</h3>
                                             <p class="text-grey-1 mb-0">Bronze</p>
                                         </div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="p-4 rounded-4 bg-grey-8">
+                                        <div class="p-4 rounded-4 border-grey-8">
                                             <input class="hover float-end form-check-input" type="radio" name="supportAmount" id="amount499" value="499">
                                             <h3 class="text-grey-1">449 Ksh</h3>
                                             <p class="text-grey-1 mb-0">Silver</p>
                                         </div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="p-4 rounded-4 bg-grey-6">
+                                        <div class="p-4 rounded-4 border-grey-5">
                                             <input class="hover float-end form-check-input" type="radio" name="supportAmount" id="amount999" value="999">
                                             <h3 class="text-white">999 Ksh</h3>
                                             <p class="text-white mb-0">Gold</p>
@@ -86,7 +86,10 @@
                             </div>
                             <div class="d-flex flex-row gap-2 justify-content-end mt-3">
                                 <button type="button" class="btn px-4 btn-outline-light" data-bs-target="#supportModal" data-bs-toggle="modal">Back</button>
-                                <button class="btn px-4 btn-light" type="submit">Confirm</button>
+                                <button id="submit-btn" type="submit" class="btn px-4 btn-light">
+                                    <span id="submit-text">Confirm</span>
+                                    <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                </button>
                             </div>
                         </div>
                     </div>
