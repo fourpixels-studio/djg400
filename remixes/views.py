@@ -1,5 +1,6 @@
 import uuid
 from .models import Remix
+from mixes.models import Genre
 from orders.models import Order
 from products.models import Product
 from django.contrib import messages
@@ -16,6 +17,7 @@ seo = SEO.objects.get(pk=3)
 def remixes_list(request):
     context = {
         'title_tag': seo.title_tag,
+        "genres": Genre.objects.all(),
         'meta_keywords': seo.meta_keywords,
         'meta_thumbnail': seo.get_thumbnail,
         'remixes': Remix.objects.order_by("-pk"),
