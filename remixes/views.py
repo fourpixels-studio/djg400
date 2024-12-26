@@ -40,19 +40,19 @@ def remix_detail(request, slug):
 def support_remix(request):
     if request.method == 'POST':
         order_number = str(uuid.uuid4())
-        amount = request.POST.get('supportAmount')
+        email = request.POST.get('email')
+        product = Product.objects.get(pk=4)
         remix_id = request.POST.get('remix_id')
         remix = Remix.objects.get(pk=remix_id)
-        product = Product.objects.get(pk=4)
-        description = f"Payment for '{remix.title}'"
-        first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
-        email = request.POST.get('email')
+        amount = request.POST.get('supportAmount')
+        first_name = request.POST.get('first_name')
+        description = f"Payment for '{remix.title}'"
         phone_number = request.POST.get('phone_number')
         order = Order(
             paid=False,
             email=email,
-            amount=1,
+            amount=amount,
             product=product,
             status='pending',
             last_name=last_name,
