@@ -1,0 +1,12 @@
+<a href="{{ product.get_url }}" class="no-link">
+    <div style="background-color: #141414; padding: 8px;" class="rounded-2">
+        <div class="d-flex flex-row gap-2">
+            <img src="{{ product.img_md.url }}" alt="{{ product.name }}'s image" style="height: 100px; width: 100px; object-fit: cover" class="rounded-2">
+            <div>
+                <h6 href="{{ product.get_url }}" class="hover-underline mb-0 text-grey-1 fw-500">{{ product.name|truncatechars:25 }}</h6>
+                <p href="{{ product.get_url }}" class="small mb-0 hover-underline text-grey-3 small">Limited shipping areas</p>
+                <p href="{{ product.get_url }}" class="small mb-0 hover-underline text-grey-7 small">Shop</p>
+            </div>
+        </div>
+    </div>
+</a>
