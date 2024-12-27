@@ -80,28 +80,29 @@ class Playlist(models.Model):
                 default_storage.delete(temp_path)
 
     def __str__(self):
-        return self.title
+        return f"{self.pk} - {self.title}"
 
     @property
     def get_similar_playlists(self):
-        if self.genre:
-            return Playlist.objects.filter(genre=self.genre)
-        return None
+        if not self.similar_playlists:
+            return []
+
+        try:
+            playlist_ids = [int(pk.strip()) for pk in self.similar_playlists.split(',') if pk.strip().isdigit()]
+            return list(Playlist.objects.filter(pk__in=playlist_ids).exclude(pk=self.pk))
+        except ValueError:
+            return []
 
     @property
     def get_similar_mixes(self):
-        if self.similar_mixes:
-            pks = [
-                item.strip()
-                for item in self.similar_mixes.split(',')
-                if item.strip()
-            ]
-            query = Q()
-            for pk in pks:
-                query |= Q(pk__icontains=pk)
-            mixes = Mix.objects.filter(query).exclude(pk=self.pk)
-            return mixes
-        return None
+        if not self.similar_mixes:
+            return []
+
+        try:
+            mix_ids = [int(pk.strip()) for pk in self.similar_mixes.split(',') if pk.strip().isdigit()]
+            return list(Mix.objects.filter(pk__in=mix_ids))
+        except ValueError:
+            return []
 
     @property
     def get_hit_count(self):
@@ -129,6 +130,6 @@ class Playlist(models.Model):
     
     @property
     def get_thumbnail(self):
-        if self.meta_thumbnail:
-            return self.meta_thumbnail.url
+        if self.genre:
+            return self.genre.get_thumbnail
         return static('playlist_thumbnail.jpg')
