@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from django.urls import reverse
 from django.conf import settings
 from hitcount.models import HitCount
@@ -64,6 +65,11 @@ class Album(models.Model):
                 f"{self.square_cover.name}", self.square_cover, save=False)
             super().save(update_fields=['meta_thumbnail'])
 
+    @property
+    def get_thumbnail(self):
+        if self.meta_thumbnail.url:
+            return self.meta_thumbnail.url
+        return static('landscape_thumbnail.jpg')
 
 class Genre(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
@@ -120,7 +126,13 @@ class Genre(models.Model):
                 f"{self.square_cover.name}", self.square_cover, save=False)
             super().save(update_fields=['meta_thumbnail'])
 
-
+    @property
+    def get_thumbnail(self):
+        if self.meta_thumbnail.url:
+            return self.meta_thumbnail.url
+        return static('landscape_thumbnail.jpg')
+        
+        
 class Mix(models.Model):
     title = models.CharField(max_length=150, blank=True, null=True)
     square_cover = models.ImageField(upload_to="mixes/covers/", blank=True, null=True)
@@ -216,22 +228,16 @@ class Mix(models.Model):
             return self.landscape_cover.url
         return static('landscape_cover.png')
 
-    # @property
-    # def get_similar_mixes(self):
-    #     if self.similar_mixes:
-    #         pk_list = self.similar_mixes.split(',')
-    #         return Mix.objects.filter(pk__in=pk_list)
-    #     return Mix.objects.none()
-
     @property
     def get_similar_mixes(self):
-        mixes = []
-        if self.album:
-            album_mixes = Mix.objects.filter(album=self.album)
-        if self.genre:
-            genre_mixes = Mix.objects.filter(genre=self.genre)
-        mixes = album_mixes | genre_mixes
-        return mixes
+        if not self.similar_mixes:
+            return []
+
+        try:
+            mix_ids = [int(pk.strip()) for pk in self.similar_mixes.split(',') if pk.strip().isdigit()]
+            return list(Mix.objects.filter(pk__in=mix_ids))
+        except ValueError:
+            return []
 
     @property
     def get_year(self):
