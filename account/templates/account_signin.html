@@ -27,10 +27,10 @@
                                 <form method="POST" action="{% url 'account_signin' %}" class="mb-3" onsubmit="showSpinner()">
                                     {% csrf_token %}
                                     <div class="my-3">
-                                        <label class="text-grey-3 mb-1 small">Email</label>
-                                        <input placeholder="Enter your email" type="email" class="form-control py-2 rounded-2" id="id_email" name="email" required/>
+                                        <label class="text-grey-3 mb-1 small">Username</label>
+                                        <input placeholder="johndoe" type="text" class="form-control py-2 rounded-2" id="id_username" name="username" required/>
                                         {% if signin_form.password.errors %}
-                                        <div class="invalid-feedback">{{ signin_form.email.errors }}</div>
+                                        <div class="invalid-feedback">{{ signin_form.username.errors }}</div>
                                         {% endif %}
                                     </div>
                                     <div class="my-3">
