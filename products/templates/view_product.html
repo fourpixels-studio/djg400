@@ -1,11 +1,17 @@
 {% extends 'base.html' %}
 {% block body %}
+{% load hitcount_tags %}
 <div class="container px-lg-0 px-4 mb-5 pt-5">
     <button onclick="goBack()" class="no-btn text-white mb-4 d-lg-none"><i class="fa-solid fa-xl fa-arrow-left"></i></button>
     <div class="row gy-4 align-items-start justify-content-start">
         {% if product.product_category.slug == "wallpaper" %}
         <div class="col-12">
-            <img class="mb-3 img-fluid w-100" src="{{ product.img_lg.url }}" loading="lazy"/>
+            <picture>
+                <source media="(min-width: 1200px)" srcset="{{ product.image.url }}">
+                <source media="(min-width: 992px)" srcset="{{ product.img_lg.url }}">
+                <source media="(min-width: 576px)" srcset="{{ product.img_md.url }}">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}'s Image" class="mb-3 img-fluid w-100" loading="lazy">
+            </picture>
         </div>
         {% else %}
         <div class="col-sm-12 col-lg-6">
@@ -20,6 +26,10 @@
         <div class="col-sm-12 col-lg-6">
             <div class="d-flex flex-column">
                 <h4 class="grey-1">{{ product.name }} - {{ product.product_category.name }}</h4>
+                <h5 class="grey-2">Ksh {{ product.price }}</h5>
+                {% if request.user.is_superuser %}
+                <small class="text-grey-3 small"><i class="fa-solid fa-eye"></i> {% get_hit_count for product %}</small>
+                {% endif %}
                 <a href="{% url 'cart' slug=product.slug %}" class="btn btn-primary w-100 btn-lg rounded-5 mt-3">Buy Now</a>
                 <h3 class="grey-1 mt-4">Description</h3>
                 <p class="grey-2">{{ product.description }}</p>
