@@ -1,9 +1,14 @@
+import uuid
 from datetime import datetime
+from orders.models import Order
 from products.models import Product
-from seo_management.models import SEO
+from django.contrib import messages
+from django.http import HttpResponse
 from .models import Album, Genre, Mix
+from seo_management.models import SEO
 from frontend.utils import update_views
-from django.shortcuts import render, get_object_or_404
+from payments.pesapal_payments import PesaPal
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .get_items import get_albums, get_all_mixes, get_genres, get_latest_mix
 
@@ -80,3 +85,49 @@ def mix_detail(request, slug):
     }
     update_views(request, mix)
     return render(request, "mix_detail.html", context)
+
+
+def support_mix(request):
+    if request.method == 'POST':
+        order_number = str(uuid.uuid4())
+        mix_id = request.POST.get('mix_id')
+        mix = Mix.objects.get(pk=mix_id)
+        email = request.POST.get('email')
+        product = Product.objects.get(pk=5)
+        last_name = request.POST.get('last_name')
+        amount = request.POST.get('supportAmount')
+        first_name = request.POST.get('first_name')
+        description = f"Payment for '{mix.get_title}' Mix"
+        phone_number = request.POST.get('phone_number')
+        order = Order(
+            paid=False,
+            email=email,
+            amount=amount,
+            product=product,
+            status='pending',
+            last_name=last_name,
+            first_name=first_name,
+            description=description,
+            phone_number=phone_number,
+            order_number=order_number,
+        )
+        order.save()
+        try:
+            pesapal = PesaPal()
+            payment_response = pesapal.submit_order(order, description)
+            if 'redirect_url' in payment_response:
+                order.order_tracking_id = payment_response['order_tracking_id']
+                order.status = "Awaiting payment confirmation"
+                order.save()
+                return redirect(payment_response['redirect_url'])
+            else:
+                messages.error(request, "Missing redirect URL")
+                order.status = "Missing redirect URL"
+                order.save()
+                return redirect('payment_failed', order_number)
+        except KeyError as e:
+            messages.error(request, f"Payment initiation failed: {str(e)}")
+            order.status = str(e)
+            order.save()
+            return redirect('payment_failed', order_number)
+    return HttpResponse("Invalid request method", status=400)
