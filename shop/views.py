@@ -9,6 +9,7 @@ def shop(request):
         'title_tag': seo.title_tag,
         'products': Product.objects.all(),
         'meta_keywords': seo.meta_keywords,
+        'meta_thumbnail': seo.get_thumbnail,
         'meta_description': seo.meta_description,
     }
     return render(request, 'shop.html', context)
