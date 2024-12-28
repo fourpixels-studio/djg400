@@ -3,48 +3,53 @@ from .models import Product
 from orders.models import Order
 from django.contrib import messages
 from django.http import HttpResponse
+from seo_management.models import SEO
+from frontend.utils import update_views
 from payments.pesapal_payments import PesaPal
 from django.shortcuts import render, get_object_or_404, redirect
 
 
+seo = SEO.objects.get(pk=4)
+
+
 def view_product(request, product_category, slug):
     product = get_object_or_404(Product, slug=slug)
-    meta_keywords = "400 miles above the competition, arap trap, 4hunnid, g400, highjacked, hood love, trap, hip hop, rnb, rap, quality mixes, hd mixes, 1080p mixes"
     context = {
         'product': product,
-        'title_tag': product.name,
-        'meta_keywords': meta_keywords,
-        'meta_description': product.description,
+        'meta_thumbnail': product.meta_thumbnail.url,
+        'title_tag': f"Shop | {product.name} - {product.product_category.name}",
+        'meta_description': f"Discover {product.name} in the {product.product_category.name} category on DJ G400's Shop. {product.description} available now for just {product.price}. Stay 400 miles above the competition with exclusive DJ G400 products, wallpapers, and remixed tracks.",
+        'meta_keywords': f"{product.name}, {product.product_category.name}, DJ G400 shop, exclusive merchandise, wallpapers, remixed tracks, 400 miles above the competition, Arap Trap, 4Hunnid, G400 apparel, trap music gear, urban products, digital downloads, {product.name} on DJ G400 shop, buy {product.name}, DJ G400 store, {product.product_category.name} products",
     }
+    update_views(request, product)
     return render(request, 'view_product.html', context)
 
 
 def buy_product(request):
     if request.method == 'POST':
+        order_number = str(uuid.uuid4())
+        email = request.POST.get('email')
+        amount = request.POST.get('amount')
+        last_name = request.POST.get('last_name')
+        first_name = request.POST.get('first_name')
         product_id = request.POST.get('product_id')
         product = Product.objects.get(pk=product_id)
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        email = request.POST.get('email')
         phone_number = request.POST.get('phone_number')
-        amount = request.POST.get('amount')
-        order_number = str(uuid.uuid4())
-        description = f"Payment for '{product.name}' {product.product_category}"
+        description = f"Payment for {product.product_category}: {product.name}"
 
         order = Order(
-            product=product,
             paid=False,
-            first_name=first_name,
-            last_name=last_name,
             email=email,
-            phone_number=phone_number,
             amount=amount,
-            order_number=order_number,
+            product=product,
             status='pending',
+            last_name=last_name,
+            first_name=first_name,
             description=description,
+            phone_number=phone_number,
+            order_number=order_number,
         )
         order.save()
-        messages.success(request, f"Succesfully received order and payment!")
         try:
             pesapal = PesaPal()
             payment_response = pesapal.submit_order(order, description)
