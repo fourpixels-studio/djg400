@@ -47,8 +47,8 @@ def filtered_albums(request, slug):
         'all_mixes': get_all_mixes(),
         'latest_mix': get_latest_mix(),
         'meta_keywords': seo.meta_keywords,
+        'mixes': Mix.objects.filter(album=album),
         'title_tag': f'Showing all {album} Mixes',
-        'mixes': Mix.objects.filter(album=album).order_by("-pk"),
         'meta_description': f'Showing all {album} mixes from DJ G400.',
     }
     update_views(request, album)
@@ -61,11 +61,11 @@ def filtered_genres(request, slug):
         'genre': genre,
         'genres': get_genres(),
         'albums': get_albums(),
-        'mixes': get_all_mixes(),
         'cover_image': genre.image,
         'active_genre': genre.slug,
         'latest_mix': get_latest_mix(),
         'meta_keywords': seo.meta_keywords,
+        'mixes': Mix.objects.filter(genre=genre),
         'title_tag': f'Showing all {genre} Mixes',
         'meta_description': f'Showing all {genre} mixes from DJ G400.',
     }
@@ -90,15 +90,15 @@ def mix_detail(request, slug):
 def support_mix(request):
     if request.method == 'POST':
         order_number = str(uuid.uuid4())
+        email = request.POST.get('email')
         mix_id = request.POST.get('mix_id')
         mix = Mix.objects.get(pk=mix_id)
-        email = request.POST.get('email')
         product = Product.objects.get(pk=5)
         last_name = request.POST.get('last_name')
         amount = request.POST.get('supportAmount')
         first_name = request.POST.get('first_name')
-        description = f"Payment for '{mix.get_title}' Mix"
         phone_number = request.POST.get('phone_number')
+        description = f"Payment for '{mix.get_title}' Mix"
         order = Order(
             paid=False,
             email=email,
