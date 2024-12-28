@@ -32,12 +32,6 @@ class CustomUserCreationForm(UserCreationForm):
         if not captcha_value:
             raise forms.ValidationError("Please complete the captcha.")
         return captcha_value
-
-
-class LoginForm(forms.Form):
-    email = forms.EmailField()
-    password = forms.CharField(label="Password", widget=forms.PasswordInput)
-
     def clean(self):
         cleaned_data = super().clean()
         email = cleaned_data.get("email")
