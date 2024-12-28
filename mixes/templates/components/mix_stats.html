@@ -3,7 +3,9 @@
     <div class="d-flex flex-row gap-2 align-items-center">
         <img src="{% static 'img/djg400-blog-thumbnail.jpg' %}" style="height: 40px; width: 40px; border-radius: 50px; object-fit: cover" alt="DJ G400's image">
         <p class="mb-0 grey-2">DJ G400</p>
-        <a href="{% url 'subscribe_newsletter' %}" class="btn btn-light rounded-pill px-3 ms-4">Subscribe</a>
+        <button role="button" data-bs-toggle="modal" data-bs-target="#supportMixModal" class="btn btn-primary rounded-2 px-3 ms-3">
+            Support <i class="ms-1 fa-solid fa-hand-holding-dollar"></i>
+        </button>
     </div>
     <div class="d-flex flex-row gap-3 align-items-center">
         <div id="like-btn" class="bg-grey py-2 rounded-pill px-3 grey-2 hover-like" data-mix-slug="{{ mix.slug }}" data-csrf-token="{{ csrf_token }}">
