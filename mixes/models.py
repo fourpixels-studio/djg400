@@ -182,10 +182,6 @@ class Mix(models.Model):
         
     class Meta:
         ordering = ['-release_date']
-        
-    @property
-    def meta_url(self):
-        return f"mixes/{self.slug}/"
 
     @property
     def get_title(self):
