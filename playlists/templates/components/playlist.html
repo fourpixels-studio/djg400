@@ -2,7 +2,7 @@
 <a href="{{ playlist.get_url }}" class="no-link">
     <img loading="lazy" src="{{ playlist.get_thumbnail }}" alt="{{ playlist.title }}'s cover" class="img-fluid rounded-2 mb-2">
     <div class="d-flex flex-row align-items-center justify-content-between">
-        <small href="{{ playlist.get_url }}" class="text-grey-3">{{ playlist.title }}</small>
+        <small href="{{ playlist.get_url }}" class="text-grey-3 hover-underline">{{ playlist.title }}</small>
         {% if request.user.is_superuser %}
         <small class="text-grey-3 small"><i class="fa-solid fa-eye"></i> {% get_hit_count for playlist %}</small>
         {% endif %}
