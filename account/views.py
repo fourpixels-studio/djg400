@@ -2,11 +2,12 @@ from django.utils import timezone
 from django.contrib import messages
 from seo_management.models import SEO
 from newsletter.models import Newsletter
+from .forms import CustomUserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from .email import send_user_verification_email
 from django.core.exceptions import ValidationError
-from .forms import CustomUserCreationForm, LoginForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, logout
 
@@ -17,23 +18,18 @@ def account_signin(request):
     else:
         context = {}
         seo = SEO.objects.get(pk=8)
-        signin_form = LoginForm(request.POST)
+        signin_form = AuthenticationForm(request, data=request.POST)
         
         if request.method == "POST":
             try:
                 if signin_form.is_valid():
-                    email = signin_form.cleaned_data.get("email")
+                    username = signin_form.cleaned_data.get("username")
                     password = signin_form.cleaned_data.get("password")
-                    try:
-                        user = User.objects.filter(email=email).first()
-                        username = user.username
-                        user = authenticate(username=username, password=password)
-                        if user is not None:
-                            login(request, user)
-                            messages.success(request, f"Welcome back, {user}")
-                            return redirect("index")
-                    except:
-                        messages.error(request, f"The email {email} does not exist.")
+                    user = authenticate(username=username, password=password)
+                    if user is not None:
+                        login(request, user)
+                        messages.success(request, f"Welcome back, {user}")
+                        return redirect("index")
                 else:
                     for field, errors in signin_form.errors.items():
                         for error in errors:
