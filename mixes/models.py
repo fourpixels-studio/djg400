@@ -179,7 +179,10 @@ class Mix(models.Model):
 
     def __str__(self):
         return f"{self.pk} - {self.title}"
-
+        
+    class Meta:
+        ordering = ['-release_date']
+        
     @property
     def meta_url(self):
         return f"mixes/{self.slug}/"
