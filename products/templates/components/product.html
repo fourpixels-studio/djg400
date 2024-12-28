@@ -1,3 +1,4 @@
+{% load hitcount_tags %}
 <a href="{{ product.get_url }}" class="no-link">
     <div class="rounded-3 d-flex flex-column gap-3" style="background-color: #141414; padding: 8px">
         <picture>
@@ -7,7 +8,12 @@
             <img src="{{ product.img_md.url }}" alt="{{ product.name }}'s image" style="height: 236px; width: 100%; object-fit: cover" class="rounded-3">
         </picture>
         <div class="mt-2">
-            <h6 href="{{ product.get_url }}" class="mb-0 hover-underline grey-1 fw-500 font-alt">{{ product.name }}</h6>
+            <div class="d-flex flex-row align-items-center justify-content-between flex-wrap">
+                <h6 href="{{ product.get_url }}" class="mb-0 hover-underline grey-1 fw-500 font-alt">{{ product.name }}</h6>
+                {% if request.user.is_superuser %}
+                <small class="text-grey-3 small"><i class="fa-solid fa-eye"></i> {% get_hit_count for product %}</small>
+                {% endif %}
+            </div>
             <p class="my-0 grey-3 small fw-300">Type: {{ product.product_category }}</p>
             <button class="btn mt-3 btn-outline-light w-100" style="border-radius: 10px;">View</button>
         </div>
