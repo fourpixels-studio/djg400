@@ -1,16 +1,17 @@
+from datetime import datetime
 from products.models import Product
-from .models import Album, Genre, Mix
 from seo_management.models import SEO
+from .models import Album, Genre, Mix
 from frontend.utils import update_views
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from .get_items import get_albums, get_all_mixes, get_genres, get_latest_mix
 
 seo = SEO.objects.first()
 
 
 def mix_list(request):
-    all_mixes = Mix.objects.order_by("-pk")
-    paginator = Paginator(all_mixes, 9)
+    paginator = Paginator(get_all_mixes(), 9)
     page = request.GET.get("page", 1)
 
     try:
@@ -20,13 +21,13 @@ def mix_list(request):
 
     context = {
         'mixes': mixes,
+        'genres': get_genres(),
+        'albums': get_albums(),
         'title_tag': seo.title_tag,
-        'albums': Album.objects.all(),
-        'genres': Genre.objects.all(),
+        'latest_mix': get_latest_mix(),
         'meta_keywords': seo.meta_keywords,
         'meta_thumbnail': seo.get_thumbnail,
         'meta_description': seo.meta_description,
-        'latest_mix': Mix.objects.latest("release_date"),
     }
     return render(request, 'mix_list.html', context)
 
@@ -34,15 +35,16 @@ def mix_list(request):
 def filtered_albums(request, slug):
     album = get_object_or_404(Album, slug=slug)
     context = {
-        'latest_mix': Mix.objects.latest("release_date"),
-        'mixes': Mix.objects.filter(album=album).order_by("-pk"),
-        'all_mixes': Mix.objects.all(),
-        'genres': Genre.objects.all(),
-        'albums': Album.objects.all(),
-        'title_tag': f'Showing all {album} Mixes',
-        'meta_description': f'Showing all {album} mixes from DJ G400.',
         'album': album,
+        'albums': get_albums(),
+        'genres': get_genres(),
+        'cover_image': album.image,
+        'all_mixes': get_all_mixes(),
+        'latest_mix': get_latest_mix(),
         'meta_keywords': seo.meta_keywords,
+        'title_tag': f'Showing all {album} Mixes',
+        'mixes': Mix.objects.filter(album=album).order_by("-pk"),
+        'meta_description': f'Showing all {album} mixes from DJ G400.',
     }
     update_views(request, album)
     return render(request, 'mix_list.html', context)
@@ -51,69 +53,30 @@ def filtered_albums(request, slug):
 def filtered_genres(request, slug):
     genre = get_object_or_404(Genre, slug=slug)
     context = {
-        'latest_mix': Mix.objects.latest("release_date"),
-        'mixes': Mix.objects.filter(genre=genre).order_by("-pk"),
-        'genres': Genre.objects.all(),
-        'albums': Album.objects.all(),
+        'genre': genre,
+        'genres': get_genres(),
+        'albums': get_albums(),
+        'mixes': get_all_mixes(),
+        'cover_image': genre.image,
+        'active_genre': genre.slug,
+        'latest_mix': get_latest_mix(),
+        'meta_keywords': seo.meta_keywords,
         'title_tag': f'Showing all {genre} Mixes',
         'meta_description': f'Showing all {genre} mixes from DJ G400.',
-        'genre': genre,
-        'active_genre': genre.slug,
-        'meta_keywords': seo.meta_keywords,
     }
     update_views(request, genre)
     return render(request, 'mix_list.html', context)
 
 
-def audio_mix_detail(request, slug):
+def mix_detail(request, slug):
     mix = get_object_or_404(Mix, slug=slug)
-    meta_description = f"Volume {mix.episode_number} in the {mix.album.name} series. This mix embodies the spirit of uptown vibes, evoking a world of sophistication, luxury, and refinement in the world of {mix.genre.name} music."
-    meta_keywords = f"{mix.album.name}, {mix.genre.name}, {mix.title}, 400 miles above the competition, arap trap, 4hunnid, g400, highjacked, hood love, trap, hip hop, rnb, rap, quality mixes, hd mixes, 1080p mixes"
-    if mix.meta_thumbnail:
-        meta_thumbnail = mix.meta_thumbnail.url
-    else:
-        meta_thumbnail = None
     context = {
         'mix': mix,
-        'title_tag': f"Playing {mix.get_title}",
-        'meta_description': meta_description,
-        'meta_keywords': meta_keywords,
-        'meta_thumbnail': meta_thumbnail,
         'products': Product.objects.all(),
+        'meta_thumbnail': mix.get_landscape_thumbnail,
+        'title_tag': f"{mix.get_title} - {mix.genre.name} Mix | Stream & Download",
+        'meta_description': f"Listen to '{mix.title}' by DJ G400, a {mix.genre.name} mix from the album '{mix.album.name}' featuring {mix.get_featured_artists}. Stream or download this popular mix with {mix.play_count} plays and {mix.download_count} downloads. Available now on DJ G400's platform.",
+        'meta_keywords': f"{mix.title}, {mix.genre.name}, {mix.album.name}, DJ G400 mix, DJ G400 music, {mix.title} mix, featured artists {mix.get_featured_artists}, popular mixes, hip hop mixes, trap mixes, RnB mixes, stream {mix.title}, download {mix.title}, urban music, DJ G400 playlist, exclusive mixes, top mixes {datetime.now().year}",
     }
     update_views(request, mix)
-    return render(request, 'audio_mix_detail.html', context)
-
-
-def video_mix_detail(request, slug):
-    mix = get_object_or_404(Mix, slug=slug)
-    meta_description = f"Volume {mix.episode_number} in the {mix.album.name} series. This mix embodies the spirit of uptown vibes, evoking a world of sophistication, luxury, and refinement in the world of {mix.genre.name} music."
-    meta_keywords = f"{mix.album.name}, {mix.genre.name}, {mix.title}, 400 miles above the competition, arap trap, 4hunnid, g400, highjacked, hood love, trap, hip hop, rnb, rap, quality mixes, hd mixes, 1080p mixes"
-    if mix.meta_thumbnail:
-        meta_thumbnail = mix.meta_thumbnail.url
-    else:
-        meta_thumbnail = None
-    context = {
-        'mix': mix,
-        'title_tag': f"Playing {mix.get_title}",
-        'meta_description': meta_description,
-        'meta_keywords': meta_keywords,
-        'meta_thumbnail': meta_thumbnail,
-        'products': Product.objects.all(),
-    }
-    update_views(request, mix)
-    return render(request, 'audio_mix_detail.html', context)
-    
-    
-def video_mix_list(request):
-    context = {
-        'title_tag': "Video Mixes",
-        'meta_description': seo.meta_description,
-        'meta_keywords': seo.meta_keywords,
-        'meta_thumbnail': seo.get_thumbnail,
-        'mixes': Mix.objects.order_by("-pk"),
-        'latest_mix': Mix.objects.latest("release_date"),
-        'albums': Album.objects.all(),
-        'genres': Genre.objects.all(),
-    }
-    return render(request, 'video_mix_list.html', context)
+    return render(request, "mix_detail.html", context)
