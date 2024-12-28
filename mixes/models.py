@@ -35,6 +35,9 @@ class Album(models.Model):
     hit_count_generic = GenericRelation(
         HitCount, object_id_field='object_pk', related_query_name='hit_count_generic_relation')
 
+    class Meta:
+        ordering = ['name']
+        
     def __str__(self):
         return self.name
 
@@ -95,6 +98,9 @@ class Genre(models.Model):
     )
     hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk', related_query_name='hit_count_generic_relation')
 
+    class Meta:
+        ordering = ['name']
+        
     def __str__(self):
         return self.name
 
@@ -193,16 +199,15 @@ class Mix(models.Model):
 
     @property
     def get_url(self):
-        return reverse("audio_mix_detail", kwargs={
+        return reverse("mix_detail", kwargs={
             "slug": self.slug,
         })
         
     @property
     def get_video_url(self):
-        return reverse("video_mix_detail", kwargs={
+        return reverse("mix_detail", kwargs={
             "slug": self.slug,
         })
-
 
     @property
     def get_square_cover(self):
@@ -232,7 +237,6 @@ class Mix(models.Model):
     def get_similar_mixes(self):
         if not self.similar_mixes:
             return []
-
         try:
             mix_ids = [int(pk.strip()) for pk in self.similar_mixes.split(',') if pk.strip().isdigit()]
             return list(Mix.objects.filter(pk__in=mix_ids))
@@ -278,3 +282,14 @@ class Mix(models.Model):
         current_site = settings.PUBLIC_URL
         blog_url = self.get_url
         return f"{current_site}{blog_url}"
+
+    @property
+    def get_featured_artists(self):
+        if self.featured_artists:
+            artists = [
+                item.strip()
+                for item in self.featured_artists.split(',')
+                if item.strip()
+            ]
+            return artists
+        return "DJ G400"
