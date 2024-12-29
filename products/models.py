@@ -3,7 +3,7 @@ from django.db.models import Q
 from django.urls import reverse
 from django.utils.text import slugify
 from django_resized import ResizedImageField
-from hitcount.models import HitCountMixin, HitCount  # type: ignore
+from hitcount.models import HitCountMixin, HitCount
 from django.contrib.contenttypes.fields import GenericRelation
 
 
@@ -21,49 +21,21 @@ class ProductCategory(models.Model):
 
 
 class Product(models.Model):
-    product_category = models.ForeignKey(
-        ProductCategory, on_delete=models.SET_NULL, null=True, blank=True)
+    product_category = models.ForeignKey(ProductCategory, on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=200, null=True, blank=True)
     similar_products = models.CharField(max_length=100, null=True, blank=True)
     price = models.IntegerField(default=0, blank=True, null=True)
     description = models.TextField(null=True, blank=True)
     link = models.TextField(null=True, blank=True)
     file = models.FileField(blank=True, null=True, upload_to='products/files/')
-    image = models.FileField(
-        blank=True, null=True,
-        upload_to='products/')
-    img_sm = ResizedImageField(
-        size=[300, 300],
-        quality=75,
-        upload_to='thumbnails/',
-        blank=True,
-        null=True
-    )
-    img_md = ResizedImageField(
-        size=[768, 768],
-        quality=75,
-        upload_to='resized_images/',
-        blank=True,
-        null=True
-    )
-    img_lg = ResizedImageField(
-        size=[1200, 1200],
-        quality=75,
-        upload_to='resized_images/',
-        blank=True,
-        null=True
-    )
-    meta_thumbnail = ResizedImageField(
-        size=[1200, 630],
-        crop=['middle', 'center'],
-        quality=75,
-        upload_to='resized_images/',
-        blank=True,
-        null=True
-    )
+    image = models.FileField(blank=True, null=True, upload_to='products/')
+    img_sm = ResizedImageField(size=[300, 300], quality=75, upload_to='thumbnails/', blank=True, null=True)
+    img_md = ResizedImageField(size=[768, 768], quality=75, upload_to='resized_images/', blank=True, null=True)
+    img_lg = ResizedImageField(size=[1200, 1200], quality=75, upload_to='resized_images/', blank=True, null=True)
+    meta_thumbnail = ResizedImageField(size=[1200, 630], crop=['middle', 'center'], quality=75, upload_to='resized_images/', blank=True, null=True)
     slug = models.SlugField(unique=True, null=True, blank=True)
-    hit_count_generic = GenericRelation(
-        HitCount, object_id_field="object_pk", related_query_name="hit_count_generic_relation")
+    hit_count_generic = GenericRelation(HitCount, object_id_field="object_pk", related_query_name="hit_count_generic_relation")
+    show_in_mixes = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         if not self.slug:
