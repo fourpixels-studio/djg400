@@ -105,6 +105,10 @@ class Genre(models.Model):
         return self.name
 
     @property
+    def get_num_mixes(self):
+        return Mix.objects.filter(genre=self).count()
+        
+    @property
     def get_url(self):
         return reverse("filtered_genres", kwargs={
             "slug": self.slug,
@@ -179,7 +183,7 @@ class Mix(models.Model):
 
     def __str__(self):
         return f"{self.pk} - {self.title}"
-        
+
     class Meta:
         ordering = ['-release_date']
 
