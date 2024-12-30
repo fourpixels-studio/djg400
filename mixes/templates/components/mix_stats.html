@@ -11,18 +11,30 @@
         </button>
     </div>
     <div class="d-flex flex-row gap-3 align-items-center">
-        <div id="like-btn" class="bg-grey py-2 rounded-pill px-3 grey-2 hover-like" data-mix-slug="{{ mix.slug }}" data-csrf-token="{{ csrf_token }}">
-            <i class="fa-solid fa-thumbs-up"></i> 
-            <small class="mb-0">{{ mix.like_count }} Likes</small>
+        {% if not request.user.is_authenticated %}
+        <button role="button" data-bs-toggle="modal" data-bs-target="#loginModal" class="no-btn bg-grey-8 py-2 rounded-2 px-3 text-grey-3">
+            <i class="fa-solid fa-thumbs-up"></i>
+            <span class="like-text">Like</span>
+        </button>
+        {% elif mix in user.customer.liked_mixes.all %}
+        <div data-id="{{ mix.id }}" data-type="mix" class="bg-grey-8 py-2 rounded-2 px-3 text-primary-4 hover-like like-btn">
+            <i class="fa-solid fa-thumbs-up like-icon"></i>
+            <span class="like-text">Liked</span>
         </div>
-        <div class="dropdown bg-grey py-2 rounded-pill px-3 grey-2">
+        {% else %}
+        <div data-id="{{ mix.id }}" data-type="mix" class="bg-grey-8 py-2 rounded-2 px-3 text-grey-4 hover-like like-btn">
+            <i class="fa-solid fa-thumbs-up like-icon"></i>
+            <span class="like-text">Like</span>
+        </div>
+        {% endif %}
+        <div class="dropdown py-2 rounded-2 px-3 bg-grey-8 text-grey-3">
             <button class="no-btn dropdown-toggle" id="dropdownMixMenu" data-bs-toggle="dropdown" aria-expanded="false">Share</button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMixMenu">
                 <li>
                     <button class="no-btn dropdown-item" data-bs-toggle="modal" data-bs-target="#share"> 
                         <div class="d-flex flex-row align-items-center justify-content-start gap-3">
                             <div class="col-2 text-center"><i class="fa-solid fa-link"></i></div>
-                            <div class="col-8"><span class="text-start">Copy Link</span></div>
+                            <div class="col-8"><span class="text-start">Link</span></div>
                         </div>
                     </button>
                 </li>
