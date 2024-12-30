@@ -1,3 +1,4 @@
+from .models import Customer
 from django.utils import timezone
 from django.contrib import messages
 from seo_management.models import SEO
@@ -74,6 +75,7 @@ def account_signup(request):
                 user = authenticate(username=username, password=password)
 
                 if user is not None:
+                    Customer.objects.create(user=user)
                     login(request, user)
                     try:
                         subscription = Newsletter.objects.filter(email=email).first()
