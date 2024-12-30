@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models import Q
 from django.urls import reverse
 from colorthief import ColorThief
 from mixes.models import Genre, Mix
@@ -20,8 +19,8 @@ class Playlist(models.Model):
     square_thumbnail = ResizedImageField(size=[150, 150], crop=['middle', 'center'], quality=75,upload_to='playlists/thumbnails/', blank=True, null=True)
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE, blank=True, null=True)
     is_popular = models.BooleanField(default=False, blank=True, null=True)
-    spotify_link = models.TextField(blank=True, null=True)
-    youtube_link = models.TextField(blank=True, null=True)
+    spotify_link = models.URLField(blank=True, null=True)
+    youtube_link = models.URLField(blank=True, null=True)
     similar_playlists = models.CharField(max_length=100, blank=True, null=True)
     similar_mixes = models.CharField(max_length=100, blank=True, null=True)
     release_date = models.DateField(blank=True, null=True)
@@ -44,8 +43,7 @@ class Playlist(models.Model):
         # Extract colors from square_cover
         if self.square_cover:
             # Save the image temporarily to access it
-            temp_path = default_storage.save(
-                self.square_cover.name, ContentFile(self.square_cover.read()))
+            temp_path = default_storage.save(self.square_cover.name, ContentFile(self.square_cover.read()))
             temp_file_path = default_storage.path(temp_path)
 
             try:
@@ -72,8 +70,7 @@ class Playlist(models.Model):
                 self.color = hex_color
                 self.dark_color = dark_hex
                 self.light_color = light_hex
-                super(Playlist, self).save(update_fields=[
-                    'color', 'dark_color', 'light_color'])
+                super(Playlist, self).save(update_fields=['color', 'dark_color', 'light_color'])
 
             finally:
                 # Clean up temporary file
