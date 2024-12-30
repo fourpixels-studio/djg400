@@ -10,34 +10,23 @@
       {% if mix.youtube_link %}
       <div class="youtube-video-container">{{ mix.youtube_link|safe }}</div>
       <!-- if video snippet and theres a link, show them both -->
-      {% elif mix.video and mix.stream_link %}
-      <video class="img-fluid rounded-4" controls>
-        <source src="{{ mix.video.url }}" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-      <audio src="{{ mix.stream_link }}" controls class="w-100 mt-3">
-        <source type="audio/mpeg" />
-        Your browser does not support the audio element.
-      </audio>
-      <!-- if snippet and no audio link, show the snippet only -->
-      {% elif mix.stream_link %}
-      <img src="{{ mix.get_landscape_cover }}" alt="" class="img-fluid rounded-4 mb-3">
-      <audio src="{{ mix.stream_link }}" controls class="w-100">
-        <source type="audio/mpeg" />
-        Your browser does not support the audio element.
+      {% elif mix.stream_link and not mix.youtube_link %}
+      <img src="{{ mix.get_landscape_cover }}" alt="{{ mix.get_title }}'s Cover" class="img-fluid rounded-4 mb-3">
+      <audio src="{{ mix.stream_link }}" controls class="w-100" id="audio-player" data-id="{{ mix.pk }}">
+          <source type="audio/mpeg" />
+          Your browser does not support the audio element.
       </audio>
       {% else %}
       <img src="{{ mix.get_landscape_cover }}" alt="{{ mix.get_title }}'s Cover" class="img-fluid rounded-4">
-      <div class="badge bg-primary text-dark">Link coming soon</div>
+      <div class="badge bg-primary rounded-2 text-dark mt-3">Link coming soon</div>
       {% endif %}
       <h2 class="text-white mt-3">{{ mix.get_title }}</h2>
       {% include 'components/mix_stats.html' %}
       {% include 'components/mix_info.html' %}
       {% include 'components/mix_products.html' %}
     </div>
-
     <div class="col-sm-12 col-lg-4 mt-4 px-0 px-lg-2">
-      <div class="bg-gradientToDown p-3 rounded-4">
+      <div class="p-3 rounded-4">
         <div class="d-flex flex-row flex-wrap gap-2">
           <a href="#!" class="badge rounded-1 bg-light text-dark">All</a>
           <a href="#!" class="badge grey-2 rounded-1 bg-grey">From the series</a>
@@ -60,12 +49,82 @@
         {% endfor %}
       </div>
     </div>
-
   </div>
-
 </div>
 {% include "modals/share.html" %}
 {% include "modals/support_mix.html" %}
+{% if not request.user.is_authenticated %}
 {% include "modals/login.html" %}
+{% endif %}
+{% if request.user.is_authenticated %}
+<script>
+  document.querySelectorAll('audio').forEach(audio => {
+    audio.addEventListener('timeupdate', function () {
+        const playedTime = Math.floor(this.currentTime); // Current time in seconds
+        const mixId = this.dataset.id; // Extract mix ID from element ID
+        console.log(playedTime);
+
+        if (playedTime >= 60 && !this.dataset.updated) { // 1 minute = 60 seconds
+            // Prevent multiple updates for the same mix
+            this.dataset.updated = true;
+            console.log("Elapsed!");
+
+            // Make an AJAX call to the server
+            fetch('/account/mix/update_play/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCSRFToken(), // Ensure CSRF protection
+                },
+                body: JSON.stringify({ mix_id: mixId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Just keep listening :)');
+            })
+            .catch(error => console.error('Error updating play count:', error));
+        }
+    });
+});
+// CSRF Token Helper
+function getCSRFToken() {
+    return document.querySelector('[name=csrfmiddlewaretoken]').value;
+}
+</script>
+{% endif %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const likeButtons = document.querySelectorAll(".like-btn");
+        likeButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const itemId = this.dataset.id;
+                const itemType = this.dataset.type;
+                const url = `/account/like/${itemType}/${itemId}/`;
+                fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const icon = this.querySelector(".like-icon");
+                    const text = this.querySelector(".like-text");
+                    if (data.liked) {
+                        icon.classList.add("liked");
+                        text.textContent = "Liked";
+                        icon.style.color = "#99f1ea";
+                        text.style.color = "#99f1ea";
+                    } else {
+                        icon.classList.remove("liked");
+                        text.textContent = "Like";
+                        icon.style.color = "#b0b0b0";
+                        text.style.color = "#b0b0b0";
+                    }
+                });
+            });
+        });
+    });
+</script>
 <script src="{% static 'js/mixUtils.js' %}"></script>
 {% endblock %}
