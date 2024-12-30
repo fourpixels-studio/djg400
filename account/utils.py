@@ -84,7 +84,7 @@ def add_playlist_history(request, playlist_id):
     return JsonResponse({'status': 'success'})
 
 
-@method_decorator(csrf_exempt, name="dispatch")
+@csrf_exempt
 def update_mix_play(request):
     if request.method == 'POST':
         data = json.loads(request.body)
