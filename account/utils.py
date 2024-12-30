@@ -1,106 +1,104 @@
-from .models import User
+import json
 from mixes.models import Mix
 from products.models import Product
 from django.http import JsonResponse
 from playlists.models import Playlist
-from django.shortcuts import render, get_object_or_404
-from .models import Purchase, MixHistory, PlaylistHistory
+from django.shortcuts import get_object_or_404
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from .models import MixHistory, PlaylistHistory, Remix
 from django.contrib.auth.decorators import login_required
 
 
+# Like a mix
 @login_required
 def like_mix(request, mix_id):
-    """
-    Allows a user to like or unlike a mix.
-    """
     mix = get_object_or_404(Mix, id=mix_id)
-    if mix in request.user.liked_mixes.all():
-        request.user.liked_mixes.remove(mix)
+    customer = request.user.customer
+    if mix in customer.liked_mixes.all():
+        customer.liked_mixes.remove(mix)
         liked = False
     else:
-        request.user.liked_mixes.add(mix)
+        customer.liked_mixes.add(mix)
         liked = True
     return JsonResponse({'liked': liked})
 
 
+# Like a playlist
 @login_required
 def like_playlist(request, playlist_id):
-    """
-    Allows a user to like or unlike a playlist.
-    """
     playlist = get_object_or_404(Playlist, id=playlist_id)
-    if playlist in request.user.liked_playlists.all():
-        request.user.liked_playlists.remove(playlist)
+    customer = request.user.customer
+    if playlist in customer.liked_playlists.all():
+        customer.liked_playlists.remove(playlist)
         liked = False
     else:
-        request.user.liked_playlists.add(playlist)
+        customer.liked_playlists.add(playlist)
         liked = True
     return JsonResponse({'liked': liked})
 
 
+# Like a remix
+@login_required
+def like_remix(request, remix_id):
+    remix = get_object_or_404(Remix, id=remix_id)
+    customer = request.user.customer
+    if remix in customer.liked_remixes.all():
+        customer.liked_remixes.remove(remix)
+        liked = False
+    else:
+        customer.liked_remixes.add(remix)
+        liked = True
+    return JsonResponse({'liked': liked})
+
+
+# Like a product
 @login_required
 def like_product(request, product_id):
-    """
-    Allows a user to like or unlike a product.
-    """
     product = get_object_or_404(Product, id=product_id)
-    if product in request.user.liked_products.all():
-        request.user.liked_products.remove(product)
+    customer = request.user.customer
+    if product in customer.liked_products.all():
+        customer.liked_products.remove(product)
         liked = False
     else:
-        request.user.liked_products.add(product)
+        customer.liked_products.add(product)
         liked = True
     return JsonResponse({'liked': liked})
 
 
+# Add to Mix history
 @login_required
-def purchase_product(request, product_id):
-    """
-    Allows a user to purchase a product.
-    """
-    product = get_object_or_404(Product, id=product_id)
-    quantity = int(request.POST.get('quantity', 1))
-    Purchase.objects.create(user=request.user, product=product, quantity=quantity)
-    return JsonResponse({'message': 'Purchase successful'})
-
-
-@login_required
-def listen_mix(request, mix_id):
-    """
-    Records that a user has listened to a mix.
-    """
+def add_mix_history(request, mix_id):
     mix = get_object_or_404(Mix, id=mix_id)
-    MixHistory.objects.create(user=request.user, mix=mix)
-    return JsonResponse({'message': 'Mix listened'})
+    customer = request.user.customer
+    MixHistory.objects.get_or_create(customer=customer, mix=mix)
+    return JsonResponse({'status': 'success'})
 
 
+# Add to Playlist history
 @login_required
-def listen_playlist(request, playlist_id):
-    """
-    Records that a user has listened to a playlist.
-    """
+def add_playlist_history(request, playlist_id):
     playlist = get_object_or_404(Playlist, id=playlist_id)
-    PlaylistHistory.objects.create(user=request.user, playlist=playlist)
-    return JsonResponse({'message': 'Playlist listened'})
+    customer = request.user.customer
+    PlaylistHistory.objects.get_or_create(customer=customer, playlist=playlist)
+    return JsonResponse({'status': 'success'})
 
 
-@login_required
-def purchase_history(request):
-    """
-    View for displaying the user's purchase history.
-    """
-    purchases = Purchase.objects.filter(user=request.user).select_related('product')
-    return render(request, 'purchase_history.html', {'purchases': purchases})
-
-
-@login_required
-def listening_history(request):
-    """
-    View for displaying the user's listening history.
-    """
-    mix_history = MixHistory.objects.filter(user=request.user).select_related('mix')
-    playlist_history = PlaylistHistory.objects.filter(user=request.user).select_related('playlist')
-    return render(request, 'listening_history.html', {
-        'mix_history': mix_history,
-        'playlist_history': playlist_history,
-    })
+@method_decorator(csrf_exempt, name="dispatch")
+def update_mix_play(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        mix_id = data.get('mix_id')
+        user = request.user
+        if not user.is_authenticated:
+            return JsonResponse({'message': 'User not authenticated'}, status=403)
+        try:
+            mix = Mix.objects.get(id=mix_id)
+            customer = user.customer
+            mix_history, created = MixHistory.objects.get_or_create(customer=customer, mix=mix)
+            if not created:
+                mix_history.increment_play_count()
+            return JsonResponse({'message': 'Play count updated successfully'})
+        except Mix.DoesNotExist:
+            return JsonResponse({'message': 'Mix not found'}, status=404)
+    return JsonResponse({'message': 'Invalid request method'}, status=405)
