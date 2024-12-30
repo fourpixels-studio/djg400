@@ -4,7 +4,27 @@
     <button onclick="goBack()" class="no-btn ps-0 text-white my-4"><i class="fa-solid fa-xl fa-arrow-left me-2"></i> Back to playlists</button>
     <section class="row fadeIn">
         <h1 class="display-4 fw-bold text-white">{{ playlist.title }}</h1>
-        <h5 class="text-grey-6 mb-4">Genre: {{ playlist.genre.name }}</h5>
+        <div class="d-flex flex-row align-items-center justify-content-start gap-3 mb-4">
+            <h5 class="text-grey-6 my-0">Genre: {{ playlist.genre.name }}</h5>
+            <div>
+                {% if not request.user.is_authenticated %}
+                <button role="button" data-bs-toggle="modal" data-bs-target="#loginModal" class="no-btn text-grey-3">
+                    <i class="fa-solid fa-thumbs-up"></i>
+                    <span class="like-text">Like</span>
+                </button>
+                {% elif playlist in user.customer.liked_playlists.all %}
+                <div data-id="{{ playlist.id }}" data-type="playlist" class="no-btn text-primary-4 hover-like like-btn">
+                    <i class="fa-solid fa-thumbs-up like-icon"></i>
+                    <span class="like-text">Liked</span>
+                </div>
+                {% else %}
+                <div data-id="{{ playlist.id }}" data-type="playlist" class="no-btn text-grey-4 hover-like like-btn">
+                    <i class="fa-solid fa-thumbs-up like-icon"></i>
+                    <span class="like-text">Like</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
         <div class="col-12">{{ playlist.spotify_link|safe }}</div>
     </section>
     {% if playlist.get_similar_playlists %}
@@ -30,4 +50,40 @@
     </section>
     {% endif %}
 </div>
+{% if request.user.is_authenticated %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const likeButtons = document.querySelectorAll(".like-btn");
+        likeButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const itemId = this.dataset.id;
+                const itemType = this.dataset.type;
+                const url = `/account/like/${itemType}/${itemId}/`;
+                fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const icon = this.querySelector(".like-icon");
+                    const text = this.querySelector(".like-text");
+                    if (data.liked) {
+                        icon.classList.add("liked");
+                        text.textContent = "Liked";
+                        icon.style.color = "#99f1ea";
+                        text.style.color = "#99f1ea";
+                    } else {
+                        icon.classList.remove("liked");
+                        text.textContent = "Like";
+                        icon.style.color = "#b0b0b0";
+                        text.style.color = "#b0b0b0";
+                    }
+                });
+            });
+        });
+    });
+</script>
+{% endif %}
 {% endblock %}
