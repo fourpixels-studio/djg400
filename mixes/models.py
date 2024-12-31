@@ -75,6 +75,16 @@ class Genre(models.Model):
     @property
     def get_num_mixes(self):
         return Mix.objects.filter(genre=self).count()
+
+    @property
+    def get_num_playlists(self):
+        from playlists.models import Playlist
+        return Playlist.objects.filter(genre=self).count()
+
+    @property
+    def get_num_remixes(self):
+        from remixes.models import Remix
+        return Remix.objects.filter(genre=self).count()
         
     @property
     def get_url(self):
@@ -119,8 +129,8 @@ class Mix(models.Model):
     color = models.CharField(max_length=15, blank=True, null=True)
     album = models.ForeignKey(Album, on_delete=models.CASCADE, blank=True, null=True)
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE, blank=True, null=True)
-    youtube_link = models.URLField(blank=True, null=True)
-    stream_link = models.URLField(blank=True, null=True)
+    youtube_link = models.TextField(blank=True, null=True)
+    stream_link = models.TextField(blank=True, null=True)
     is_popular = models.BooleanField(default=False, blank=True, null=True)
     featured_artists = models.TextField(blank=True, null=True)
     similar_mixes = models.CharField(max_length=100, blank=True, null=True)
