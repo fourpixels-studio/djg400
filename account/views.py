@@ -75,10 +75,10 @@ def account_signup(request):
                 user = authenticate(username=username, password=password)
 
                 if user is not None:
-                    Customer.objects.create(user=user)
+                    customer, created = Customer.objects.get_or_create(user=user)
                     login(request, user)
                     try:
-                        subscription = Newsletter.objects.filter(email=email).first()
+                        subscription, created = Newsletter.objects.get_or_create(email=email)
                         if subscription:
                             if subscription.consent == False:
                                 subscription.resubscribed_at = timezone.now()
