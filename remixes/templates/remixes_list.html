@@ -18,22 +18,24 @@
                         </div>
                     </div>
                     <div class="row gy-4">
-                        <div class="genre-filter" style="margin-bottom: -1rem; padding-right: 2rem; padding-left: 1rem">
+                        <div class="genre-filter" style="margin-bottom: -1rem; padding-right: 2rem; padding-left: 2rem">
                             <button class="scroll-btn left-btn" aria-label="Scroll Left">
                                 <i class="fas fa-chevron-left"></i>
                             </button>
-                            <div class="genres-container px-3">
+                            <div class="genres-container ps-0">
                                 <a href="/mixes/" class="no-link">
                                     <div class="genre-item rounded-4 {% if not active_genre %}active{% endif %}">
                                         All
                                     </div>
                                 </a>
                                 {% for genre in genres %}
+                                {% if genre.get_num_mixes > 0 %}
                                 <a href="{{ genre.get_url }}" class="no-link">
-                                    <div class="genre-item rounded-4 {% if genre.slug == active_genre %}active{% endif %}">
+                                    <div class="genre-item rounded-2 {% if genre.slug == active_genre %}active{% endif %}">
                                         {{ genre.name }}
                                     </div>
                                 </a>
+                                {% endif %}
                                 {% endfor %}
                             </div>
                             <button class="scroll-btn right-btn" aria-label="Scroll Right">
