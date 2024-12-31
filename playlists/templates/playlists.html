@@ -29,7 +29,7 @@
                                     </div>
                                 </a>
                                 {% for genre in genres %}
-                                {% if genre.get_num_mixes > 0 %}
+                                {% if genre.get_num_playlists > 0 %}
                                 <a href="{{ genre.get_url }}" class="no-link">
                                     <div class="genre-item rounded-2 {% if genre.slug == active_genre %}active{% endif %}">
                                         {{ genre.name }}
