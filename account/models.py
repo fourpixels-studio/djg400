@@ -27,10 +27,8 @@ class Customer(models.Model):
         if not self.pk:
             super().save(*args, **kwargs)
         if self.profile_picture and (not self.square_thumbnail or self.square_thumbnail.name != f"profile_pictures/thumbnails/{self.profile_picture.name}"):
-            self.square_thumbnail.save(
-                f"profile_pictures/thumbnails/{self.profile_picture.name}", self.profile_picture, save=False
-            )
-        super().save(*args, **kwargs)
+            self.square_thumbnail.save(f"profile_pictures/thumbnails/{self.profile_picture.name}", self.profile_picture, save=False)
+            super().save(*args, **kwargs)
 
 
 class Purchase(models.Model):
