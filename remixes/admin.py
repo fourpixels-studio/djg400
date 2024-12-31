@@ -1,4 +1,3 @@
 from django.contrib import admin
-from .models import Remix, RemixGenre
+from .models import Remix
 admin.site.register(Remix)
-admin.site.register(RemixGenre)
