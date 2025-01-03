@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<main class="container-fluid pt-4 px-0">
+    <img src="https://images.pexels.com/photos/6985048/pexels-photo-6985048.jpeg?auto=compress&cs=tinysrgb&w=800" style="height: 20vh; width: 100%; object-fit: cover">
+    <div class="container px-4">
+        <div class="row justify-content-start" style="margin-top: -2rem;">
+            <div class="col-sm-12 col-lg-6">
+                {% if user.customer.profile_picture %}
+                <img style="height: 150px; width: 150px; object-fit: cover; border-radius: 50%; border: 5px solid #1a1a1a" src="{{ user.customer.profile_picture.url }}">
+                {% else %}
+                <i class="fa-regular fa-user text-white" style="font-size: 4rem;"></i>
+                {% endif %}
+                <h1 class="text-grey-1 mb-0 mt-3">{{ user.get_full_name }}</h1>
+                <p class="text-grey-2">@{{ user.username }}</p>
+                <p class="text-grey-4">{{ user.customer.bio }}</p>
+                <div class="d-flex flex-row align-items-center justify-conten-start gap-2">
+                    <a href="{% url 'edit_profile' %}" class="btn btn-outline-light rounded-2 px-3 btn-sm">Edit</a>
+                    <a href="{% url 'edit_profile' %}" class="btn btn-light rounded-2 px-3 btn-sm">Share</a>
+                </div>
+            </div>
+        </div>
+        {% if user.customer.liked_mixes.all %}
+        <hr class="text-grey-8">
+        <h5 class="text-grey-3 mt-5">Activity</h4>
+        <h6 class="text-grey-4">Liked mixes</h6>
+        <div class="row row-cols-2 align-items-start g-3 my-3">
+            {% for mix in user.customer.liked_mixes.all %}
+            <article class="col-sm-6 col-md-2">
+                {% include "components/mix_portrait_card.html" %}
+            </article>
+            {% endfor %}
+        </div>
+        <hr class="text-grey-8">
+        {% else %}
+        <hr class="text-grey-8 mt-5">
+        <div class="col-sm-12 col-lg-6">
+            <h4 class="text-grey-3 mt-5">Oops! You have no activities yet! :(</h4>
+            <p class="text-grey-3">Start listening to <a href="{% url 'playlists' %}" class="link text-grey-1">playlists</a>, like some <a href="{% url 'mix_list' %}" class="link text-grey-1">mixes</a>, read a few <a href="{% url 'blog_list' %}" class="link text-grey-1">blogs</a>, download some fire <a href="{% url 'remixes_list' %}" class="link text-grey-1">remixes</a>, start <a href="{% url 'shop' %}" class="link text-grey-1">shopping</a> now , explore some <a href="{% url 'event_list' %}" class="link text-grey-1">events</a> — jump in and make some noise!</h6>
+        </div>
+        {% endif %}
+    </div>
+</main>
+{% endblock %}
