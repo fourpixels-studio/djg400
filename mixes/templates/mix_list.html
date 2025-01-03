@@ -135,14 +135,21 @@
                             </article>
                             {% endfor %}
                             {% if mixes.paginator.page_range %}
-                            <div class="col-12 mt-5">
-                                <div class="d-flex flex-row justify-content-center align-items-center gap-2">
-                                    <h6 class="grey-2 my-0">Page</h6>
+                            <nav aria-label="Mixes Pagination" class="mt-5">
+                                <ul class="pagination justify-content-center">
+                                    {% if mixes.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ mixes.previous_page_number }}">Previous</a>
+                                    </li>
+                                    {% endif %}
                                     {% for num_page in mixes.paginator.page_range %}
-                                    <a class="btn btn-sm rounded-4 {% if num_page == mixes.number %}btn-light{% else %}btn-outline-light{% endif %}" href="?page={{ num_page }}">{{ num_page }}</a>
+                                    <li class="page-item {% if num_page == mixes.number %}active{% endif %}"><a class="page-link" href="?page={{ num_page }}">{{ num_page }}</a></li>
                                     {% endfor %}
-                                </div>
-                            </div>
+                                    {% if mixes.has_next %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ mixes.next_page_number }}">Next</a></li>
+                                    {% endif %}
+                                </ul>
+                            </nav>
                             {% endif %}
                         {% endif %}
                     </div>
