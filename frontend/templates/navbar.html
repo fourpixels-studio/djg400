@@ -4,11 +4,61 @@
         <a class="navbar-brand fw-bold" href="{% url 'index' %}">
             <img src="{% static 'logo/logo.svg' %}" style="height: 40px; filter: contrast(0) brightness(3);" class="img-fluid">
         </a>
-        <button class="navbar-toggler collapsed d-flex d-lg-none flex-column justify-content-around" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="toggler-icon top-bar"></span>
-            <span class="toggler-icon middle-bar"></span>
-            <span class="toggler-icon bottom-bar"></span>
-        </button>
+        <div class="d-flex flex-row align-items-center gap-3 d-lg-none">
+            <div class="dropdown">
+                {% if request.user.is_authenticated %}
+                <a href="#" id="dropdownProfile" data-bs-toggle="dropdown" aria-expanded="false">
+                    {% if request.user.customer.profile_picture %}
+                    <img src="{{ request.user.customer.square_thumbnail.url }}" alt="{{ request.user.first_name }}'s Profile Picture" style="height: 30px; width: 30px; object-fit: cover; border-radius: 50%">
+                    {% else %}
+                    <i class="fa-solid fa-user fa-lg text-white"></i>
+                    {% endif %}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end bg-gradient-down text-small shadow" aria-labelledby="dropdownProfile">
+                    {% if request.user.is_superuser %}
+                    <li>
+                        <a class="dropdown-item" href="/admin/">
+                            <span class="d-flex align-items-center">
+                                <i class="fa-solid fa-user me-2"></i>
+                                <span>Admin</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{% url 'send_newsletter_article' %}">
+                            <span class="d-flex align-items-center">
+                                <i class="fa-solid fa-envelope me-2"></i>
+                                <span>Newsletter</span>
+                            </span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    <li><a class="dropdown-item" href="{% url 'account_profile' request.user.username %}"><i class="fa-solid fa-gear me-2"></i> Settings</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <a class="dropdown-item" href="{% url 'account_signout' %}">
+                            <span class="d-flex align-items-center">
+                                <i class="fa-solid fa-right-from-bracket me-2"></i>
+                                <span>Log out</span>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+                {% else %}
+                <button role="button" class="btn btn-outline-light rounded-2 btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">
+                    <span class="d-flex align-items-center hover">
+                        <i class="fa-solid fa-user me-2"></i>
+                        <span>Log in</span>
+                    </span>
+                </button>
+                {% endif %}
+            </div>
+            <button class="navbar-toggler collapsed d-flex flex-column justify-content-around" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="toggler-icon top-bar"></span>
+                <span class="toggler-icon middle-bar"></span>
+                <span class="toggler-icon bottom-bar"></span>
+            </button>
+        </div>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav me-auto me-4 my-3 my-lg-0">
                 <li class="nav-item"><a class="nav-link me-lg-2 {% if '/mixes/' in request.path %}text-primary{% endif %}" href="{% url 'mix_list' %}">Mixes</a></li>
@@ -24,34 +74,61 @@
                 <li class="nav-item"><a class="nav-link me-lg-3 {% if '/shop/' in request.path %}text-primary{% endif %}" href="{% url 'shop' %}">Shop</a></li>
                 <li class="nav-item"><a class="nav-link me-lg-3 {% if '/blogs/' in request.path %}text-primary{% endif %}" href="{% url 'blog_list' %}">Blogs</a></li>
                 <li class="nav-item"><a class="nav-link me-lg-3 {% if '/events/' in request.path %}text-primary{% endif %}" href="{% url 'event_list' %}">Events</a></li>
-                {% if request.user.is_superuser %}
                 <li class="nav-item">
-                    <div class="dropdown nav-link">
-                        <a href="#" class="text-white text-decoration-none dropdown-toggle" id="dropdownAdmin" data-bs-toggle="dropdown" aria-expanded="false">
-                            Admin
-                        </a>
-                        <ul class="dropdown-menu bg-gradient-down text-small shadow" aria-labelledby="dropdownAdmin">
-                            <li><a class="dropdown-item" href="/admin/">Admin</a></li>
-                            <li><a class="dropdown-item" href="{% url 'send_newsletter_article' %}">Newsletter</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="{% url 'account_signout' %}">Sign out</a></li>
-                        </ul>
+                    <div class="me-lg-3">
+                        <form method="GET" action="{% url 'search' %}" class="col" onsubmit="showSpinner()">
+                            <div class="input-group">
+                                <input required placeholder="Search..." type="text" class="form-control bg-dark rounded-start" name="q" value="{{ query }}">
+                                <button class="btn btn-outline-dark rounded-end-4" id="search-addon" value="Search" type="submit" aria-describedby="search">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </li>
-                {% endif %}
             </ul>
-            <button class="btn btn-light mb-2 me-2 rounded-2 mb-lg-0" data-bs-toggle="modal" data-bs-target="#searchModal">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
             {% if request.user.is_authenticated %}
-            <a style="text-decoration: none;" class="hover grey-1 ms-2 mb-2 mb-lg-0" href="{% url 'account_signout' %}">
-                <span class="d-flex align-items-center">
-                    <i class="fa-solid fa-right-from-bracket me-2"></i>
-                    <span>Log out</span>
-                </span>
-            </a>
+            <div class="dropdown d-sm-none d-md-none d-lg-block">
+                <a href="#" id="dropdownProfile" data-bs-toggle="dropdown" aria-expanded="false">
+                    {% if request.user.customer.profile_picture %}
+                    <img src="{{ request.user.customer.square_thumbnail.url }}" alt="{{ request.user.first_name }}'s Profile Picture" style="height: 30px; width: 30px; object-fit: cover; border-radius: 50%">
+                    {% else %}
+                    <i class="fa-solid fa-user fa-lg text-white"></i>
+                    {% endif %}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end bg-gradient-down text-small shadow" aria-labelledby="dropdownProfile">
+                    {% if request.user.is_superuser %}
+                    <li>
+                        <a class="dropdown-item" href="/admin/">
+                            <span class="d-flex align-items-center">
+                                <i class="fa-solid fa-user me-2"></i>
+                                <span>Admin</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{% url 'send_newsletter_article' %}">
+                            <span class="d-flex align-items-center">
+                                <i class="fa-solid fa-envelope me-2"></i>
+                                <span>Newsletter</span>
+                            </span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    <li><a class="dropdown-item" href="{% url 'account_profile' request.user.username %}"><i class="fa-solid fa-gear me-2"></i> Settings</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <a class="dropdown-item" href="{% url 'account_signout' %}">
+                            <span class="d-flex align-items-center">
+                                <i class="fa-solid fa-right-from-bracket me-2"></i>
+                                <span>Log out</span>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
             {% else %}
-            <button class="btn btn-outline-light rounded-2 mb-2 mb-lg-0" data-bs-toggle="modal" data-bs-target="#loginModal">
+            <button role="button" class="btn btn-outline-light rounded-2 mb-2 mb-lg-0 d-none d-lg-block" data-bs-toggle="modal" data-bs-target="#loginModal">
                 <span class="d-flex align-items-center hover">
                     <i class="fa-solid fa-user me-2"></i>
                     <span>Log in</span>
