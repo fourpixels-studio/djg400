@@ -79,8 +79,9 @@
                         <form method="GET" action="{% url 'search' %}" class="col" onsubmit="showSpinner()">
                             <div class="input-group">
                                 <input required placeholder="Search..." type="text" class="form-control bg-dark rounded-start" name="q" value="{{ query }}">
-                                <button class="btn btn-outline-dark rounded-end-4" id="search-addon" value="Search" type="submit" aria-describedby="search">
-                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                <button id="submit-btn" class="btn btn-outline-dark rounded-end-4" value="Search" type="submit" aria-describedby="search">
+                                    <span id="submit-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+                                    <span id="spinner" class="spinner-border spinner-border-sm d-none text-grey-1" role="status" aria-hidden="true"></span>
                                 </button>
                             </div>
                         </form>
