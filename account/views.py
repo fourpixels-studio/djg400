@@ -29,7 +29,7 @@ def account_signin(request):
                     user = authenticate(username=username, password=password)
                     if user is not None:
                         login(request, user)
-                        messages.success(request, f"Welcome back, {user}")
+                        messages.success(request, f"Welcome back, {user.get_full_name()}")
                         return redirect("index")
                 else:
                     for field, errors in signin_form.errors.items():
