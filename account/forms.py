@@ -33,18 +33,20 @@ class CustomUserCreationForm(UserCreationForm):
         if not captcha_value:
             raise forms.ValidationError("Please complete the captcha.")
         return captcha_value
-    def clean(self):
-        cleaned_data = super().clean()
-        email = cleaned_data.get("email")
-        password = cleaned_data.get("password")
-        return cleaned_data
+        
 
 
 class CustomerEditForm(forms.ModelForm):
-    full_name = forms.CharField(
+    first_name = forms.CharField(
         max_length=150,
         required=True,
-        label='Full Name',
+        label='First Name',
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+    last_name = forms.CharField(
+        max_length=150,
+        required=True,
+        label='Last Name',
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )
     email = forms.EmailField(
@@ -64,7 +66,16 @@ class CustomerEditForm(forms.ModelForm):
     profile_picture = forms.ImageField(
         required=False,
         label='Profile Picture',
-        widget=forms.FileInput(attrs={'class': 'form-control-file'})
+        widget=forms.FileInput(
+            attrs={'class': 'form-control-sm rounded-2 form-control'}),
+    )
+    delete_picture = forms.BooleanField(
+        required=False,
+        initial=False,
+        widget=forms.CheckboxInput(attrs={
+            'class': ' form-check-input',
+        }),
+        label='Delete current picture',
     )
 
     class Meta:
@@ -75,15 +86,22 @@ class CustomerEditForm(forms.ModelForm):
         user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
         if user:
-            self.fields['full_name'].initial = user.get_full_name()
+            self.fields['first_name'].initial = user.first_name
+            self.fields['last_name'].initial = user.last_name
             self.fields['email'].initial = user.email
 
     def save(self, commit=True):
         customer = super().save(commit=False)
         user = self.instance.user
-        user.first_name, user.last_name = self.cleaned_data['full_name'].split(
-            ' ', 1)
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
         user.email = self.cleaned_data['email']
+        if self.cleaned_data.get('delete_picture'):
+            self.instance.profile_picture.delete(save=False)
+            self.instance.profile_picture = None
+            self.instance.square_thumbnail.delete(save=False)
+            self.instance.square_thumbnail = None
+            super().save(commit=commit)
         if commit:
             user.save()
             customer.save()
