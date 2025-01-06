@@ -20,16 +20,17 @@ class Customer(models.Model):
     listened_remixes = models.ManyToManyField(Remix, through='RemixHistory', related_name='listened_by', blank=True)
     listened_playlists = models.ManyToManyField(Playlist, through='PlaylistHistory', related_name='listened_by', blank=True)
     bio = models.CharField(max_length=200, blank=True)
-
+    
     def __str__(self):
         return self.user.get_full_name()
 
     def save(self, *args, **kwargs):
-        if not self.pk:
-            super().save(*args, **kwargs)
-        if self.profile_picture and (not self.square_thumbnail or self.square_thumbnail.name != f"profile_pictures/thumbnails/{self.profile_picture.name}"):
-            self.square_thumbnail.save(f"profile_pictures/thumbnails/{self.profile_picture.name}", self.profile_picture, save=False)
-            super().save(*args, **kwargs)
+        if self.profile_picture:
+            if not self.pk:
+                super().save(*args, **kwargs)
+            if not self.square_thumbnail or self.square_thumbnail.name != f"profile_pictures/thumbnails/{self.profile_picture.name}":
+                self.square_thumbnail.save(f"profile_pictures/thumbnails/{self.profile_picture.name}", self.profile_picture, save=False)
+        super().save(*args, **kwargs)
 
 
 class Purchase(models.Model):
