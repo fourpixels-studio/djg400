@@ -1,0 +1,26 @@
+<div class="modal fade" id="deleteProfilePictureModal" tabindex="-1" aria-labelledby="deleteProfilePictureModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content rounded-5 border-0">
+            <div class="modal-body bg-grey-9 rounded-4 py-4">
+                <form method="post" action="{% url 'delete_picture' %}" onsubmit="showSpinner()">
+                    {% csrf_token %}
+                    <div class="text-center">
+                        <i class="fa-solid fa-trash text-danger" style="font-size: 4rem;"></i>
+                        <h5 class="text-grey-1 mt-4">Are you sure you want to<br>delete your profile picture?</h5>
+                    </div>
+                    <div class="row justify-content-center gap-4">
+                        <div class="col-12 text-center mt-3">
+                            <button id="submit-btn" type="submit" class="btn rounded-2 btn-danger btn-lg px-5">
+                                <span id="submit-text">Delete</span>
+                                <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button role="button" type="button" class="no-btn hover-underline text-grey-3" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
