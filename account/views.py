@@ -119,6 +119,7 @@ def account_signup(request):
 @login_required(login_url='/account/signin/')
 def account_profile(request, username):
     if username != request.user.username:
+        return redirect("account_profile", request.user.username)
     user = User.objects.get(username=username)
     context = {
         "user": user,
