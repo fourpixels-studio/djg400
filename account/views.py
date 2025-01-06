@@ -3,7 +3,6 @@ from django.utils import timezone
 from django.contrib import messages
 from seo_management.models import SEO
 from newsletter.models import Newsletter
-from .forms import CustomUserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from .email import send_user_verification_email
@@ -11,6 +10,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, logout
+from .forms import CustomUserCreationForm, CustomerEditForm
 
 
 def account_signin(request):
@@ -113,3 +113,65 @@ def account_signup(request):
     })
 
     return render(request, "account_signup.html", context)
+
+
+
+@login_required(login_url='/account/signin/')
+def account_profile(request, username):
+    user = User.objects.get(username=username)
+    context = {
+        "user": user,
+        "title_tag": "My Profile",
+    }
+    return render(request, "account_profile.html", context)
+
+
+@login_required(login_url='/account/signin/')
+def edit_profile(request):
+    if request.method == "POST":
+        form = CustomerEditForm(request.POST, request.FILES, instance=request.user.customer, user=request.user)
+        try:
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Profile updated successfully.")
+                return redirect("account_profile", request.user.username)
+            else:
+                messages.error(request, 'Please correct the errors below.')
+        except ValidationError as e:
+            messages.error(request, f"Error: {', '.join(e.messages)}")
+    else:
+        form = CustomerEditForm(instance=request.user.customer, user=request.user)
+    context = {
+        "form": form,
+        "title_tag": "Edit Profile",
+    }
+    return render(request, "edit_profile.html", context)
+
+
+@login_required
+def change_picture(request):
+    if request.method == 'POST':
+        customer = request.user.customer
+        profile_picture = request.FILES.get('profile_picture')
+        if profile_picture:
+            customer.profile_picture = profile_picture
+            customer.save()
+            messages.success(request, 'Profile picture updated successfully.')
+        else:
+            messages.error(request, 'Please select a valid image.')
+    return redirect('edit_profile')
+
+
+@login_required
+def delete_picture(request):
+    if request.method == 'POST':
+        customer = request.user.customer
+        if customer.profile_picture:
+            customer.profile_picture.delete(save=False)
+            customer.profile_picture = None
+        if customer.square_thumbnail:
+            customer.square_thumbnail.delete(save=False)
+            customer.square_thumbnail = None
+        customer.save()
+        messages.success(request, 'Profile picture deleted successfully.')
+    return redirect('edit_profile')
