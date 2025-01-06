@@ -118,6 +118,7 @@ def account_signup(request):
 
 @login_required(login_url='/account/signin/')
 def account_profile(request, username):
+    if username != request.user.username:
     user = User.objects.get(username=username)
     context = {
         "user": user,
@@ -127,7 +128,9 @@ def account_profile(request, username):
 
 
 @login_required(login_url='/account/signin/')
-def edit_profile(request):
+def edit_profile(request, username):
+    if username != request.user.username:
+        return redirect("edit_profile", request.user.username)
     if request.method == "POST":
         form = CustomerEditForm(request.POST, request.FILES, instance=request.user.customer, user=request.user)
         try:
@@ -149,7 +152,9 @@ def edit_profile(request):
 
 
 @login_required
-def change_picture(request):
+def change_picture(request, username):
+    if username != request.user.username:
+        return redirect("change_picture", request.user.username)
     if request.method == 'POST':
         customer = request.user.customer
         profile_picture = request.FILES.get('profile_picture')
@@ -159,11 +164,13 @@ def change_picture(request):
             messages.success(request, 'Profile picture updated successfully.')
         else:
             messages.error(request, 'Please select a valid image.')
-    return redirect('edit_profile')
+    return redirect('edit_profile', request.user.username)
 
 
 @login_required
-def delete_picture(request):
+def delete_picture(request, username):
+    if username != request.user.username:
+        return redirect("delete_picture", request.user.username)
     if request.method == 'POST':
         customer = request.user.customer
         if customer.profile_picture:
@@ -174,4 +181,4 @@ def delete_picture(request):
             customer.square_thumbnail = None
         customer.save()
         messages.success(request, 'Profile picture deleted successfully.')
-    return redirect('edit_profile')
+    return redirect('edit_profile', request.user.username)
