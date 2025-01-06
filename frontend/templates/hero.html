@@ -6,7 +6,9 @@
             <p class="text-center fw-300 grey-2 my-4">Stay 400 miles above the competition and be part of a community that celebrates the intersection of art, music and urban culture.</p>
             <div class="d-flex flex-row gap-3 align-items-center justify-content-center">
                 <a href="{% url 'mix_list' %}" class="btn btn-light rounded-2 px-4">Play Mixes</a>
+                {% if not request.user.is_authenticated %}
                 <a href="{% url 'subscribe_newsletter' %}"  class="btn btn-outline-light rounded-2 px-4">Subscribe</a>
+                {% endif %}
             </div>
         </div>
     </div>
