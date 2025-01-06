@@ -88,9 +88,9 @@ def account_signup(request):
                             subscription = Newsletter.objects.create(email=email)
                     except:
                         subscription = None
-                    messages.success(request, f"Welcome aboard, {user.get_full_name()}! You are now 400 miles above the rest!")
+                    messages.success(request, f"Welcome aboard, {user.get_full_name()}! You are now 400 miles above the rest! Update your profile now.")
                     send_user_verification_email(user)
-                    return redirect("index")
+                    return redirect("account_profile", request.user.username)
                 else:
                     messages.error(request, "There was an error with authentication.")
             else:
