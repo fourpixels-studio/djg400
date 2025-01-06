@@ -2,7 +2,7 @@
     <div class="modal-dialog">
         <div class="modal-content rounded-5 border-0">
             <div class="modal-body bg-grey-9 rounded-4 py-4">
-                <form method="post" action="{% url 'delete_picture' %}" onsubmit="showSpinner()">
+                <form method="post" action="{% url 'delete_picture' request.user.username %}" onsubmit="showSpinner()">
                     {% csrf_token %}
                     <div class="text-center">
                         <i class="fa-solid fa-trash text-danger" style="font-size: 4rem;"></i>

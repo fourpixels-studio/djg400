@@ -7,7 +7,8 @@
                 <i class="fa-solid fa-xl fa-arrow-left me-2"></i>
                 Back to profile
             </button>
-            <h1 class="text-grey-1">Update Profile</h1>
+            <h1 class="text-grey-1 mb-3">Update Profile</h1>
+            <hr class="text-grey-6">
             <div class="mb-2 text-grey-5">Profile Picture</div>
             <div class="mb-4 d-flex flex-row flex-wrap align-items-center justify-content-start gap-3">
                 <div>
@@ -18,7 +19,7 @@
                     {% endif %}
                 </div>
                 <div class="d-flex flex-row align-items-center flex-wrap justify-content-start gap-3">
-                    <form method="post" enctype="multipart/form-data" action="{% url 'change_picture' %}">
+                    <form method="post" enctype="multipart/form-data" action="{% url 'change_picture' request.user.username %}">
                         {% csrf_token %}
                         <input type="file" name="profile_picture" class="form-control d-none" id="uploadPictureInput" onchange="this.form.submit()">
                         <label for="uploadPictureInput" class="btn btn-light btn-sm rounded-2 px-3">Change picture</label>
@@ -29,7 +30,8 @@
                     {% endif %}
                 </div>
             </div>
-            <form method="post" enctype="multipart/form-data" action="{% url 'edit_profile' %}" onsubmit="showSpinner()">
+            <hr class="text-grey-6">
+            <form method="post" enctype="multipart/form-data" action="{% url 'edit_profile' request.user.username %}" onsubmit="showSpinner()">
                 {% csrf_token %}
                 <div class="mb-3 row justify-content-between g-3 align-items-center">
                     <div class="col-sm-12 col-lg-6">
@@ -45,6 +47,7 @@
                 <div class="mb-3">{{ form.email }}</div>
                 <div class="mb-2 text-grey-5">{{ form.bio.label }}</div>
                 <div class="mb-3">{{ form.bio }}</div>
+                <hr class="text-grey-6">
                 <div class="d-flex flex-row align-items-center justify-content-end gap-2">
                     <a href="{% url 'account_profile' request.user.username %}" class="btn btn-outline-light rounded-2 px-3">Discard</a>
                     <button id="submit-btn" type="submit" class="btn px-3 btn-light rounded-2">
