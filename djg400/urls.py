@@ -37,6 +37,7 @@ urlpatterns = [
     path("cart/", include("cart.urls")),
     path("", include("payments.urls")),
     path("events/", include("events.urls")),
+    path("comments/", include("comments.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Configure admin titles
