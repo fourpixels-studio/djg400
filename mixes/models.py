@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.conf import settings
+from comments.models import Comment
 from hitcount.models import HitCount
 from django.utils.text import slugify
 from django_resized import ResizedImageField
@@ -142,6 +143,7 @@ class Mix(models.Model):
     slug = models.SlugField(unique=True, null=True, blank=True)
     video = models.FileField(null=True, blank=True)
     hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk', related_query_name='hit_count_generic_relation')
+    comments = models.ManyToManyField(Comment, related_name='comments', blank=True)
     
     def __str__(self):
         return f"{self.pk} - {self.title}"
@@ -149,6 +151,18 @@ class Mix(models.Model):
     class Meta:
         ordering = ['-release_date']
 
+    @property
+    def get_comments(self):
+        if self.comments:
+            return Comment.objects.filter(comments=self)
+        return None
+
+    @property
+    def get_num_comments(self):
+        if self.comments:
+            return Comment.objects.filter(comments=self).count()
+        return None
+        
     @property
     def get_title(self):
         if not self.album:
