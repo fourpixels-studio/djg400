@@ -90,6 +90,14 @@ class CustomerEditForm(forms.ModelForm):
             self.fields['last_name'].initial = user.last_name
             self.fields['email'].initial = user.email
 
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if self.instance.user.email != email:  # if the email is being changed
+            if Customer.objects.filter(user__email=email).exists():
+                raise forms.ValidationError(
+                    "This email is already in use. Please choose a different one.")
+        return email
+        
     def save(self, commit=True):
         customer = super().save(commit=False)
         user = self.instance.user
