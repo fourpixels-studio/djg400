@@ -406,3 +406,40 @@ nav {
     border-radius: 10px;
     opacity: 1;
 }
+
+/* youtube inputs */
+.youtube-style-comment {
+    position: relative;
+    width: 100%;
+}
+
+.youtube-style-comment input {
+    border: none;
+    background-color: #1a1a1a;
+    border-bottom: 2px solid #b0b0b0;
+    outline: none;
+    width: 100%;
+    padding: 5px 0;
+    font-size: 16px;
+    border-radius: 0;
+    transition: border-color 0.5s;
+    color: #f8f8f8;
+}
+
+.youtube-style-comment input:focus {
+    border-bottom: 2px solid #2bb2a6; 
+    background-color: #1a1a1a;
+    border-radius: 0;
+    color: #fff;
+    box-shadow: none;
+}
+.youtube-style-comment input:hover {
+    border-bottom: 2px solid #2bb2a6; 
+    cursor: pointer;
+}
+
+.youtube-style-comment input::placeholder {
+    color: #b0b0b0;
+    font-size: 14px;
+}
+/* youtube inputs */
