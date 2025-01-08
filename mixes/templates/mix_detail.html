@@ -26,6 +26,7 @@
               {% include 'components/mix_stats.html' %}
               {% include 'components/mix_info.html' %}
               {% include 'components/mix_products.html' %}
+            {% include 'components/mix_comment_section.html' %}
             </div>
         <div class="col-sm-12 col-lg-4 mt-4 px-0 px-lg-2">
           {% if mix.get_similar_mixes %}
@@ -64,6 +65,7 @@
 {% include "modals/support_mix.html" %}
 {% if not request.user.is_authenticated %}
 {% include "modals/login.html" %}
+{% include "modals/comment_login.html" %}
 {% endif %}
 {% if request.user.is_authenticated %}
 <script>
