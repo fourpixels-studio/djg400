@@ -33,7 +33,8 @@
                         </a>
                     </li>
                     {% endif %}
-                    <li><a class="dropdown-item" href="{% url 'account_profile' request.user.username %}"><i class="fa-solid fa-gear me-2"></i> Settings</a></li>
+                    <li><a class="dropdown-item {% if '/profile/'|add:request.user.username|add:'/' in request.path %}bg-light text-dark{% else %}text-grey-1{% endif %}" href="{% url 'account_profile' request.user.username %}"><i class="fa-solid fa-user me-2"></i> Account</a></li>
+                    <li><a class="dropdown-item {% if '/edit/'|add:request.user.username|add:'/' in request.path %}bg-light text-dark{% else %}text-grey-1{% endif %}" href="{% url 'edit_profile' request.user.username %}"><i class="fa-solid fa-gear me-2"></i> Settings</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li>
                         <a class="dropdown-item" href="{% url 'account_signout' %}">
@@ -89,7 +90,7 @@
                 </li>
             </ul>
             {% if request.user.is_authenticated %}
-            <div class="dropdown d-sm-none d-md-none d-lg-block">
+            <div class="dropdown d-none d-lg-block">
                 <a href="#" id="dropdownProfile" data-bs-toggle="dropdown" aria-expanded="false">
                     {% if request.user.customer.profile_picture %}
                     <img src="{{ request.user.customer.square_thumbnail.url }}" alt="{{ request.user.first_name }}'s Profile Picture" style="height: 30px; width: 30px; object-fit: cover; border-radius: 50%">
@@ -116,7 +117,8 @@
                         </a>
                     </li>
                     {% endif %}
-                    <li><a class="dropdown-item" href="{% url 'account_profile' request.user.username %}"><i class="fa-solid fa-gear me-2"></i> Settings</a></li>
+                    <li><a class="dropdown-item {% if '/profile/'|add:request.user.username|add:'/' in request.path %}bg-light text-dark{% else %}text-grey-1{% endif %}" href="{% url 'account_profile' request.user.username %}"><i class="fa-solid fa-user me-2"></i> Account</a></li>
+                    <li><a class="dropdown-item {% if '/edit/'|add:request.user.username|add:'/' in request.path %}bg-light text-dark{% else %}text-grey-1{% endif %}" href="{% url 'edit_profile' request.user.username %}"><i class="fa-solid fa-gear me-2"></i> Settings</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li>
                         <a class="dropdown-item" href="{% url 'account_signout' %}">
