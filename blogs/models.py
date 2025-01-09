@@ -5,8 +5,9 @@ from django.db.models import Q
 from django.urls import reverse
 from django.conf import settings
 from django.utils import timezone
-from django.utils.text import slugify
+from comments.models import Comment
 from hitcount.models import HitCount
+from django.utils.text import slugify
 from django_resized import ResizedImageField
 from django.contrib.contenttypes.fields import GenericRelation
 
@@ -25,7 +26,8 @@ class Blog(models.Model):
     slug = models.SlugField(unique=True, blank=True, null=True)
     hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk', related_query_name='hit_count_generic_relation')
     read_time = models.IntegerField(blank=True, null=True, editable=False)
-
+    comments = models.ManyToManyField(Comment, related_name='blog_comments', blank=True)
+    
     def calculate_read_time(self):
         if self.content:
             plain_text = BeautifulSoup(self.content, "html.parser").get_text()
@@ -91,3 +93,16 @@ class Blog(models.Model):
         current_site = settings.PUBLIC_URL
         blog_url = self.get_url
         return f"{current_site}{blog_url}"
+
+
+    @property
+    def get_comments(self):
+        if self.comments:
+            return Comment.objects.filter(blog_comments=self)
+        return None
+
+    @property
+    def get_num_comments(self):
+        if self.comments:
+            return Comment.objects.filter(blog_comments=self).count()
+        return None
