@@ -74,6 +74,7 @@
                     <li><span class="btn btn-outline-light rounded-5 px-3 btn-sm">{{ keyword }}</span></li>
                     {% endfor %}
                 </ul>
+                {% include 'components/blog_comment.html' %}
             </div>
             <div class="col-sm-12 col-lg-4">
                 <div class="position-sticky" style="top: 6rem;">
@@ -112,6 +113,9 @@
     </section>
 </main>
 {% include "modals/share.html" %}
+{% if not request.user.is_authenticated %}
+{% include "modals/comment_login.html" %}
+{% endif %}
 <script>
     var article = document.getElementById("article-post");
     if (article) {
