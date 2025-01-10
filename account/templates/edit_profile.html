@@ -46,12 +46,12 @@
                 <div class="mb-2 text-grey-5">{{ form.email.label }}</div>
                 <div class="mb-3">{{ form.email }}</div>
                 {% if form.email.errors %}
-                <div class="text-danger mt-2 list-unstyled">{{ form.email.errors.0 }}</div>
+                <div style="margin-top: -.7rem;" class="text-danger list-unstyled">{{ form.email.errors.0 }}</div>
                 {% endif %}
                 <div class="mb-2 mt-3 text-grey-5">{{ form.bio.label }}</div>
                 <div>{{ form.bio }}</div>
                 {% if form.bio.errors %}
-                <div class="text-danger mt-2 list-instyled">{{ form.bio.errors.0 }}</div>
+                <div style="margin-top: -.7rem;" class="text-danger list-instyled">{{ form.bio.errors.0 }}</div>
                 {% endif %}
                 <hr class="text-grey-6">
                 <div class="d-flex flex-row align-items-center justify-content-end gap-2">
