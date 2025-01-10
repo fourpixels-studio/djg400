@@ -66,15 +66,12 @@ class CustomerEditForm(forms.ModelForm):
     profile_picture = forms.ImageField(
         required=False,
         label='Profile Picture',
-        widget=forms.FileInput(
-            attrs={'class': 'form-control-sm rounded-2 form-control'}),
+        widget=forms.FileInput(attrs={'class': 'form-control-sm rounded-2 form-control'}),
     )
     delete_picture = forms.BooleanField(
         required=False,
         initial=False,
-        widget=forms.CheckboxInput(attrs={
-            'class': ' form-check-input',
-        }),
+        widget=forms.CheckboxInput(attrs={'class': ' form-check-input'}),
         label='Delete current picture',
     )
 
@@ -94,10 +91,9 @@ class CustomerEditForm(forms.ModelForm):
         email = self.cleaned_data['email']
         if self.instance.user.email != email:  # if the email is being changed
             if Customer.objects.filter(user__email=email).exists():
-                raise forms.ValidationError(
-                    "This email is already in use. Please choose a different one.")
+                raise forms.ValidationError("This email is already in use. Please choose a different one.")
         return email
-        
+
     def save(self, commit=True):
         customer = super().save(commit=False)
         user = self.instance.user
@@ -114,3 +110,4 @@ class CustomerEditForm(forms.ModelForm):
             user.save()
             customer.save()
         return customer
+
