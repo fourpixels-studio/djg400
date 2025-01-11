@@ -3,61 +3,61 @@
 {% load static %}
 {% load hitcount_tags %}
 <div class="container-fluid p-4">
-    <button onclick="goBack()" class="no-btn ps-0 text-white mt-3 mb-2 d-lg-none">
+    <button onclick="goBack()" class="no-btn ps-0 text-white mt-3 d-lg-none">
         <i class="fa-solid fa-xl fa-arrow-left"></i>
     </button>
-    <div class="row justify-content-evenly g-3 rounded-4 px-2">
+    <div class="row justify-content-center g-3 rounded-4 px-2 mt-3">
         <div class="col-sm-12 col-lg-8 px-0 p-lg-2">
-            <!-- if youtube video, show youtube video only -->
-              {% if mix.youtube_link %}
-              <div class="youtube-video-container">{{ mix.youtube_link|safe }}</div>
-              <!-- if video snippet and theres a link, show them both -->
-              {% elif mix.stream_link and not mix.youtube_link %}
-              <img src="{{ mix.get_landscape_cover }}" alt="{{ mix.get_title }}'s Cover" class="img-fluid rounded-4 mb-3">
-              <audio src="{{ mix.stream_link }}" controls class="w-100" id="audio-player" data-id="{{ mix.pk }}">
-                  <source type="audio/mpeg" />
-                  Your browser does not support the audio element.
-              </audio>
-              {% else %}
-              <img src="{{ mix.get_landscape_cover }}" alt="{{ mix.get_title }}'s Cover" class="img-fluid rounded-4">
-              <div class="badge bg-primary rounded-2 text-dark mt-3">Link coming soon</div>
-              {% endif %}
-              <h2 class="text-white mt-3">{{ mix.get_title }}</h2>
-              {% include 'components/mix_stats.html' %}
-              {% include 'components/mix_info.html' %}
-              {% include 'components/mix_products.html' %}
-            {% include 'components/mix_comment_section.html' %}
-            </div>
+        {% if mix.youtube_link %}
+        <div class="youtube-video-container">{{ mix.youtube_link|safe }}</div>
+        {% elif mix.stream_link and not mix.youtube_link %}
+        <img src="{{ mix.get_landscape_cover }}" alt="{{ mix.get_title }}'s Cover" class="img-fluid rounded-4 mb-3">
+        <audio controlslist="nodownload" src="{{ mix.stream_link }}" controls class="w-100" id="audio-player" data-id="{{ mix.pk }}">
+            <source type="audio/mpeg" />
+            Your browser does not support the audio element.
+        </audio>
+        {% else %}
+        <img src="{{ mix.get_landscape_cover }}" alt="{{ mix.get_title }}'s Cover" class="img-fluid rounded-4">
+        <div class="badge bg-primary rounded-2 text-dark mt-3">Link coming soon</div>
+        {% endif %}
+        <h2 class="text-white mt-3">{{ mix.get_title }}</h2>
+        {% include 'components/mix_stats.html' %}
+        {% include 'components/mix_info.html' %}
+        {% include 'components/mix_products.html' %}
+        {% include 'components/mix_comment_section.html' %}
+        </div>
         <div class="col-sm-12 col-lg-4 mt-4 px-0 px-lg-2">
-          {% if mix.get_similar_mixes %}
-          {% for mix in mix.get_similar_mixes %}
-          <div class="d-flex flex-row align-items-center gap-3 mb-3">
-            <img src="{{ mix.get_landscape_thumbnail }}" style="width: 50%; height: auto; object-fit: cover" class="img-fluid rounded-4">
-            <div>
-              <a href="{{ mix.get_url }}" class="grey-1 no-btn hover-underline">{{ mix.get_title }}</a> <br>
-              <small class="grey-2 m-0">{{ mix.genre.name }}</small> <br>
-              <div class="d-flex flex-row justify-content-between">
-                <small style="font-size: .7rem;" class="grey-2 m-0">{% get_hit_count for mix %} Views</small>
-                <small style="font-size: .7rem;" class="grey-2 m-0">{{ mix.get_year }}</small> <br>
-              </div>
-            </div>
-          </div>
-          {% endfor %}
-          {% else %}
-          {% for mix in most_viewed_mixes %}
-          <div class="d-flex flex-row align-items-center gap-3 mb-3">
+        {% if mix.get_similar_mixes %}
+        <h4 class="text-grey-4 mb-4">Similar mixes</h4>
+        {% for mix in mix.get_similar_mixes %}
+        <div class="d-flex flex-row align-items-center gap-3 mb-3">
             <img src="{{ mix.get_landscape_thumbnail }}" style="width: 50%; height: auto; object-fit: cover" class="img-fluid rounded-4">
             <div>
             <a href="{{ mix.get_url }}" class="grey-1 no-btn hover-underline">{{ mix.get_title }}</a> <br>
-                <small class="grey-2 m-0">{{ mix.genre.name }}</small> <br>
-                <div class="d-flex flex-row justify-content-between">
+            <small class="grey-2 m-0">{{ mix.genre.name }}</small> <br>
+            <div class="d-flex flex-row justify-content-between">
                 <small style="font-size: .7rem;" class="grey-2 m-0">{% get_hit_count for mix %} Views</small>
                 <small style="font-size: .7rem;" class="grey-2 m-0">{{ mix.get_year }}</small> <br>
-              </div>
             </div>
-          </div>
-          {% endfor %}
-          {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <h4 class="text-grey-4 mb-4">Most listened mixes</h4>
+        {% for mix in most_viewed_mixes %}
+        <div class="d-flex flex-row align-items-center gap-3 mb-3">
+            <img src="{{ mix.get_landscape_thumbnail }}" style="width: 50%; height: auto; object-fit: cover" class="img-fluid rounded-4">
+            <div>
+            <a href="{{ mix.get_url }}" class="grey-1 no-btn hover-underline">{{ mix.get_title }}</a> <br>
+            <small class="grey-2 m-0">{{ mix.genre.name }}</small> <br>
+            <div class="d-flex flex-row justify-content-between">
+                <small style="font-size: .7rem;" class="grey-2 m-0">{% get_hit_count for mix %} Views</small>
+                <small style="font-size: .7rem;" class="grey-2 m-0">{{ mix.get_year }}</small> <br>
+            </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
         </div>
     </div>
 </div>
@@ -69,38 +69,36 @@
 {% endif %}
 {% if request.user.is_authenticated %}
 <script>
-  document.querySelectorAll('audio').forEach(audio => {
-    audio.addEventListener('timeupdate', function () {
-        const playedTime = Math.floor(this.currentTime); // Current time in seconds
-        const mixId = this.dataset.id; // Extract mix ID from element ID
-        console.log(playedTime);
+    document.querySelectorAll('audio').forEach(audio => {
+        audio.addEventListener('timeupdate', function () {
+            const playedTime = Math.floor(this.currentTime); // Current time in seconds
+            const mixId = this.dataset.id; // Extract mix ID from element ID
 
-        if (playedTime >= 60 && !this.dataset.updated) { // 1 minute = 60 seconds
-            // Prevent multiple updates for the same mix
-            this.dataset.updated = true;
-            console.log("Elapsed!");
+            if (playedTime >= 6 && !this.dataset.updated) { // 1 minute = 60 seconds
+                // Prevent multiple updates for the same mix
+                this.dataset.updated = true;
 
-            // Make an AJAX call to the server
-            fetch('/account/mix/update_play/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCSRFToken(), // Ensure CSRF protection
-                },
-                body: JSON.stringify({ mix_id: mixId })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Just keep listening :)');
-            })
-            .catch(error => console.error('Error updating play count:', error));
-        }
+                // Make an AJAX call to the server
+                fetch('/account/mix/update_play/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCSRFToken(), // Ensure CSRF protection
+                    },
+                    body: JSON.stringify({ mix_id: mixId })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Just keep listening :)');
+                })
+                .catch(error => console.error('Error updating play count:', error));
+            }
+        });
     });
-});
-// CSRF Token Helper
-function getCSRFToken() {
-    return document.querySelector('[name=csrfmiddlewaretoken]').value;
-}
+    // CSRF Token Helper
+    function getCSRFToken() {
+        return document.querySelector('[name=csrfmiddlewaretoken]').value;
+    }
 </script>
 {% endif %}
 <script>
