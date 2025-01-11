@@ -350,3 +350,59 @@
     background-color: #f8f8f8;
     color: #282828;
 }
+
+/* Style the audio player container */
+#audio-player {
+    background-color: #282828; /* Dark background */
+    color: #fff; /* Text color */
+    border-radius: 8px; /* Rounded corners */
+}
+
+/* Adjust the width of the audio player */
+#audio-player::-webkit-media-controls-panel {
+    background-color: #282828; /* Dark background for controls */
+    border-radius: 8px; /* Rounded corners for controls */
+    color: #fff;
+}
+
+/* Customize the play/pause button */
+#audio-player::-webkit-media-controls-play-button,
+#audio-player::-webkit-media-controls-pause-button {
+    background-color: #66e5dc; /* Button background */
+    color: #1a1a1a; /* Button icon color */
+    border-radius: 50%; /* Circular button */
+    padding: 5px;
+}
+
+/* Customize the progress bar */
+#audio-player::-webkit-media-controls-timeline {
+    background-color: #282828; /* Progress bar track */
+    border-radius: 4px;
+}
+
+#audio-player::-webkit-media-controls-current-time-display,
+#audio-player::-webkit-media-controls-time-remaining-display {
+    color: #fff; /* Time display text */
+}
+
+/* Firefox customizations */
+#audio-player {
+    scrollbar-color: #282828 #000; /* Thumb and track colors */
+    scrollbar-width: thin; /* Thinner scrollbar */
+}
+/* Target the volume control container */
+#audio-player::-webkit-media-controls-volume-control-container {
+    color: #fff; /* Makes the volume control icon white */
+}
+
+/* Target the mute/unmute button */
+#audio-player::-webkit-media-controls-mute-button {
+    background-color: #282828; /* Background of mute button */
+    -webkit-mask: none; /* Ensure mask doesn't obscure color */
+    mask: none; /* Ensure mask doesn't obscure color */
+}
+
+/* General volume slider adjustments */
+#audio-player::-webkit-media-controls-volume-slider {
+    background-color: #282828; /* Volume slider background */
+}
