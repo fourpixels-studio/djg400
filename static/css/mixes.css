@@ -270,6 +270,18 @@
     overflow-x: auto; 
     white-space: nowrap;
     padding: 0.5rem 0;
+    scrollbar-color: #585858 #1a1a1a;
+    scrollbar-width: thin; 
+}
+
+.products-overflow::-webkit-scrollbar {
+    height: 8px;
+    background-color: #1a1a1a;
+}
+
+.products-overflow::-webkit-scrollbar-thumb {
+    background-color: #585858;
+    border-radius: 4px;
 }
 
 .products-overflow .col-lg-4 {
