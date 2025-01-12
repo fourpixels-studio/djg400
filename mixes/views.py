@@ -132,3 +132,17 @@ def support_mix(request):
             order.save()
             return redirect('payment_failed', order_number)
     return HttpResponse("Invalid request method", status=400)
+
+
+def download_mix(request, slug):
+    mix = get_object_or_404(Mix, slug=slug)
+    context = {
+        'mix': mix,
+        'meta_thumbnail': mix.get_landscape_thumbnail,
+        'products': Product.objects.filter(show_in_mixes=True),
+        'title_tag': f"Download {mix.get_title} - {mix.genre.name} Mix",
+        'most_viewed_mixes': Mix.objects.filter(is_popular=True).exclude(pk=mix.pk).order_by('hit_count_generic')[:5],
+        'meta_description': f"Download '{mix.title}' by DJ G400, a {mix.genre.name} mix from the album '{mix.album.name}' featuring {mix.get_featured_artists}. Download this popular mix with {mix.play_count} plays and {mix.download_count} downloads. Available now on DJ G400's platform.",
+        'meta_keywords': f"{mix.title}, {mix.genre.name}, {mix.album.name}, DJ G400 mix, DJ G400 music, {mix.title} mix, featured artists {mix.get_featured_artists}, popular mixes, hip hop mixes, trap mixes, RnB mixes, stream {mix.title}, download {mix.title}, urban music, DJ G400 playlist, exclusive mixes, top mixes {datetime.now().year}",
+    }
+    return render(request, "download_mix.html", context)
