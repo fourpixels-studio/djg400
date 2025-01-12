@@ -144,6 +144,7 @@ class Mix(models.Model):
     video = models.FileField(null=True, blank=True)
     hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk', related_query_name='hit_count_generic_relation')
     comments = models.ManyToManyField(Comment, related_name='comments', blank=True)
+    download_link = models.TextField(blank=True, null=True)
     
     def __str__(self):
         return f"{self.pk} - {self.title}"
