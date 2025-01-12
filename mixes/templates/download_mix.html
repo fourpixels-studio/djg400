@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+{% load hitcount_tags %}
+<main class="container p-4">
+    <button onclick="goBack()" class="no-btn ps-0 text-white my-3">
+        <i class="fa-solid fa-xl fa-arrow-left"></i>
+    </button>
+    <div class="row gy-4">
+        <!-- Mix Details -->
+        <div class="col-sm-12 col-lg-4">
+            <img src="{{ mix.get_landscape_cover }}" class="img-fluid rounded" alt="Mix Cover">
+        </div>
+        <div class="col-sm-12 col-lg-8">
+            <h1 class="display-5 text-grey-1">Download '{{ mix.get_title }}' Mix by DJ G400</h1>
+            <p class="text-grey-2 mb-0">Release Date: <strong>{{ mix.release_date }}</strong></p>
+            <p class="text-grey-2">Genre: <strong>{{ mix.genre.name }}</strong> | Album: <strong>{{ mix.album.name }}</strong></p>
+            <a href="{{ mix.download_link|default:'#' }}" class="btn btn-primary btn-lg w-100 rounded-2 my-2 btn-download" data-id="{{ mix.id }}">Download Mix</a>
+            <form method="post">
+                {% csrf_token %}
+            </form>
+            {% if not request.user.is_authenticated %}
+            <p class="mt-3 text-grey-2">Sign up for an account to get the download link in your email and enjoy more features!</p>
+            <a href="{% url 'account_signup' %}" class="link text-white">Sign Up Now</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Donate Section -->
+    <div class="my-5 p-4 text-center rounded-2 bg-grey-8">
+        <h2 class="text-grey-1">Support</h2>
+        <p class="text-grey-2">Your support will help me deliver more amazing content!</p>
+        <button class="btn btn-outline-light px-4 rounded-2" role="button" data-bs-toggle="modal" data-bs-target="#supportMixModal">Support Now</button>
+    </div>
+
+    <!-- Shop Section -->
+    <h2 class="my-4 text-grey-1">Check Out My Merch</h2>
+    <div class="row row-cols-2">
+        {% for product in products %}
+        <div class="col-sm-6 col-lg-4">
+            {% include 'components/product.html' %}
+        </div>
+        {% endfor %}
+    </div>
+</main>
+{% include "modals/support_mix.html" %}
+<script>
+    document.querySelectorAll('.btn-download').forEach(button => {
+        button.addEventListener('click', function () {
+            const mixId = this.dataset.id; // Extract mix ID from data attribute
+
+            // Make an AJAX call to the server to update the download count
+            fetch('/download/update_download/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCSRFToken(), // Ensure CSRF protection
+                },
+                body: JSON.stringify({ mix_id: mixId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Download count updated successfully!');
+                } else {
+                    console.error('Failed to update download count:', data.error);
+                }
+            })
+            .catch(error => console.error('Error updating download count:', error));
+        });
+    });
+
+    // CSRF Token Helper
+    function getCSRFToken() {
+        const csrfTokenElement = document.querySelector('[name=csrfmiddlewaretoken]');
+        return csrfTokenElement ? csrfTokenElement.value : '';
+    }
+</script>
+
+{% endblock %}
