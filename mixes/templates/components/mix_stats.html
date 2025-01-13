@@ -1,18 +1,20 @@
 {% load static %}
 <div class="d-flex mb-3 flex-row flex-wrap gap-3 align-items-center justify-content-between">
-    <div class="d-flex flex-row gap-2 align-items-center">
+    <div class="d-flex flex-row gap-3 align-items-center flex-wrap">
         <img src="{% static 'img/djg400-blog-thumbnail.jpg' %}" style="height: 40px; width: 40px; border-radius: 50px; object-fit: cover" alt="DJ G400's image">
         <p class="mb-0 grey-2">DJ G400</p>
         {% if not request.user.is_authenticated %}
-        <button role="button" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-outline-dark rounded-2 px-3 ms-3">Join</button>
+        <button role="button" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-outline-dark rounded-2 px-3">Join</button>
         {% endif %}
-        <button role="button" data-bs-toggle="modal" data-bs-target="#supportMixModal" class="btn btn-primary rounded-2 px-3 ms-3">
+        <button role="button" data-bs-toggle="modal" data-bs-target="#supportMixModal" class="btn btn-primary rounded-2 px-3">
             Support <i class="ms-1 fa-solid fa-hand-holding-dollar"></i>
         </button>
         {% if mix.download_link %}
-        <a href="{% url 'download_mix' mix.slug %}" class="btn btn-outline-light rounded-2 px-3 ms-3">
-            Download <i class="ms-1 fa-solid fa-download"></i>
-        </a>
+        <div class="link">
+            <a href="{% url 'download_mix' mix.slug %}" class="hover-underline text-grey-1">
+                Download <i class="text-grey-2 ms-1 fa-solid fa-download"></i>
+            </a>
+        </div>
         {% endif %}
     </div>
     <div class="d-flex flex-row gap-3 align-items-center">
