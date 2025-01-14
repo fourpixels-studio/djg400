@@ -10,7 +10,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 def search_results(request):
     search_context = {}
-    random_mixes = Mix.objects.order_by('?')[:3]
+    random_mixes = Mix.objects.order_by('?')[:6]
 
     if request.GET:
         query = request.GET.get("q")
@@ -26,7 +26,7 @@ def search_results(request):
                 remix_genre_results
             ).order_by('-release_date').distinct()
 
-            remixes_paginator = Paginator(remixes_results, 9)
+            remixes_paginator = Paginator(remixes_results, 12)
             page = request.GET.get("page", 1)
 
             try:
@@ -55,7 +55,7 @@ def search_results(request):
                 events_results = events_results.filter(
                     event_date_results).distinct()
 
-            events_paginator = Paginator(events_results, 9)
+            events_paginator = Paginator(events_results, 12)
             page = request.GET.get("page", 1)
 
             try:
