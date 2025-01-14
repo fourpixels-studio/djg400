@@ -31,7 +31,7 @@ def blog_detail(request, slug):
 
 def blog_list(request):
     all_blogs = Blog.objects.filter(is_published=True).order_by("-published_date")
-    paginator = Paginator(all_blogs, 4)
+    paginator = Paginator(all_blogs, 12)
     page = request.GET.get("page", 1)
 
     try:
