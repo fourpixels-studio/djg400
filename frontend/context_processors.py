@@ -85,7 +85,7 @@ def search_results(request):
                 mix_results = mix_results.filter(
                     mix_release_date_results).distinct()
 
-            mixes_paginator = Paginator(mix_results, 9)
+            mixes_paginator = Paginator(mix_results, 12)
             page = request.GET.get("page", 1)
 
             try:
@@ -108,7 +108,7 @@ def search_results(request):
                 blog_category_results
             ).filter(is_published=True).order_by('-published_date').distinct()
 
-            blogs_paginator = Paginator(blog_results, 9)
+            blogs_paginator = Paginator(blog_results, 12)
             page = request.GET.get("page", 1)
 
             try:
@@ -125,7 +125,7 @@ def search_results(request):
                 playlist_genre_results
             ).order_by('-release_date').distinct()
 
-            playlists_paginator = Paginator(playlists_results, 9)
+            playlists_paginator = Paginator(playlists_results, 12)
             page = request.GET.get("page", 1)
 
             try:
@@ -143,7 +143,7 @@ def search_results(request):
                 prodyct_description_results
             ).order_by('-pk').distinct()
 
-            products_paginator = Paginator(products_results, 9)
+            products_paginator = Paginator(products_results, 12)
             page = request.GET.get("page", 1)
 
             try:
