@@ -16,7 +16,7 @@ seo = SEO.objects.first()
 
 
 def mix_list(request):
-    paginator = Paginator(get_all_mixes(), 9)
+    paginator = Paginator(get_all_mixes(), 12)
     page = request.GET.get("page", 1)
 
     try:
