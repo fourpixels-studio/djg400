@@ -20,6 +20,7 @@ class Customer(models.Model):
     listened_remixes = models.ManyToManyField(Remix, through='RemixHistory', related_name='listened_by', blank=True)
     listened_playlists = models.ManyToManyField(Playlist, through='PlaylistHistory', related_name='listened_by', blank=True)
     bio = models.CharField(max_length=200, blank=True)
+    newsletter_email_notification = models.BooleanField(default=True)
     
     def __str__(self):
         return self.user.get_full_name()
