@@ -108,9 +108,7 @@
             {% endif %}
         </div>
     </div>
-    <section class="px-0 py-5" style="background-color: #141414; margin-top: 5rem">
-        {% include "components/newsletter_banner.html" %}
-    </section>
+    {% include "components/newsletter_banner.html" %}
 </main>
 {% include "modals/share.html" %}
 {% if not request.user.is_authenticated %}
