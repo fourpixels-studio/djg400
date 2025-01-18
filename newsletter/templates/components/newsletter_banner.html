@@ -1,9 +1,13 @@
-<div class="container px-4 py-5">
-    <div class="row justify-content-center">
-        <div class="col-sm-12 col-lg-7 text-center">
-            <h2 class="text-white">Stay in the Mix with DJ G400</h2>
-            <p class="grey-1 mb-3">Get exclusive access to the latest drops, playlists, event updates, and behind-the-scenes content! Sign up for the newsletter and never miss a beat.</p>
-            <a href="{% url 'subscribe_newsletter' %}" class="btn btn-outline-light px-4 rounded-2">Subscribe Now</a>
+{% if not request.user.customer.newsletter_email_notification %}
+<section class="px-0 py-5 my-5" style="background-color: #141414;">
+    <div class="container px-4 py-5">
+        <div class="row justify-content-center">
+            <div class="col-sm-12 col-lg-7 text-center">
+                <h2 class="text-white">Stay in the Mix with DJ G400</h2>
+                <p class="grey-1 mb-3">Get exclusive access to the latest drops, playlists, event updates, and behind-the-scenes content! Sign up for the newsletter and never miss a beat.</p>
+                <a href="{% url 'subscribe_newsletter' %}" class="btn btn-outline-light px-4 rounded-2">Subscribe Now</a>
+            </div>
         </div>
     </div>
-</div>
+</section>
+{% endif %}
