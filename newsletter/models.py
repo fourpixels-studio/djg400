@@ -8,7 +8,7 @@ class Newsletter(models.Model):
     email = models.EmailField()
     subscribed_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     unsubscribed_at = models.DateTimeField(blank=True, null=True)
-    consent = models.BooleanField(default=True)
+    newsletter_email_notification = models.BooleanField(default=True)
     resubscribed_at = models.DateTimeField(blank=True, null=True)
 
     @property
@@ -31,7 +31,7 @@ class Newsletter(models.Model):
         return formatted_date
 
     def __str__(self):
-        if self.consent == True:
+        if self.newsletter_email_notification == True:
             subscription_status = f"Subscribed on {self.get_subscription_date}"
         else:
             if self.unsubscribed_at:
