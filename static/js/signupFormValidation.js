@@ -1,9 +1,10 @@
-const emailPassword = document.getElementById("email-password");
-const usernameNames = document.getElementById("username-names");
+const username = document.getElementById("id_username");
+const lastName = document.getElementById("id_last_name");
+const firstName = document.getElementById("id_first_name");
 const prevBtn = document.getElementById("show-username-names");
 const nextBtn = document.getElementById("show-email-password");
-const username = document.getElementById("id_username");
-const firstName = document.getElementById("id_first_name");
+const usernameNames = document.getElementById("username-names");
+const emailPassword = document.getElementById("email-password");
 
 emailPassword.style.display = 'none';
 usernameNames.style.display = 'block';
@@ -11,8 +12,9 @@ usernameNames.style.display = 'block';
 function nextStep() {
     validateField(username);
     validateField(firstName);
+    validateField(lastName);
     
-    if (username.value.trim() !== "" && firstName.value.trim() !== "") {
+    if (username.value.trim() !== "" && firstName.value.trim() !== "" && lastName.value.trim() !== "") {
         usernameNames.style.display = 'none';
         emailPassword.style.display = 'block';
     }
