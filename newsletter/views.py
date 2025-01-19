@@ -15,8 +15,8 @@ def subscribe_newsletter(request):
             email = newsletter_form.cleaned_data['email']
             existing_subscription = Newsletter.objects.filter(email=email).first()
             if existing_subscription:
-                if not existing_subscription.consent:
-                    existing_subscription.consent = True
+                if not existing_subscription.newsletter_email_notification:
+                    existing_subscription.newsletter_email_notification = True
                     existing_subscription.resubscribed_at = timezone.now()
                     existing_subscription.save()
                     messages.success(request, "You've been resubscribed to our newsletter!")
@@ -60,9 +60,9 @@ def unsubscribe_newsletter(request):
         if unsubscribe_form.is_valid():
             email = unsubscribe_form.cleaned_data['email']
             try:
-                subscription = get_object_or_404(Newsletter, email=email, consent=True)
+                subscription = get_object_or_404(Newsletter, email=email, newsletter_email_notification=True)
                 subscription.unsubscribed_at = timezone.now()
-                subscription.consent = False
+                subscription.newsletter_email_notification = False
                 subscription.save()
                 return render(request, 'unsubscribe_newsletter.html', {
                     "success": True,
@@ -118,7 +118,7 @@ def send_newsletter_article(request):
         "newletters_count": Newsletter.objects.count(),
         "newletter_article_form": newletter_article_form,
         "sent_newsletters": NewsletterArticle.objects.order_by("-pk"),
-        "newletters": Newsletter.objects.filter(consent=True).order_by("-pk"),
+        "newletters": Newsletter.objects.filter(newsletter_email_notification=True).order_by("-pk"),
     }
     return render(request, "send_newsletter_article.html", context)
     
